@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>151002963324-ratqpdp7i6pgufi7b2bej0g92l5jqpjd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.151002963324-ratqpdp7i6pgufi7b2bej0g92l5jqpjd</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDypDfSu3a1VkLdLMQ66c_NgXAgj8fB8rQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>151002963324</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>MyTask.Food-Application</string>
+	<key>PROJECT_ID</key>
+	<string>pizzashop-4af9d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pizzashop-4af9d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:151002963324:ios:a5e712733ebbe3041718f9</string>
+</dict>
+</plist>
