@@ -12,6 +12,8 @@ class AuthorizationViewController: UIViewController {
     @IBOutlet weak var passwordLabel: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailLabel.delegate = self
+        passwordLabel.delegate = self
     }
     @IBAction func AuthorisationTapped(_ sender: Any) {
         AuthService.shared.signIn(email: emailLabel.text ?? "", password: passwordLabel.text ?? "") { [self] result in
@@ -45,3 +47,13 @@ class AuthorizationViewController: UIViewController {
     }
 }
 
+extension AuthorizationViewController:UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailLabel {
+            emailLabel.resignFirstResponder()
+        } else {
+            passwordLabel.resignFirstResponder()
+        }
+        return true
+    }
+}

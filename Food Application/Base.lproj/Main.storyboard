@@ -227,21 +227,24 @@
                                     <action selector="orderButtonIsTapped:" destination="PFx-UM-BV9" eventType="touchUpInside" id="sul-6M-REZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpV-yX-0UB">
-                                <rect key="frame" x="5" y="768" width="130" height="50"/>
-                                <color key="backgroundColor" systemColor="systemRedColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="hqs-1I-nH7"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title=" Удалить"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Цена" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho8-oN-rJR">
                                 <rect key="frame" x="368" y="731" width="41" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpV-yX-0UB">
+                                <rect key="frame" x="5" y="768" width="147" height="50"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hqs-1I-nH7"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Очистить корзину"/>
+                                <connections>
+                                    <action selector="cleanButtonIsTapped:" destination="PFx-UM-BV9" eventType="touchUpInside" id="htS-Ou-i9p"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="J5Y-33-gtE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -255,6 +258,7 @@
                             <constraint firstItem="TpV-yX-0UB" firstAttribute="leading" secondItem="J5Y-33-gtE" secondAttribute="leading" constant="5" id="S6o-tM-phc"/>
                             <constraint firstItem="TpV-yX-0UB" firstAttribute="bottom" secondItem="J5Y-33-gtE" secondAttribute="bottom" constant="5" id="Ulc-9J-Df1"/>
                             <constraint firstItem="J5Y-33-gtE" firstAttribute="trailing" secondItem="j5r-dy-BG6" secondAttribute="trailing" constant="5" id="WSV-Zd-P1e"/>
+                            <constraint firstItem="j5r-dy-BG6" firstAttribute="leading" secondItem="TpV-yX-0UB" secondAttribute="trailing" constant="13" id="Ztb-ub-tYs"/>
                             <constraint firstItem="TpV-yX-0UB" firstAttribute="height" secondItem="j5r-dy-BG6" secondAttribute="height" id="eV3-Af-diB"/>
                             <constraint firstItem="TpV-yX-0UB" firstAttribute="top" secondItem="1Hb-5q-cYU" secondAttribute="bottom" constant="16" id="hdK-gw-io1"/>
                             <constraint firstItem="1Hb-5q-cYU" firstAttribute="top" secondItem="403-fh-tIh" secondAttribute="bottom" constant="-4" id="mS2-Kr-08N"/>
@@ -353,22 +357,34 @@
                                 <rect key="frame" x="20" y="247.5" width="374" height="495.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnq-7i-97t">
+                                <rect key="frame" x="20" y="88" width="80" height="80"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="setImageButtonIsTapped:" destination="lAR-oP-LLQ" eventType="touchUpInside" id="Hpf-At-ysU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tkb-0H-Ccl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="OY8-hb-cvh" firstAttribute="top" secondItem="Za2-Gj-Zar" secondAttribute="bottom" constant="10" id="0eK-jw-U49"/>
+                            <constraint firstItem="tVu-Zl-xmw" firstAttribute="leading" secondItem="tnq-7i-97t" secondAttribute="trailing" constant="20" id="1XT-aT-iwD"/>
                             <constraint firstItem="Za2-Gj-Zar" firstAttribute="top" secondItem="tkb-0H-Ccl" secondAttribute="top" id="2ls-la-JRb"/>
                             <constraint firstItem="tkb-0H-Ccl" firstAttribute="trailing" secondItem="eSR-hp-f54" secondAttribute="trailing" constant="20" id="DOc-N1-ZMc"/>
                             <constraint firstItem="tVu-Zl-xmw" firstAttribute="leading" secondItem="Za2-Gj-Zar" secondAttribute="trailing" constant="20" id="Eqz-6p-A0p"/>
                             <constraint firstItem="tkb-0H-Ccl" firstAttribute="trailing" secondItem="OY8-hb-cvh" secondAttribute="trailing" constant="20" id="Ivy-nR-B9y"/>
+                            <constraint firstItem="tnq-7i-97t" firstAttribute="top" secondItem="tkb-0H-Ccl" secondAttribute="top" id="O3k-2j-o8G"/>
                             <constraint firstItem="tkb-0H-Ccl" firstAttribute="bottom" secondItem="9We-5b-Lih" secondAttribute="bottom" constant="20" id="bcg-6a-uP8"/>
                             <constraint firstItem="eSR-hp-f54" firstAttribute="top" secondItem="OY8-hb-cvh" secondAttribute="bottom" constant="10" id="bze-nh-OWG"/>
+                            <constraint firstItem="OY8-hb-cvh" firstAttribute="top" secondItem="tnq-7i-97t" secondAttribute="bottom" constant="10" id="cdF-sb-3KP"/>
                             <constraint firstItem="9We-5b-Lih" firstAttribute="top" secondItem="eSR-hp-f54" secondAttribute="bottom" constant="10" id="kxM-rf-mI3"/>
                             <constraint firstItem="Za2-Gj-Zar" firstAttribute="leading" secondItem="tkb-0H-Ccl" secondAttribute="leading" constant="20" id="mbi-5P-9NW"/>
                             <constraint firstItem="tkb-0H-Ccl" firstAttribute="trailing" secondItem="9We-5b-Lih" secondAttribute="trailing" constant="20" id="nRX-AQ-qj4"/>
                             <constraint firstItem="tVu-Zl-xmw" firstAttribute="centerY" secondItem="Za2-Gj-Zar" secondAttribute="centerY" id="pR5-rs-bOf"/>
                             <constraint firstItem="tkb-0H-Ccl" firstAttribute="trailing" secondItem="tVu-Zl-xmw" secondAttribute="trailing" constant="20" id="sAF-ow-4lv"/>
+                            <constraint firstItem="tnq-7i-97t" firstAttribute="leading" secondItem="tkb-0H-Ccl" secondAttribute="leading" constant="20" id="sUi-Wp-A57"/>
                             <constraint firstItem="eSR-hp-f54" firstAttribute="leading" secondItem="tkb-0H-Ccl" secondAttribute="leading" constant="20" id="si2-6P-evW"/>
                             <constraint firstItem="tVu-Zl-xmw" firstAttribute="top" secondItem="tkb-0H-Ccl" secondAttribute="top" id="uDT-9u-cxx"/>
                             <constraint firstItem="9We-5b-Lih" firstAttribute="leading" secondItem="tkb-0H-Ccl" secondAttribute="leading" constant="20" id="w2C-A2-O4U"/>

@@ -10,6 +10,8 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var passwordLabel: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailLabel.delegate = self
+        passwordLabel.delegate = self
     }
     @IBAction func registrationTapped(_ sender: Any) {
         let validatifonFields = AuthService.shared.validateFields(password: passwordLabel.text ?? "", email: emailLabel.text ?? "")
@@ -48,5 +50,15 @@ class RegistrationViewController: UIViewController {
         let alerAction = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(alerAction)
         present(alertController, animated: true)
+    }
+}
+extension RegistrationViewController:UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailLabel {
+            emailLabel.resignFirstResponder()
+        } else {
+            passwordLabel.resignFirstResponder()
+        }
+        return true
     }
 }

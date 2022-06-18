@@ -30,14 +30,17 @@ class CartViewController: UIViewController {
         priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
     }
     @IBAction func orderButtonIsTapped(_ sender: UIButton) {
-        if CartViewModel.shared.positions.count == 0 {
+        if CartViewModel.shared.cartPositions.count == 0 {
             let alertContoller = UIAlertController(title:"Невозможно выполнить действие.", message: "Ваша корзина пуста.", preferredStyle: .alert)
             let alerAction = UIAlertAction(title: "Закрыть", style: .default)
             alertContoller.addAction(alerAction)
             self.present(alertContoller, animated: true)
         } else {
             var order = Order(userId: AuthService.shared.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue)
-            order.positions = CartViewModel.shared.positions
+            order.positions = CartViewModel.shared.cartPositions
+            CartViewModel.shared.cartPositions.removeAll()
+            priceForAllLabel.text = "0₽"
+            tableView.reloadData()
             print("order.positions:\(order.positions)")
           //  ProfileViewModel.orders = CartViewModel.shared.positions wegwegwert wsrthwrrt wrh
             DispatchQueue.global(qos: .userInitiated).sync {
@@ -54,19 +57,31 @@ class CartViewController: UIViewController {
             //NotificationCenter.default.post(name: NSNotification.Name("order"), object: nil)
         }
     }
+    @IBAction func cleanButtonIsTapped(_ sender: Any) {
+        if CartViewModel.shared.cartPositions.count == 0 {
+            let alertContoller = UIAlertController(title:"Невозможно выполнить действие.", message: "Ваша корзина пуста.", preferredStyle: .alert)
+            let alerAction = UIAlertAction(title: "Закрыть", style: .default)
+            alertContoller.addAction(alerAction)
+            self.present(alertContoller, animated: true)
+        } else {
+            CartViewModel.shared.cartPositions.removeAll()
+            priceForAllLabel.text = "0₽"
+            tableView.reloadData()
+        }
+    }
 }
 extension CartViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (CartViewModel.shared.positions.count == 0)  {
             return 0
         } else {
-            return CartViewModel.shared.positions.count
+            return CartViewModel.shared.cartPositions.count
         }
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PositionCollectionViewCell", for: indexPath) as! PositionCollectionViewCell
-        cell.setup(position: CartViewModel.shared.positions[indexPath.row])
+        cell.setup(position: CartViewModel.shared.cartPositions[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -80,12 +95,12 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource {
         if editingStyle == .delete {
             tableView.beginUpdates()
             print("Было: \(CartViewModel.shared.positions.count)")
-            CartViewModel.shared.positions.remove(at: indexPath.row)
+            CartViewModel.shared.cartPositions.remove(at: indexPath.row)
         //    CartViewModel.shared.positions.removeAll { pos in
         //        pos.product.title == posit
          //   }
             tableView.deleteRows(at: [indexPath], with: .fade)
-            print("Стало: \(CartViewModel.shared.positions.count)")
+            print("Стало: \(CartViewModel.shared.cartPositions.count)")
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
             tableView.endUpdates()
         }

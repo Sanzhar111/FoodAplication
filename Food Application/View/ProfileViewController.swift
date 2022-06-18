@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import Photos
+import PhotosUI
 class ProfileViewController: UIViewController {
     
     
@@ -74,29 +75,44 @@ class ProfileViewController: UIViewController {
         let action = UIAlertAction(title: "Да", style: .default) { action in
             self.dismiss(animated: true)
         }
-        let action2 = UIAlertAction(title: "Отмена", style: .cancel) { action in
-            
-        }
+        let action2 = UIAlertAction(title: "Отмена", style: .cancel)
         alert.addAction(action)
         alert.addAction(action2)
         present(alert, animated: true)
     }
-    private func format(phoneNumber:String,shouldRemoveLastDigit:Bool) -> String {
-        return ""
+    @IBAction func setImageButtonIsTapped(_ sender: Any) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action1 = UIAlertAction(title: "Выбрать фото", style: .default) { [weak self]action in
+            var config = PHPickerConfiguration(photoLibrary: .shared())
+            config.selectionLimit = 3
+            config.filter = .images
+            let vc = PHPickerViewController(configuration: config)
+            vc.delegate = self
+            self?.present(vc, animated: true)
+        }
+        let action2  = UIAlertAction(title: "Сделать фото", style: .default) {  action in
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.delegate = self
+            self.present(picker, animated: true)
+        }
+        let action3 = UIAlertAction(title: "отмена", style: .cancel)
+        alertController.addAction(action1)
+        alertController.addAction(action2)
+        alertController.addAction(action3)
+        present(alertController, animated: true)
     }
 }
 extension ProfileViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ProfileViewModel.orders.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTableViewCell", for: indexPath) as! OrderTableViewCell
         cell.setup(order: ProfileViewModel.orders[indexPath.row])
         return cell
     }
-    
-    
 }
 extension ProfileViewController : UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -109,7 +125,6 @@ extension ProfileViewController : UITextFieldDelegate {
         } else {
             return false
         }
-        
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == nameTextField {
@@ -120,7 +135,7 @@ extension ProfileViewController : UITextFieldDelegate {
             isClickable = false
         } else if textField == numberTextField {
             numberTextField.resignFirstResponder()
-            ProfileViewModel.profile!.phone = Int(numberTextField.text!)!
+            ProfileViewModel.profile!.phone = Int(numberTextField.text ?? "0") ?? 0 // wqfqefnnlqeknlkqjwnlkqnlkqnglk
             ProfileViewModel.setProfile()
             isClickable = false
         } else {
@@ -130,20 +145,44 @@ extension ProfileViewController : UITextFieldDelegate {
         }
         return true
     }
+  
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == numberTextField {
             let allowedCharacters = "1234567890"
             let alloweCharacterSet = CharacterSet(charactersIn: allowedCharacters)
             let typedCharacterSet = CharacterSet(charactersIn: string)
-            
-            
-            let fullString = (textField.text ?? "") + string
-            numberTextField.text = format(phoneNumber: fullString, shouldRemoveLastDigit: range.length == 1)
-            
-            
             return alloweCharacterSet.isSuperset(of: typedCharacterSet)
-        } else {
-            return false
+        }  else {
+            return true
         }
     }
+}
+extension ProfileViewController:PHPickerViewControllerDelegate {
+    // photo from library
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        results.forEach { result in
+            result.itemProvider.loadObject(ofClass: UIImage.self) { reading, error in
+                guard let image = reading as? UIImage, error == nil else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.profilePhotoImageView.image = image
+                }
+            }
+        }
+    }
+}
+extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    //Taking a photo
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            profilePhotoImageView.image = image
+        } else { return}
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
 }
