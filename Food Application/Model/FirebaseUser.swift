@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 struct FirebaseUser {
@@ -13,6 +14,7 @@ struct FirebaseUser {
     var name : String
     var phone : Int
     var address:String
+    var profileImage:String
     
     var representation:[String:Any] {
         var repres = [String:Any]()
@@ -20,6 +22,7 @@ struct FirebaseUser {
         repres["name"] = self.name
         repres["phone"] = self.phone
         repres["address"] = self.address
+        repres["profileImage"] = self.profileImage
         return repres
     }
     

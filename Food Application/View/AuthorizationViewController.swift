@@ -23,6 +23,7 @@ class AuthorizationViewController: UIViewController {
                 self.passwordLabel.text = ""
                 ProfileViewModel.getProfile()
                 ProfileViewModel.getOrders()
+                ProfileViewModel.getProfileImage()
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyBoard.instantiateViewController(withIdentifier: "TabbarController")
                 vc.modalPresentationStyle = .fullScreen

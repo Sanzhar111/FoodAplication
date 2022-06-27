@@ -7,15 +7,23 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseStorage
+import UIKit
 
 class DataBaseService {
     static let shared = DataBaseService()
     private let dataBase = Firestore.firestore() // ссылка на папку с базой данных находящаяся в firebase
+    private var storage = Storage.storage()
     private var  usersRef:CollectionReference {
         return dataBase.collection("users")
     } // ссылка на коллекцию пользователей , или же ссылка по которой мы обращаемся к коллекции пользователей
     private var ordersRef:CollectionReference {
         return dataBase.collection("orders")
+    }
+    private var imageRef:StorageReference {
+        return storage.reference(forURL: "gs://pizzashop-4af9d.appspot.com/").child("avatars")
+    //
+
     }
     
     private init () {}
@@ -43,7 +51,8 @@ class DataBaseService {
             guard let id = data["id"] as? String? else { return }
             guard let phone = data["phone"] as? Int else { return }
             guard let address = data["address"] as? String else { return }
-            let user = FirebaseUser(id: id!, name: username, phone: phone, address: address)
+            guard let profileImage = data["profileImage"] as? String else { return }
+            let user = FirebaseUser(id: id!, name: username, phone: phone, address: address, profileImage: profileImage)
             print("пришедший юзер: \(user.name) | \(user.phone) | \(user.address)")
             complition(.success(user))
         }
@@ -121,5 +130,29 @@ class DataBaseService {
         }
         
         
+    }
+    func uploadImage(currentUserID:String,photo:UIImage,completion:@escaping(Result<URL,Error>)->()) {
+        let imageReference = storage.reference().child("avatars").child(AuthService.shared.currentUser!.uid)
+        //imageRef.child(currentUserID)
+        guard let imageData = photo.jpegData(compressionQuality: 0.4) else { return }
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        imageReference.putData(imageData, metadata: metaData) { (metaData, error) in
+            guard let _ = metaData else {
+                print("print here")
+                completion(.failure(error!))
+                return
+            }
+            imageReference.downloadURL { url, error in
+                guard let url = url else {
+                    print("and print  smth here")
+                    completion(.failure(error!))
+                    return
+                }
+                //print("")
+                completion(.success(url))
+            }
+            
+        }
     }
 }

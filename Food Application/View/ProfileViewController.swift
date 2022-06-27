@@ -42,11 +42,14 @@ class ProfileViewController: UIViewController {
         setButton(button: button3, tag: 3, textField: addressTextField)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("order"), object: nil)
+        // getImage
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadImage), name: NSNotification.Name("getImage"), object: nil)
+    }
+    @objc func reloadImage() {
+        profilePhotoImageView.image = ProfileViewModel.imageProfile
     }
     @objc func reloadInformation() {
-        
         self.ordersTableView.reloadData()
-        
     }
     func setButton(button:UIButton,tag:Int,textField:UITextField) {
         button.setImage(UIImage(systemName: "pencil"), for: .normal)
@@ -56,7 +59,6 @@ class ProfileViewController: UIViewController {
         button.tag = tag
         textField.rightView = button
         textField.rightViewMode = .always
-        
     }
     @objc func tapped(responder:UIButton) {
         print("i tapped")
@@ -105,9 +107,9 @@ class ProfileViewController: UIViewController {
 }
 extension ProfileViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print( ProfileViewModel.orders.count)
         return ProfileViewModel.orders.count
     }
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTableViewCell", for: indexPath) as! OrderTableViewCell
         cell.setup(order: ProfileViewModel.orders[indexPath.row])
@@ -145,7 +147,6 @@ extension ProfileViewController : UITextFieldDelegate {
         }
         return true
     }
-  
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == numberTextField {
             let allowedCharacters = "1234567890"
@@ -166,9 +167,21 @@ extension ProfileViewController:PHPickerViewControllerDelegate {
                 guard let image = reading as? UIImage, error == nil else {
                     return
                 }
-                DispatchQueue.main.async {
+                DispatchQueue.main.async {//*
                     self.profilePhotoImageView.image = image
-                }
+                    DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
+                        switch res {
+                        case .success(let url):
+                            let urtString = url.absoluteString
+                            ProfileViewModel.profile?.profileImage = urtString
+                            ProfileViewModel.setProfile()
+                            print("the url:\(urtString)")
+                        case .failure(let error):
+                            print("error is exactly here")
+                            print(error.localizedDescription)
+                        }
+                    }
+                }//*
             }
         }
     }
@@ -178,6 +191,18 @@ extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profilePhotoImageView.image = image
+            DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
+                switch res {
+                case .success(let url):
+                    let urtString = url.absoluteString
+                    ProfileViewModel.profile?.profileImage = urtString
+                    ProfileViewModel.setProfile()
+                    print("the url:\(urtString)")
+                case .failure(let error):
+                    print("error is exactly here")
+                    print(error.localizedDescription)
+                }
+            }
         } else { return}
         picker.dismiss(animated: true)
     }

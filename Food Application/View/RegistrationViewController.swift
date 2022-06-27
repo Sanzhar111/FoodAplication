@@ -25,6 +25,7 @@ class RegistrationViewController: UIViewController {
                     self.emailLabel.text = ""
                     self.passwordLabel.text = ""
                     print("user:\(String(describing: user.email))")
+                    
                     //
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyBoard.instantiateViewController(withIdentifier: "TabbarController")
@@ -34,10 +35,7 @@ class RegistrationViewController: UIViewController {
                 case .failure(let error) : showError(errorText: "Ошибка регистрации \(error.localizedDescription)")
                 }
            }
-            
         }
-        
-        
     }
     @IBAction func showAuthorisationVC(_ sender: Any) {
         let story = UIStoryboard(name: "Main", bundle: nil)

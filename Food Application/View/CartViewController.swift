@@ -8,7 +8,7 @@
 import UIKit
 
 class CartViewController: UIViewController {
-
+    
     //var viewModel = CartViewModel()
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var priceForAllLabel: UILabel!
@@ -25,6 +25,18 @@ class CartViewController: UIViewController {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("load"), object: nil)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        ProfileViewModel.getOrders()
+        
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        ProfileViewModel.getOrders()
+    }
+    
+    
     @objc func reloadInformation() {
         self.tableView.reloadData()
         priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
@@ -42,18 +54,24 @@ class CartViewController: UIViewController {
             priceForAllLabel.text = "0₽"
             tableView.reloadData()
             print("order.positions:\(order.positions)")
-          //  ProfileViewModel.orders = CartViewModel.shared.positions wegwegwert wsrthwrrt wrh
-            DispatchQueue.global(qos: .userInitiated).sync {
+            //  ProfileViewModel.orders = CartViewModel.shared.positions wegwegwert wsrthwrrt wrh
+            let dispatchGroup = DispatchGroup()
+            dispatchGroup.enter()
+            DispatchQueue.global(qos: .userInteractive).async {
                 DataBaseService.shared.setOrder(order: order) { result in
                     switch result {
                     case .success(let order):
                         print("orders:\(order.cost)")
+                        ProfileViewModel.getOrders()
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
                 }
+                dispatchGroup.leave()
             }
-                ProfileViewModel.getOrders()
+            dispatchGroup.wait()
+            print("continiue working")
+            //ProfileViewModel.getOrders()
             //NotificationCenter.default.post(name: NSNotification.Name("order"), object: nil)
         }
     }
@@ -87,18 +105,19 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.beginUpdates()
             print("Было: \(CartViewModel.shared.positions.count)")
             CartViewModel.shared.cartPositions.remove(at: indexPath.row)
-        //    CartViewModel.shared.positions.removeAll { pos in
-        //        pos.product.title == posit
-         //   }
+            //    CartViewModel.shared.positions.removeAll { pos in
+            //        pos.product.title == posit
+            //   }
             tableView.deleteRows(at: [indexPath], with: .fade)
             print("Стало: \(CartViewModel.shared.cartPositions.count)")
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"

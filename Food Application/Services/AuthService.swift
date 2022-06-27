@@ -41,7 +41,7 @@ class AuthService {
                  в данном result
                  делаем что-то с данными которые пришли с сервера
                  */
-                let firebaseUser = FirebaseUser(id: result.user.uid, name: "", phone: 0, address: "")//создаем юзера который только что зарегистрировался
+                let firebaseUser = FirebaseUser(id: result.user.uid, name: "", phone: 0, address: "", profileImage: "")//создаем юзера который только что зарегистрировался
                 
                 // если все ок то возвращаем данные с серрвера
                 DataBaseService.shared.setUser(user: firebaseUser) { resultDB in // делаем что-то с даныыми которые пришли с сервера 
