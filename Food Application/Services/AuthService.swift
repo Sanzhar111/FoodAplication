@@ -66,9 +66,10 @@ class AuthService {
     }
     
     func signIn(email:String,password:String,completion:@escaping(Result<User,Error>)->()) {//авторизация
-        auth.signIn(withEmail: email, password: password) { result, error in
+        auth.signIn(withEmail: email, password: password) { result, error in // (1) true calling
             if let result = result {
-                completion(.success(result.user))
+                completion(.success(result.user)) // 1-1 после (1) получили ответ
+                // 1-2 получили ответ
             } else if let error = error {
                 completion(.failure(error))
             }

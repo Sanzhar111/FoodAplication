@@ -16,14 +16,26 @@ class AuthorizationViewController: UIViewController {
         passwordLabel.delegate = self
     }
     @IBAction func AuthorisationTapped(_ sender: Any) {
-        AuthService.shared.signIn(email: emailLabel.text ?? "", password: passwordLabel.text ?? "") { [self] result in
+        AuthService.shared.signIn(email: emailLabel.text ?? "", password: passwordLabel.text ?? "") { [self] result in //1 вызывется
             switch result {
             case .success(let user):
                 self.emailLabel.text = ""
                 self.passwordLabel.text = ""
-                ProfileViewModel.getProfile()
-                ProfileViewModel.getOrders()
-                ProfileViewModel.getProfileImage()
+                let myQueue = DispatchQueue(label: "myQueue")
+                print("case .success(let user): \(user.uid)")
+                myQueue.sync {
+                    ProfileViewModel.getProfile()
+                }
+                myQueue.sync {
+                    ProfileViewModel.getOrders()
+                }
+                //myQueue.sync {
+                  //  ProfileViewModel.getProfileImage()
+               // }
+                
+
+                
+                print("The user URL here \(ProfileViewModel.profile?.profileImage)")
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyBoard.instantiateViewController(withIdentifier: "TabbarController")
                 vc.modalPresentationStyle = .fullScreen
@@ -33,7 +45,7 @@ class AuthorizationViewController: UIViewController {
             }
         }
         
-    }
+    } 
     @IBAction func showRegistrationVC(_ sender: Any) {
         let story = UIStoryboard(name: "Main", bundle: nil)
         let newVC = story.instantiateViewController(withIdentifier: "RegistrationViewController") as! RegistrationViewController

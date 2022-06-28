@@ -40,11 +40,20 @@ class ProfileViewController: UIViewController {
         setButton(button: button, tag: 1, textField: nameTextField)
         setButton(button: button2, tag: 2, textField: numberTextField)
         setButton(button: button3, tag: 3, textField: addressTextField)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("order"), object: nil)
+        //profilePhotoImageView.image = ProfileViewModel.imageProfile
+        //NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("order"), object: nil)
         // getImage
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadImage), name: NSNotification.Name("getImage"), object: nil)
+      //  NotificationCenter.default.addObserver(self, selector: #selector(reloadImage), name: NSNotification.Name("getImage"), object: nil)
+        
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+      //  ProfileViewModel.getProfileImage()
+        profilePhotoImageView.image = ProfileViewModel.imageProfile
+        self.ordersTableView.reloadData()
+        
+    }
+    
     @objc func reloadImage() {
         profilePhotoImageView.image = ProfileViewModel.imageProfile
     }
@@ -190,14 +199,28 @@ extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationCon
     //Taking a photo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            profilePhotoImageView.image = image
+          //  DispatchQueue.main.async { [self] in
+                self.profilePhotoImageView.image = image
+                ProfileViewModel.imageProfile = image
+           // }
+            
+            
             DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
                 switch res {
                 case .success(let url):
                     let urtString = url.absoluteString
+                    print("ursString = \(urtString)")
                     ProfileViewModel.profile?.profileImage = urtString
+                    print("Here is ProfileViewModel.profile?.profileImage = \(String(describing: ProfileViewModel.profile?.profileImage)) ")
                     ProfileViewModel.setProfile()
                     print("the url:\(urtString)")
+                    
+                    // https://firebasestorage.googleapis.com/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
+                    
+                    // https://firebasestorage.googleapis.com:443/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
+                    
+                    // https://firebasestorage.googleapis.com/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
+                    // https://firebasestorage.googleapis.com:443/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
                 case .failure(let error):
                     print("error is exactly here")
                     print(error.localizedDescription)

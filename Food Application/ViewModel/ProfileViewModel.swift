@@ -18,10 +18,10 @@ class ProfileViewModel {
     }
    static func getOrders() {
        
-        let dispatchGroup2 = DispatchGroup()
-       dispatchGroup2.enter()
-       DispatchQueue.global(qos: .userInteractive).async {
-           DataBaseService.shared.getOrders(by: AuthService.shared.currentUser?.accessibilityHint) { result in // 1
+       // let dispatchGroup2 = DispatchGroup()
+      // dispatchGroup2.enter()
+      // DispatchQueue.global(qos: .userInteractive).async {
+           DataBaseService.shared.getOrders(by: AuthService.shared.currentUser?.accessibilityHint) { result in // 3
                 switch result {
                 case .success(let orders):
                     ProfileViewModel.orders = orders
@@ -50,24 +50,25 @@ class ProfileViewModel {
                    // dispatchGroup.leave()
                 }
             }
-           dispatchGroup2.leave()
-       }
+          // dispatchGroup2.leave()
+       //}
        
        
       //
-       dispatchGroup2.wait()
+       //dispatchGroup2.wait()
        print("getOrders is finished")
-       NotificationCenter.default.post(name: NSNotification.Name("order"), object: nil)
-       print("orders")
+      // NotificationCenter.default.post(name: NSNotification.Name("order"), object: nil)
+      // print("orders")
     }
     static func getProfileImage() {
         //let concurrentQueue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
-        let dispatchGroup = DispatchGroup()
+       // let dispatchGroup = DispatchGroup()
+        print("urlString = ProfileViewModel.profile?.profileImage = \(String(describing: ProfileViewModel.profile?.profileImage))")
         guard let urlString = ProfileViewModel.profile?.profileImage, let url = URL(string: urlString) else {
             print("no url")
             return
         }
-        dispatchGroup.enter()
+        //dispatchGroup.enter()
         URLSession.shared.dataTask(with: url) {  data, response, error in
             guard let data = data, error == nil else {
                 print("error in a data or error")
@@ -76,11 +77,11 @@ class ProfileViewModel {
             let image = UIImage(data: data)
             ProfileViewModel.imageProfile = image
             print("getProfileImage almost finished")
-            dispatchGroup.leave()
-        }
-        dispatchGroup.wait()
+                //./   dispatchGroup.leave()
+        }.resume()
+        //dispatchGroup.wait()
         print("getProfileImage finished")
-        NotificationCenter.default.post(name: NSNotification.Name("getImage"), object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name("getImage"), object: nil)
     }
     static func setProfile() {
         DataBaseService.shared.setUser(user: ProfileViewModel.profile!) { result in
@@ -93,16 +94,22 @@ class ProfileViewModel {
         }
     }
    static func getProfile() {
-        DataBaseService.shared.getUser { result in
-            switch result {
-            case .success(let user):
-                print("user:\(user.address)|\(user.name)|\(user.phone)|\(user.profileImage)")
-                
-                ProfileViewModel.profile = user
-            case .failure(let error):
-                print("Error:\(error.localizedDescription)")
-            }
-        }
+       
+       let queue = DispatchQueue(label: "queue")
+       queue.sync {
+           DataBaseService.shared.getUser { result in//2
+               switch result {
+               case .success(let user):
+                   print("user:\(user.address)|\(user.name)|\(user.phone)|\(user.profileImage)")
+                   
+                   ProfileViewModel.profile = user
+                   ProfileViewModel.getProfileImage()
+               case .failure(let error):
+                   print("Error:\(error.localizedDescription)")
+               }
+           }
+       }
+        
          
     }
     

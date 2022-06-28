@@ -44,7 +44,7 @@ class DataBaseService {
         
     }
     func getUser(complition: @escaping (Result<FirebaseUser,Error>) -> () ) {
-        usersRef.document(AuthService.shared.currentUser!.uid).getDocument { docSnapShot, error in
+        usersRef.document(AuthService.shared.currentUser!.uid).getDocument { docSnapShot, error in // (2) true calling
             guard let snap = docSnapShot else { return }
             guard let data = snap.data() else { return }
             guard let username = data["name"] as? String else { return }
@@ -54,7 +54,7 @@ class DataBaseService {
             guard let profileImage = data["profileImage"] as? String else { return }
             let user = FirebaseUser(id: id!, name: username, phone: phone, address: address, profileImage: profileImage)
             print("пришедший юзер: \(user.name) | \(user.phone) | \(user.address)")
-            complition(.success(user))
+            complition(.success(user)) // пришел ответ
         }
     }
     
@@ -88,7 +88,7 @@ class DataBaseService {
     }
     func getPositions(by orderId:String,completion:@escaping(Result<[Position],Error>)->()) {
         let positionRef = ordersRef.document(orderId).collection("positions")
-        positionRef.getDocuments { qSnapshot, error in
+        positionRef.getDocuments { qSnapshot, error in // 4
             if let querySnapshot = qSnapshot {
                 var positions = [Position]()
                 for doc in querySnapshot.documents {
@@ -106,7 +106,7 @@ class DataBaseService {
     func getOrders(by userId:String?,completion:@escaping(Result<[Order],Error>)->()) {
         //string optional потому что админ будет пользоваться данной функцией
         // если будет передаваться nil то будут передаваться все заказы из базы, если не nil то мы ищем данного юзера и достаем заказы
-        ordersRef.getDocuments { qSnapShot, error in
+        ordersRef.getDocuments { qSnapShot, error in //(3) true calling
             
             if let qSnapShot = qSnapShot {
                 var orders = [Order]()
@@ -122,7 +122,8 @@ class DataBaseService {
                         }
                     }
                 }
-                completion(.success(orders))
+                completion(.success(orders)) // вернулся ответ
+                // 3-1 вернулся ответ
             } else if let error = error {
                 completion(.failure(error))
             }

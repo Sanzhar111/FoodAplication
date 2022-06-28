@@ -55,9 +55,9 @@ class CartViewController: UIViewController {
             tableView.reloadData()
             print("order.positions:\(order.positions)")
             //  ProfileViewModel.orders = CartViewModel.shared.positions wegwegwert wsrthwrrt wrh
-            let dispatchGroup = DispatchGroup()
-            dispatchGroup.enter()
-            DispatchQueue.global(qos: .userInteractive).async {
+           // let dispatchGroup = DispatchGroup()
+            //dispatchGroup.enter()
+            //DispatchQueue.global(qos: .userInteractive).async {
                 DataBaseService.shared.setOrder(order: order) { result in
                     switch result {
                     case .success(let order):
@@ -67,10 +67,10 @@ class CartViewController: UIViewController {
                         print(error.localizedDescription)
                     }
                 }
-                dispatchGroup.leave()
-            }
-            dispatchGroup.wait()
-            print("continiue working")
+            //    dispatchGroup.leave()
+           // }
+          //  dispatchGroup.wait()
+           // print("continiue working")
             //ProfileViewModel.getOrders()
             //NotificationCenter.default.post(name: NSNotification.Name("order"), object: nil)
         }

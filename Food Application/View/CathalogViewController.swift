@@ -63,6 +63,7 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             let product = products.healthy[indexPath.item]
             cell.setUp(product:product )
             return cell
+            // fuck u
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -95,7 +96,7 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             let viewModel = DetailViewModel(product: products.tasty[indexPath.item])
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
-
+            // хуууууй
         } else {
             print("selecetd 3")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
