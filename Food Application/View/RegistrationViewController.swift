@@ -25,6 +25,11 @@ class RegistrationViewController: UIViewController {
                     self.emailLabel.text = ""
                     self.passwordLabel.text = ""
                     print("user:\(String(describing: user.email))")
+                                            
+                    ProfileViewModel.getProfile()
+                    ProfileViewModel.getOrders()
+                    
+
                     
                     //
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

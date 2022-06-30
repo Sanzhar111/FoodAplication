@@ -84,6 +84,15 @@ class ProfileViewController: UIViewController {
         print("Exit")
         let alert = UIAlertController(title: "Вы действительно хотите выйти?", message: nil, preferredStyle: .alert)
         let action = UIAlertAction(title: "Да", style: .default) { action in
+            do {
+                try AuthService.shared.auth.signOut()
+            } catch let error as NSError {
+                print("Fail: \(error.localizedDescription)")
+            } catch {
+                print("Fail: \(error)")
+            }
+            ProfileViewModel.orders.removeAll()
+            ProfileViewModel.imageProfile = nil
             self.dismiss(animated: true)
         }
         let action2 = UIAlertAction(title: "Отмена", style: .cancel)

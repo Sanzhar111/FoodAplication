@@ -24,7 +24,9 @@ class CartViewModel {
         self.positions.append(position)
         self.cartPositions.append(position)
     }
-    
+    func getCartPositions() {
+        
+    }
     
     
     

@@ -23,9 +23,7 @@ class DataBaseService {
     private var imageRef:StorageReference {
         return storage.reference(forURL: "gs://pizzashop-4af9d.appspot.com/").child("avatars")
     //
-
     }
-    
     private init () {}
     func setUser(user:FirebaseUser, complition: @escaping (Result<FirebaseUser,Error>) -> () ) {//функция для записи юзера в базу данных // или же иначе говоря создание юзера в базе данных
         usersRef.document(user.id).setData(user.representation) { error in //делаем что-то с данными которые пришли с сервера
@@ -41,7 +39,6 @@ class DataBaseService {
                 complition(.success(user))
             }
         }
-        
     }
     func getUser(complition: @escaping (Result<FirebaseUser,Error>) -> () ) {
         usersRef.document(AuthService.shared.currentUser!.uid).getDocument { docSnapShot, error in // (2) true calling
@@ -58,13 +55,30 @@ class DataBaseService {
         }
     }
     
-    func setOrder(order:Order,complition:@escaping(Result<Order,Error>) -> () ) {
+    func setOrder(order:Order,
+                  complition:@escaping(Result<Order,Error>) -> ()) {
         ordersRef.document(order.id).setData(order.representation) {[weak self] error in//создается коллекция c  названием orders и уже в ней id заказа с информацией //
+            /*let orderReference = self!.dataBase.collection("orderss")//  создали коллекцию
+            
+            orderReference.document(order.id).setData(order.representation) { errorr in
+                if let errorr = errorr {
+                    complition(.failure(errorr))
+                } else {
+                    let positionReference = self!.dataBase.collection("orderss").document(order.id).collection("positions")
+                    for position in order.positions {
+                        positionReference.document(position.id).setData(position.representation) { errror in
+                            
+                        }
+                    }
+                }
+            }*/
+            
+            // создается ордер id  и туда инфомарция связанная с заказом
             // создается заказ со всеми данными начиная от позиций, заканчивая id заказчика
             if let  error = error {
                 complition(.failure(error))
             } else {
-                self?.setPositions(to: order.id, positions: order.positions) {  result in
+                self?.setPositions(to: order.id, positions: order.positions) { result in
                     switch result {
                     case .success(let positions):
                         print("positions:\(positions.count)")
@@ -78,15 +92,17 @@ class DataBaseService {
         }
     }
     func setPositions(to orderId:String,
-                     positions:[Position],compelition:@escaping(Result<[Position],Error>) -> () ) {
+                      positions:[Position],
+                      compelition:@escaping(Result<[Position],Error>) -> () ) {
         let positionRef = ordersRef.document(orderId).collection("positions")//создаем коллекцию position по orderId
-        
+        // в заказе создается коллекция positions
         for position in positions {
             positionRef.document(position.id).setData(position.representation)//  создается коллекция с именем positions и уже в ней id  позиции с информацией
         }
         compelition(.success(positions))
     }
-    func getPositions(by orderId:String,completion:@escaping(Result<[Position],Error>)->()) {
+    func getPositions(by orderId:String,
+                      completion:@escaping(Result<[Position],Error>)->()) {
         let positionRef = ordersRef.document(orderId).collection("positions")
         positionRef.getDocuments { qSnapshot, error in // 4
             if let querySnapshot = qSnapshot {
@@ -106,6 +122,7 @@ class DataBaseService {
     func getOrders(by userId:String?,completion:@escaping(Result<[Order],Error>)->()) {
         //string optional потому что админ будет пользоваться данной функцией
         // если будет передаваться nil то будут передаваться все заказы из базы, если не nil то мы ищем данного юзера и достаем заказы
+        print("DataBaseService.shared.getOrders(by: AuthService.shared.currentUser!.uid) = \(AuthService.shared.currentUser!.uid)")
         ordersRef.getDocuments { qSnapShot, error in //(3) true calling
             
             if let qSnapShot = qSnapShot {

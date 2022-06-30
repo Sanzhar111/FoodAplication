@@ -23,12 +23,12 @@ class AuthorizationViewController: UIViewController {
                 self.passwordLabel.text = ""
                 let myQueue = DispatchQueue(label: "myQueue")
                 print("case .success(let user): \(user.uid)")
-                myQueue.sync {
+                //myQueue.sync {
                     ProfileViewModel.getProfile()
-                }
-                myQueue.sync {
+                //}
+               //myQueue.sync {
                     ProfileViewModel.getOrders()
-                }
+               // }
                 //myQueue.sync {
                   //  ProfileViewModel.getProfileImage()
                // }

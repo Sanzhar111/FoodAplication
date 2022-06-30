@@ -14,11 +14,12 @@ class AuthService {
     private init() {}// приватный инициализатор гарантирует
     //то что не будет создан
     // еще один AuthService
-    private let auth = Auth.auth()// хранит ссылку на таблиуц с юзерами
+    let auth = Auth.auth()// хранит ссылку на таблиуц с юзерами
    
     // если юзер есть то он вернетсч иначе nil
     //вычисление производится в свойстве ниже
     var currentUser:User? {
+        print("auth.currentUser?.displayName=\(auth.currentUser?.displayName)")
         return auth.currentUser
     }// user exist or it can be nil when he sign up
     

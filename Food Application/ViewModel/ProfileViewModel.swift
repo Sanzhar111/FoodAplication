@@ -21,10 +21,11 @@ class ProfileViewModel {
        // let dispatchGroup2 = DispatchGroup()
       // dispatchGroup2.enter()
       // DispatchQueue.global(qos: .userInteractive).async {
-           DataBaseService.shared.getOrders(by: AuthService.shared.currentUser?.accessibilityHint) { result in // 3
+       DataBaseService.shared.getOrders(by: AuthService.shared.currentUser!.uid) { result in // 3
                 switch result {
                 case .success(let orders):
                     ProfileViewModel.orders = orders
+                    print("DataBaseService.shared.getOrders(by: AuthService.shared.currentUser!.uid) = \(AuthService.shared.currentUser!.uid)")
                     //kmlmlmlm
                     for (index,order) in self.orders.enumerated() {
     
@@ -103,6 +104,7 @@ class ProfileViewModel {
                    print("user:\(user.address)|\(user.name)|\(user.phone)|\(user.profileImage)")
                    
                    ProfileViewModel.profile = user
+                   print("ProfileViewModel.profile:\(ProfileViewModel.profile?.name)|\(ProfileViewModel.profile?.address)|\(ProfileViewModel.profile?.phone)|\(ProfileViewModel.profile?.profileImage)")
                    ProfileViewModel.getProfileImage()
                case .failure(let error):
                    print("Error:\(error.localizedDescription)")
