@@ -20,6 +20,7 @@ class CartViewModel {
         }
         return sum
     }
+    private init(){    }//here can be error
     func addPosition(_ position:Position) {
         self.positions.append(position)
         self.cartPositions.append(position)

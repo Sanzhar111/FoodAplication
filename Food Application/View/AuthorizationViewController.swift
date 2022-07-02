@@ -39,7 +39,10 @@ class AuthorizationViewController: UIViewController {
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyBoard.instantiateViewController(withIdentifier: "TabbarController")
                 vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
+                //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+                    self.present(vc, animated: true, completion: nil)
+              //  }
+                
             case .failure(let error):
                 showError(errorText: "Ошибка авторизации: \(error.localizedDescription)")
             }

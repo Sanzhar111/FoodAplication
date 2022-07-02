@@ -17,9 +17,10 @@ class CathalogViewController: UIViewController {
     @IBOutlet weak var height2: NSLayoutConstraint!
     @IBOutlet weak var height3: NSLayoutConstraint!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
-    var viewHeightVar = 0
-    var products = Menu()
-    var height = 0
+    private var viewHeightVar = 0
+    private var products = Menu()
+    private var height = 0
+    private var viewModel = CathalogViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scroller.isUserInteractionEnabled = true
@@ -40,30 +41,37 @@ class CathalogViewController: UIViewController {
         self.collectionView3.isUserInteractionEnabled = true
         self.view.layoutIfNeeded()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(function), name: NSNotification.Name("cathalog"), object: nil)
+    }
     override func viewDidLayoutSubviews() {
         scroller.isScrollEnabled = true
         heightSetup()
         scroller.contentSize = CGSize(width: scroller.contentSize.width, height:  CGFloat(self.viewHeight.constant))
+    }
+    @objc func function() {
+        self.collectionView1.reloadData()
     }
 }
 extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collectionView1 {
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "ListOfTheProductsCell", for: indexPath) as! ListOfTheProductsCell
-            let product = products.popular[indexPath.item]
+            let product = viewModel.products.popular[indexPath.item]
             cell.setUp(product:product )
             return cell
         } else if collectionView == collectionView2 {
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "ListOfTheProductsCell", for: indexPath) as! ListOfTheProductsCell
-            let product = products.tasty[indexPath.item]
-            cell.setUp(product:product )
+          //  let product = products.tasty[indexPath.item]
+           // cell.setUp(product:product )
             return cell
         } else {
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "ListOfTheProductsCell", for: indexPath) as! ListOfTheProductsCell
-            let product = products.healthy[indexPath.item]
-            cell.setUp(product:product )
+          //  let product = products.healthy[indexPath.item]
+           // cell.setUp(product:product )
             return cell
-            // fuck u
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -96,7 +104,7 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             let viewModel = DetailViewModel(product: products.tasty[indexPath.item])
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
-            // хуууууй
+            
         } else {
             print("selecetd 3")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)

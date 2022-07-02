@@ -17,7 +17,7 @@ class ListOfTheProductsCell: UICollectionViewCell {
         // Initialization code
     }
     func setUp(product:Productt) {
-        self.imageView.image = product.imageURL
+      //  self.imageView.image = product.imageURL
         self.priceLabel.text = String(product.price)
         self.nameLabel.text = String(product.title)
     }

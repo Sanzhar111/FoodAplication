@@ -24,6 +24,11 @@ class DataBaseService {
         return storage.reference(forURL: "gs://pizzashop-4af9d.appspot.com/").child("avatars")
     //
     }
+    
+    private var popularRef:CollectionReference {
+        return dataBase.collection("Popular")
+    }
+    
     private init () {}
     func setUser(user:FirebaseUser, complition: @escaping (Result<FirebaseUser,Error>) -> () ) {//функция для записи юзера в базу данных // или же иначе говоря создание юзера в базе данных
         usersRef.document(user.id).setData(user.representation) { error in //делаем что-то с данными которые пришли с сервера
@@ -58,21 +63,6 @@ class DataBaseService {
     func setOrder(order:Order,
                   complition:@escaping(Result<Order,Error>) -> ()) {
         ordersRef.document(order.id).setData(order.representation) {[weak self] error in//создается коллекция c  названием orders и уже в ней id заказа с информацией //
-            /*let orderReference = self!.dataBase.collection("orderss")//  создали коллекцию
-            
-            orderReference.document(order.id).setData(order.representation) { errorr in
-                if let errorr = errorr {
-                    complition(.failure(errorr))
-                } else {
-                    let positionReference = self!.dataBase.collection("orderss").document(order.id).collection("positions")
-                    for position in order.positions {
-                        positionReference.document(position.id).setData(position.representation) { errror in
-                            
-                        }
-                    }
-                }
-            }*/
-            
             // создается ордер id  и туда инфомарция связанная с заказом
             // создается заказ со всеми данными начиная от позиций, заканчивая id заказчика
             if let  error = error {
@@ -119,6 +109,26 @@ class DataBaseService {
             }
         }
     }
+    
+    func getPopularProducts(completion:@escaping(Result<[Productt],Error>)->()) {
+        popularRef.getDocuments { qSnapShot, error in
+            if let qSnapShot = qSnapShot {
+                var popularProducts = [Productt]()
+                for doc in qSnapShot.documents {
+                 //   popularProducts.i
+                    if let popularProduct = Productt(doc: doc) {
+                        print("popularProduct.title = \(popularProduct.title)")
+                        popularProducts.append(popularProduct)
+                    }
+
+                }
+                completion(.success(popularProducts))
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func getOrders(by userId:String?,completion:@escaping(Result<[Order],Error>)->()) {
         //string optional потому что админ будет пользоваться данной функцией
         // если будет передаваться nil то будут передаваться все заказы из базы, если не nil то мы ищем данного юзера и достаем заказы

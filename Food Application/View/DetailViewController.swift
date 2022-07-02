@@ -27,7 +27,7 @@ final class DetailViewController: UIViewController {
     var size   =  ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.imageView.image = viewModel.product.imageURL
+        //self.imageView.image = viewModel.product.imageURL
         self.nameLabel.text = viewModel.product.title
         self.priceLabel.text = String(viewModel.product.price)+"₽"
         self.descriptionLabel.text = viewModel.product.descript

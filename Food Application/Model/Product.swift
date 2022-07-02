@@ -7,17 +7,51 @@
 
 import Foundation
 import UIKit
-struct Productt {
+import Firebase
+class Productt {
     var id:String = UUID().uuidString
     var title:String
-    var imageURL:UIImage?
+    var imageURL:String?
     var price:Int
     var descript:String
     //var ordersCount:Int
     //var isReccomend:Bool
+    init(title: String, imageURL: String?, price: Int, descript:String) {
+        self.title = title
+        self.imageURL = imageURL
+        self.price = price
+        self.descript = descript
+    }
+
+    init(id:String, title: String, imageURL: String?, price: Int, descript:String) {
+        self.id = id
+        self.title = title
+        self.imageURL = imageURL
+        self.price = price
+        self.descript = descript
+    }
+    init?(doc:QueryDocumentSnapshot) {// QueryDocumentSnapshot
+        //думаю будем использовать инициализатор при получении данных из firebase
+        let data = doc.data()
+        guard let id = data["id"] as? String else { return nil }
+        guard let title = data["title"] as? String else { return nil }
+        guard let imageURL = data["imageURL"] as? String else { return nil }
+        guard let price = data["price"] as? Int else { return nil }
+        guard let descript = data["descript"] as? String else { return nil }
+        
+        
+        self.id = id
+        self.title = title
+        self.imageURL = imageURL
+        self.price = price
+        self.descript = descript
+        print("\(self.id) / \(self.title) / \(self.imageURL) / \(self.price) / \(self.descript)")
+
+
+
+    }
+
     
-
-
 }
 class Menu {
     var groups = [Group]()
@@ -25,11 +59,11 @@ class Menu {
     var tasty = [Productt]()
     var healthy = [Productt]()
     init() {
-        setup()
+        //setup()
     }
-    func setup() {
+  /*  func setup() {
         //Бургеры
-        let p1 = Productt(title: "Попул", imageURL: UIImage(named: "p1")!, price: 100, descript: "Самые Попул бургерыСамые Попул бургерыСамые Попул бургеры Самые Попул бургерыСамые Попул бургеры")
+        /*  let p1 = Productt(title: "Попул", imageURL: UIImage(named: "p1")!, price: 100, descript: "Самые Попул бургерыСамые Попул бургерыСамые Попул бургеры Самые Попул бургерыСамые Попул бургеры")
         let p2 = Productt(title: "Попул 2", imageURL: UIImage(named: "p1")!, price: 200, descript: "Самые Попул бургерыСамые Попул бургерыСамые Попул бургеры Самые Попул бургерыСамые Попул бургеры")
         let p3 = Productt(title: "Попул 3", imageURL: UIImage(named: "p1")!, price: 300, descript: "Самые Попул бургерыСамые Попул бургерыСамые Попул бургеры Самые Попул бургерыСамые Попул бургеры")
        
@@ -39,7 +73,7 @@ class Menu {
         popular.append(p3)
         popular.append(p3)
         popular.append(p3)
-        popular.append(p3)
+        popular.append(p3)*/
         
         let p4 = Productt(title: "вкусные 1", imageURL: UIImage(named: "p1")!, price: 100, descript: "Самые вкусные бургеры")
         let p5 = Productt(title: "вкусные 2", imageURL: UIImage(named: "p1")!, price: 200, descript: "Самые вкусные бургеры")
@@ -125,6 +159,6 @@ class Menu {
 */
        // groups.append(pizzaGroup)
         //groups.append(tortGroup)
-    }
+    }*/
 }
 
