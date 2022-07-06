@@ -14,6 +14,7 @@ class Productt {
     var imageURL:String?
     var price:Int
     var descript:String
+    var image:UIImage?
     //var ordersCount:Int
     //var isReccomend:Bool
     init(title: String, imageURL: String?, price: Int, descript:String) {
@@ -38,6 +39,32 @@ class Productt {
         guard let imageURL = data["imageURL"] as? String else { return nil }
         guard let price = data["price"] as? Int else { return nil }
         guard let descript = data["descript"] as? String else { return nil }
+        
+        
+     //   print("urlString = ProfileViewModel.profile?.profileImage = \(String(describing: ProfileViewModel.profile?.profileImage))")
+         
+    //    guard let url = URL(string: imageURL) else {
+    //        print("no url")
+     //       return
+     //   }
+        //dispatchGroup.enter()
+      /*  URLSession.shared.dataTask(with: url) {   data, response, error in
+            guard let data = data, error == nil else {
+                print("error in a data or error")
+                return
+            }
+            let image = UIImage(data: data)
+          //  guard let self = self else {
+              //  return
+            //}
+            DispatchQueue.main.async {
+                self.image = image
+            }
+            
+            print("getProfileImage almost finished")
+                //./   dispatchGroup.leave()
+        }.resume()
+        */
         
         
         self.id = id

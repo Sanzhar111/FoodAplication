@@ -28,6 +28,7 @@
 		8475391D283465B700CCFF90 /* Food_ApplicationUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475391C283465B700CCFF90 /* Food_ApplicationUITestsLaunchTests.swift */; };
 		8475392C28346D6E00CCFF90 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475392B28346D6E00CCFF90 /* RegistrationViewController.swift */; };
 		847DE30C286D9D8300E56B09 /* CathalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847DE30B286D9D8300E56B09 /* CathalogViewModel.swift */; };
+		847DE35828741BEF00E56B09 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 847DE35728741BEF00E56B09 /* SkeletonView */; };
 		84C0FA692844AA7E006D89C9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0FA682844AA7E006D89C9 /* DetailViewController.swift */; };
 		84C0FA792847C52C006D89C9 /* ListOfTheProductsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0FA772847C52C006D89C9 /* ListOfTheProductsCell.swift */; };
 		84C0FA7A2847C52C006D89C9 /* ListOfTheProductsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0FA782847C52C006D89C9 /* ListOfTheProductsCell.xib */; };
@@ -115,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847DE35828741BEF00E56B09 /* SkeletonView in Frameworks */,
 				84D902D5285368C300B47152 /* FirebaseAuth in Frameworks */,
 				84D902D7285368C300B47152 /* FirebaseFirestore in Frameworks */,
 				84D902D9285368C300B47152 /* FirebaseStorage in Frameworks */,
@@ -285,6 +287,7 @@
 				84D902D4285368C300B47152 /* FirebaseAuth */,
 				84D902D6285368C300B47152 /* FirebaseFirestore */,
 				84D902D8285368C300B47152 /* FirebaseStorage */,
+				847DE35728741BEF00E56B09 /* SkeletonView */,
 			);
 			productName = "Food Application";
 			productReference = 847538F6283465B400CCFF90 /* Food Application.app */;
@@ -360,6 +363,7 @@
 			mainGroup = 847538ED283465B400CCFF90;
 			packageReferences = (
 				84D902D3285368C300B47152 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				847DE35628741BEF00E56B09 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = 847538F7283465B400CCFF90 /* Products */;
 			projectDirPath = "";
@@ -784,6 +788,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		847DE35628741BEF00E56B09 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = exactVersion;
+				version = 1.9.0;
+			};
+		};
 		84D902D3285368C300B47152 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -795,6 +807,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		847DE35728741BEF00E56B09 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847DE35628741BEF00E56B09 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
 		84D902D4285368C300B47152 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 84D902D3285368C300B47152 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

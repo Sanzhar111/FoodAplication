@@ -18,7 +18,7 @@ class CathalogViewController: UIViewController {
     @IBOutlet weak var height3: NSLayoutConstraint!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     private var viewHeightVar = 0
-    private var products = Menu()
+    //private var products = Menu()
     private var height = 0
     private var viewModel = CathalogViewModel()
     override func viewDidLoad() {
@@ -39,18 +39,61 @@ class CathalogViewController: UIViewController {
         self.collectionView3.delegate = self
         self.collectionView3.dataSource = self
         self.collectionView3.isUserInteractionEnabled = true
-        self.view.layoutIfNeeded()
+        viewModel.getPopularOrders { res in
+            switch res {
+            case .success(let product):
+                
+                self.viewModel.products.popular = product
+                self.viewModel.products.healthy = product
+                self.viewModel.products.tasty = product
+                
+                for i in 0..<self.viewModel.products.popular.count {
+                    self.viewModel.getProductImage(index: i) { result in
+                        switch result {
+                        case .success(let image):
+                            self.viewModel.products.popular[i].image = image
+                            self.viewModel.products.tasty[i].image = image
+                            self.viewModel.products.healthy[i].image = image
+                            if i == self.viewModel.products.popular.count - 1 {
+                                DispatchQueue.main.async {
+                                    self.collectionView1.reloadData()
+                                    self.collectionView2.reloadData()
+                                    self.collectionView3.reloadData()
+                                    self.heightSetup()
+                                }
+                            }
+                            
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+                
+                /*self.collectionView1.reloadData()
+                self.collectionView2.reloadData()
+                self.collectionView3.reloadData()
+                self.heightSetup()*/
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                
+            }
+        }
+        //self.view.layoutIfNeeded()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(function), name: NSNotification.Name("cathalog"), object: nil)
+        self.collectionView1.reloadData()
+        self.collectionView2.reloadData()
+        self.collectionView3.reloadData()
+       // NotificationCenter.default.addObserver(self, selector: #selector(function), name: NSNotification.Name("cathalog"), object: nil)
     }
+    /*
     override func viewDidLayoutSubviews() {
         scroller.isScrollEnabled = true
         heightSetup()
         scroller.contentSize = CGSize(width: scroller.contentSize.width, height:  CGFloat(self.viewHeight.constant))
-    }
+    }*/
     @objc func function() {
         self.collectionView1.reloadData()
     }
@@ -64,23 +107,23 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             return cell
         } else if collectionView == collectionView2 {
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "ListOfTheProductsCell", for: indexPath) as! ListOfTheProductsCell
-          //  let product = products.tasty[indexPath.item]
-           // cell.setUp(product:product )
+            let product = viewModel.products.tasty[indexPath.item]
+            cell.setUp(product:product )
             return cell
         } else {
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "ListOfTheProductsCell", for: indexPath) as! ListOfTheProductsCell
-          //  let product = products.healthy[indexPath.item]
-           // cell.setUp(product:product )
+            let product = viewModel.products.healthy[indexPath.item]
+            cell.setUp(product:product )
             return cell
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
-            return products.popular.count
+            return viewModel.products.popular.count
         } else if collectionView == collectionView2 {
-            return products.tasty.count
+            return viewModel.products.tasty.count
         } else {
-            return products.healthy.count
+            return viewModel.products.healthy.count
         }
             // pop tas heah
     }
@@ -93,7 +136,7 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
         if collectionView == collectionView1 {
             print("selecetd 1")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewModel = DetailViewModel(product: products.popular[indexPath.item])
+            let viewModel = DetailViewModel(product: viewModel.products.popular[indexPath.item])
             let vc = storyboard.instantiateViewController(withIdentifier: "FullProductViewController") as! DetailViewController
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
@@ -101,7 +144,7 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             print("selecetd 2")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "FullProductViewController") as! DetailViewController
-            let viewModel = DetailViewModel(product: products.tasty[indexPath.item])
+            let viewModel = DetailViewModel(product: viewModel.products.tasty[indexPath.item])
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
             
@@ -109,7 +152,7 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             print("selecetd 3")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "FullProductViewController") as! DetailViewController
-            let viewModel = DetailViewModel(product: products.healthy[indexPath.item])
+            let viewModel = DetailViewModel(product: viewModel.products.healthy[indexPath.item])
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
 
@@ -117,11 +160,13 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
 
     }
     func heightSetup() {
+        self.view.layoutIfNeeded()
         self.height1.constant = self.collectionView1.contentSize.height
         self.height2.constant = self.collectionView2.contentSize.height
         self.height3.constant = self.collectionView3.contentSize.height
         self.viewHeightVar = Int(height1.constant + height2.constant + height3.constant)
         self.viewHeight.constant = CGFloat(viewHeightVar)
+        self.view.layoutIfNeeded()
     }
 }
 

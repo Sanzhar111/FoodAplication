@@ -72,7 +72,9 @@ class DataBaseService {
                     switch result {
                     case .success(let positions):
                         print("positions:\(positions.count)")
-                        complition(.success(order))
+                        DispatchQueue.main.async {
+                            complition(.success(order))
+                        }
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
@@ -89,7 +91,10 @@ class DataBaseService {
         for position in positions {
             positionRef.document(position.id).setData(position.representation)//  создается коллекция с именем positions и уже в ней id  позиции с информацией
         }
-        compelition(.success(positions))
+        DispatchQueue.main.async {
+            compelition(.success(positions))
+        }
+        
     }
     func getPositions(by orderId:String,
                       completion:@escaping(Result<[Position],Error>)->()) {
@@ -102,7 +107,10 @@ class DataBaseService {
                         positions.append(position)
                     }
                 }
-                completion(.success(positions))
+                DispatchQueue.main.async {
+                    completion(.success(positions))
+                }
+                
             } else if let error = error {
                 //print(error.localizedDescription)
                 completion(.failure(error))
@@ -122,7 +130,10 @@ class DataBaseService {
                     }
 
                 }
-                completion(.success(popularProducts))
+                DispatchQueue.main.async {
+                    completion(.success(popularProducts))
+                }
+                
             } else if let error = error {
                 completion(.failure(error))
             }
@@ -149,7 +160,10 @@ class DataBaseService {
                         }
                     }
                 }
-                completion(.success(orders)) // вернулся ответ
+                DispatchQueue.main.async {
+                    completion(.success(orders))
+                }
+                 // вернулся ответ
                 // 3-1 вернулся ответ
             } else if let error = error {
                 completion(.failure(error))
@@ -178,9 +192,10 @@ class DataBaseService {
                     return
                 }
                 //print("")
-                completion(.success(url))
+                DispatchQueue.main.async {
+                    completion(.success(url))
+                }
             }
-            
         }
     }
 }
