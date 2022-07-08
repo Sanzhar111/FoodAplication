@@ -11,11 +11,9 @@
 //
 //  Created by Admin on 18.05.2022.
 //
-
 import UIKit
 
 class ExampleViewController: UIViewController {
-    
     @IBOutlet weak var scroller: UIScrollView!
     @IBOutlet weak var collectionView1: UICollectionView!
     @IBOutlet weak var collectionView2: UICollectionView!
@@ -24,7 +22,6 @@ class ExampleViewController: UIViewController {
     @IBOutlet weak var height2: NSLayoutConstraint!
     @IBOutlet weak var height3: NSLayoutConstraint!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
-    
     var products = Menu()
     var height = 0
     var viewHeightVar = 0
@@ -82,23 +79,19 @@ extension ExampleViewController:UICollectionViewDelegate,UICollectionViewDataSou
         } else {
             return products.healthy.count
         }
-            // pop tas heah
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         height += 90
         return CGSize(width: (self.view.bounds.width  - 5)/2 , height: 90)// give the size for cells
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == collectionView1 {
-            print("selecetd 1")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let viewModel = DetailViewModel(product: products.popular[indexPath.item])
             let vc = storyboard.instantiateViewController(withIdentifier: "FullProductViewController") as! DetailViewController
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
         } else if collectionView == collectionView2 {
-            print("selecetd 2")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "FullProductViewController") as! DetailViewController
             let viewModel = DetailViewModel(product: products.tasty[indexPath.item])
@@ -106,13 +99,11 @@ extension ExampleViewController:UICollectionViewDelegate,UICollectionViewDataSou
             self.navigationController?.pushViewController(vc, animated: true)
 
         } else {
-            print("selecetd 3")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "FullProductViewController") as! DetailViewController
             let viewModel = DetailViewModel(product: products.healthy[indexPath.item])
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
-
         }
 
     }
@@ -124,4 +115,3 @@ extension ExampleViewController:UICollectionViewDelegate,UICollectionViewDataSou
         self.viewHeight.constant = CGFloat(viewHeightVar)
     }
 }
-

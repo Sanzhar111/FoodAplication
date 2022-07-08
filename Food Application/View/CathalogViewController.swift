@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SkeletonView
 class CathalogViewController: UIViewController {
     @IBOutlet weak var scroller: UIScrollView!
     @IBOutlet weak var collectionView1: UICollectionView!
@@ -23,6 +23,7 @@ class CathalogViewController: UIViewController {
     private var viewModel = CathalogViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         self.scroller.isUserInteractionEnabled = true
         self.collectionView1.register(UINib(nibName: "ListOfTheProductsCell", bundle: nil), forCellWithReuseIdentifier: "ListOfTheProductsCell")
         self.collectionView1.delegate = self
@@ -62,43 +63,30 @@ class CathalogViewController: UIViewController {
                                     self.heightSetup()
                                 }
                             }
-                            
                         case .failure(let error):
                             print(error.localizedDescription)
                         }
                     }
                 }
-                
-                /*self.collectionView1.reloadData()
-                self.collectionView2.reloadData()
-                self.collectionView3.reloadData()
-                self.heightSetup()*/
-                
             case .failure(let error):
                 print(error.localizedDescription)
-                
             }
         }
-        //self.view.layoutIfNeeded()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.collectionView1.reloadData()
+       self.collectionView1.reloadData()
         self.collectionView2.reloadData()
         self.collectionView3.reloadData()
-       // NotificationCenter.default.addObserver(self, selector: #selector(function), name: NSNotification.Name("cathalog"), object: nil)
     }
-    /*
-    override func viewDidLayoutSubviews() {
-        scroller.isScrollEnabled = true
-        heightSetup()
-        scroller.contentSize = CGSize(width: scroller.contentSize.width, height:  CGFloat(self.viewHeight.constant))
-    }*/
-    @objc func function() {
-        self.collectionView1.reloadData()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 }
-extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+extension CathalogViewController:UICollectionViewDelegate,SkeletonCollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "ListOfTheProductsCell"
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collectionView1 {
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "ListOfTheProductsCell", for: indexPath) as! ListOfTheProductsCell
@@ -125,12 +113,11 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
         } else {
             return viewModel.products.healthy.count
         }
-            // pop tas heah
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         height += 90
-        return CGSize(width: (self.view.bounds.width  - 5)/2 , height: 90)// give the size for cells
+        return CGSize(width: (self.view.bounds.width  - 5)/2 , height: 90)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == collectionView1 {
@@ -147,7 +134,6 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             let viewModel = DetailViewModel(product: viewModel.products.tasty[indexPath.item])
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
-            
         } else {
             print("selecetd 3")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -155,9 +141,7 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
             let viewModel = DetailViewModel(product: viewModel.products.healthy[indexPath.item])
             vc.viewModel = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
-
         }
-
     }
     func heightSetup() {
         self.view.layoutIfNeeded()
@@ -169,4 +153,3 @@ extension CathalogViewController:UICollectionViewDelegate,UICollectionViewDataSo
         self.view.layoutIfNeeded()
     }
 }
-

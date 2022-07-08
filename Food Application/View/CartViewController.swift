@@ -8,8 +8,6 @@
 import UIKit
 
 class CartViewController: UIViewController {
-    
-    //var viewModel = CartViewModel()
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var priceForAllLabel: UILabel!
     override func viewDidLoad() {
@@ -21,21 +19,18 @@ class CartViewController: UIViewController {
             priceForAllLabel.text = "0₽"
         } else {
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
-            //viewModel.costForAll
         }
         NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("load"), object: nil)
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        ProfileViewModel.getOrders()
+        ProfileViewModel.shared.getOrders()
         
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        ProfileViewModel.getOrders()
+        ProfileViewModel.shared.getOrders()
     }
-    
     
     @objc func reloadInformation() {
         self.tableView.reloadData()
@@ -48,31 +43,21 @@ class CartViewController: UIViewController {
             alertContoller.addAction(alerAction)
             self.present(alertContoller, animated: true)
         } else {
-            var order = Order(userId: AuthService.shared.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue)
+            var order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue)
             order.positions = CartViewModel.shared.cartPositions
             CartViewModel.shared.cartPositions.removeAll()
             priceForAllLabel.text = "0₽"
             tableView.reloadData()
             print("order.positions:\(order.positions)")
-            //  ProfileViewModel.orders = CartViewModel.shared.positions wegwegwert wsrthwrrt wrh
-           // let dispatchGroup = DispatchGroup()
-            //dispatchGroup.enter()
-            //DispatchQueue.global(qos: .userInteractive).async {
                 DataBaseService.shared.setOrder(order: order) { result in
                     switch result {
                     case .success(let order):
                         print("orders:\(order.cost)")
-                        ProfileViewModel.getOrders()
+                        ProfileViewModel.shared.getOrders()
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
                 }
-            //    dispatchGroup.leave()
-           // }
-          //  dispatchGroup.wait()
-           // print("continiue working")
-            //ProfileViewModel.getOrders()
-            //NotificationCenter.default.post(name: NSNotification.Name("order"), object: nil)
         }
     }
     @IBAction func cleanButtonIsTapped(_ sender: Any) {
@@ -95,7 +80,6 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource {
         } else {
             return CartViewModel.shared.cartPositions.count
         }
-        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PositionCollectionViewCell", for: indexPath) as! PositionCollectionViewCell
@@ -109,20 +93,15 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.beginUpdates()
             print("Было: \(CartViewModel.shared.positions.count)")
             CartViewModel.shared.cartPositions.remove(at: indexPath.row)
-            //    CartViewModel.shared.positions.removeAll { pos in
-            //        pos.product.title == posit
-            //   }
             tableView.deleteRows(at: [indexPath], with: .fade)
             print("Стало: \(CartViewModel.shared.cartPositions.count)")
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
             tableView.endUpdates()
         }
     }
-    
 }

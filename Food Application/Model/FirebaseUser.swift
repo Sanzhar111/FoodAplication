@@ -4,10 +4,8 @@
 //
 //  Created by Admin on 11.06.2022.
 //
-
 import Foundation
 import UIKit
-
 
 struct FirebaseUser {
     var id : String
@@ -15,7 +13,6 @@ struct FirebaseUser {
     var phone : Int
     var address:String
     var profileImage:String
-    
     var representation:[String:Any] {
         var repres = [String:Any]()
         repres["id"] = self.id

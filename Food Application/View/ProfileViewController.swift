@@ -4,13 +4,11 @@
 //
 //  Created by Admin on 18.05.2022.
 //
-
 import UIKit
 import Photos
 import PhotosUI
+
 class ProfileViewController: UIViewController {
-    
-    
     @IBOutlet weak var ordersTableView: UITableView!
     @IBOutlet weak var profilePhotoImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -21,8 +19,10 @@ class ProfileViewController: UIViewController {
     let button3 = UIButton(type: .custom)
     var isClickable = false
     var maxnumberCount = 11
+    private let navigationManager = NavigationManager()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         ordersTableView.delegate = self
         ordersTableView.dataSource = self
         ordersTableView.register(UINib(nibName: "OrderTableViewCell", bundle: nil), forCellReuseIdentifier: "OrderTableViewCell")
@@ -31,31 +31,23 @@ class ProfileViewController: UIViewController {
         numberTextField.delegate = self
         addressTextField.delegate = self
         
-        nameTextField.text = ProfileViewModel.profile?.name
-        numberTextField.text = String(ProfileViewModel.profile!.phone)
-        addressTextField.text = ProfileViewModel.profile?.address
+        nameTextField.text = ProfileViewModel.shared.profile?.name
+        numberTextField.text = String(ProfileViewModel.shared.profile!.phone)
+        addressTextField.text = ProfileViewModel.shared.profile?.address
         
         numberTextField.keyboardType = .numbersAndPunctuation
         
         setButton(button: button, tag: 1, textField: nameTextField)
         setButton(button: button2, tag: 2, textField: numberTextField)
         setButton(button: button3, tag: 3, textField: addressTextField)
-        //profilePhotoImageView.image = ProfileViewModel.imageProfile
-        //NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("order"), object: nil)
-        // getImage
-      //  NotificationCenter.default.addObserver(self, selector: #selector(reloadImage), name: NSNotification.Name("getImage"), object: nil)
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      //  ProfileViewModel.getProfileImage()
-        profilePhotoImageView.image = ProfileViewModel.imageProfile
+        profilePhotoImageView.image = ProfileViewModel.shared.imageProfile
         self.ordersTableView.reloadData()
-        
     }
-    
     @objc func reloadImage() {
-        profilePhotoImageView.image = ProfileViewModel.imageProfile
+        profilePhotoImageView.image = ProfileViewModel.shared.imageProfile
     }
     @objc func reloadInformation() {
         self.ordersTableView.reloadData()
@@ -91,14 +83,21 @@ class ProfileViewController: UIViewController {
             } catch {
                 print("Fail: \(error)")
             }
-            ProfileViewModel.orders.removeAll()
-            ProfileViewModel.imageProfile = nil
-            self.dismiss(animated: true)
+            ProfileViewModel.shared.orders.removeAll()
+            ProfileViewModel.shared.imageProfile = nil
+            self.showInitialScreen()
         }
         let action2 = UIAlertAction(title: "Отмена", style: .cancel)
         alert.addAction(action)
         alert.addAction(action2)
         present(alert, animated: true)
+    }
+     func showInitialScreen() {
+        if AuthService.shared.auth.currentUser != nil {
+            navigationManager.show(screen: .mainApp, inController: self)
+        } else {
+            navigationManager.show(screen: .onboarding, inController: self)
+        }
     }
     @IBAction func setImageButtonIsTapped(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -125,12 +124,12 @@ class ProfileViewController: UIViewController {
 }
 extension ProfileViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print( ProfileViewModel.orders.count)
-        return ProfileViewModel.orders.count
+        print( ProfileViewModel.shared.orders.count)
+        return ProfileViewModel.shared.orders.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTableViewCell", for: indexPath) as! OrderTableViewCell
-        cell.setup(order: ProfileViewModel.orders[indexPath.row])
+        cell.setup(order: ProfileViewModel.shared.orders[indexPath.row])
         return cell
     }
 }
@@ -150,17 +149,17 @@ extension ProfileViewController : UITextFieldDelegate {
         if textField == nameTextField {
             nameTextField.resignFirstResponder()
             print("the text is : \(String(describing: nameTextField.text))")
-            ProfileViewModel.profile!.name = nameTextField.text!
-            ProfileViewModel.setProfile()
+            ProfileViewModel.shared.profile!.name = nameTextField.text!
+            ProfileViewModel.shared.setProfile()
             isClickable = false
         } else if textField == numberTextField {
             numberTextField.resignFirstResponder()
-            ProfileViewModel.profile!.phone = Int(numberTextField.text ?? "0") ?? 0 // wqfqefnnlqeknlkqjwnlkqnlkqnglk
-            ProfileViewModel.setProfile()
+            ProfileViewModel.shared.profile!.phone = Int(numberTextField.text ?? "0") ?? 0
+            ProfileViewModel.shared.setProfile()
             isClickable = false
         } else {
-            ProfileViewModel.profile?.address = addressTextField.text!
-            ProfileViewModel.setProfile()
+            ProfileViewModel.shared.profile?.address = addressTextField.text!
+            ProfileViewModel.shared.setProfile()
             addressTextField.resignFirstResponder()
         }
         return true
@@ -185,21 +184,21 @@ extension ProfileViewController:PHPickerViewControllerDelegate {
                 guard let image = reading as? UIImage, error == nil else {
                     return
                 }
-                DispatchQueue.main.async {//*
+                DispatchQueue.main.async {
                     self.profilePhotoImageView.image = image
-                    DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
+                    DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.auth.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
                         switch res {
                         case .success(let url):
                             let urtString = url.absoluteString
-                            ProfileViewModel.profile?.profileImage = urtString
-                            ProfileViewModel.setProfile()
+                            ProfileViewModel.shared.profile?.profileImage = urtString
+                            ProfileViewModel.shared.setProfile()
                             print("the url:\(urtString)")
                         case .failure(let error):
                             print("error is exactly here")
                             print(error.localizedDescription)
                         }
                     }
-                }//*
+                }
             }
         }
     }
@@ -208,28 +207,17 @@ extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationCon
     //Taking a photo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-          //  DispatchQueue.main.async { [self] in
                 self.profilePhotoImageView.image = image
-                ProfileViewModel.imageProfile = image
-           // }
-            
-            
-            DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
+            ProfileViewModel.shared.imageProfile = image
+            DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.auth.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
                 switch res {
                 case .success(let url):
                     let urtString = url.absoluteString
                     print("ursString = \(urtString)")
-                    ProfileViewModel.profile?.profileImage = urtString
-                    print("Here is ProfileViewModel.profile?.profileImage = \(String(describing: ProfileViewModel.profile?.profileImage)) ")
-                    ProfileViewModel.setProfile()
+                    ProfileViewModel.shared.profile?.profileImage = urtString
+                    print("Here is ProfileViewModel.profile?.profileImage = \(String(describing: ProfileViewModel.shared.profile?.profileImage)) ")
+                    ProfileViewModel.shared.setProfile()
                     print("the url:\(urtString)")
-                    
-                    // https://firebasestorage.googleapis.com/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
-                    
-                    // https://firebasestorage.googleapis.com:443/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
-                    
-                    // https://firebasestorage.googleapis.com/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
-                    // https://firebasestorage.googleapis.com:443/v0/b/pizzashop-4af9d.appspot.com/o/avatars%2FzaSxKjIdKjOZ5F283mFDen39L3J2?alt=media&token=3806c1c3-d8d9-4f87-889c-a10aa2120618
                 case .failure(let error):
                     print("error is exactly here")
                     print(error.localizedDescription)
@@ -241,5 +229,4 @@ extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
-    
 }

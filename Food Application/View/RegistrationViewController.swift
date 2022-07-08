@@ -18,25 +18,17 @@ class RegistrationViewController: UIViewController {
         if validatifonFields != nil {
             showError(errorText: validatifonFields!)
         } else {
-        
-            AuthService.shared.signUp(email: self.emailLabel.text!, password: self.passwordLabel.text!) { [self] result in // я хочу создать юзера
+            AuthService.shared.signUp(email: self.emailLabel.text!, password: self.passwordLabel.text!) { [self] result in 
                 switch result {
                 case .success(let user):
                     self.emailLabel.text = ""
                     self.passwordLabel.text = ""
-                    print("user:\(String(describing: user.email))")
-                                            
-                    ProfileViewModel.getProfile()
-                    ProfileViewModel.getOrders()
-                    
-
-                    
-                    //
+                    ProfileViewModel.shared.getProfile()
+                    ProfileViewModel.shared.getOrders()
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyBoard.instantiateViewController(withIdentifier: "TabbarController")
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
-                    
                 case .failure(let error) : showError(errorText: "Ошибка регистрации \(error.localizedDescription)")
                 }
            }

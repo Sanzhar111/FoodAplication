@@ -13,7 +13,6 @@ struct Order {
     var positions = [Position]()
     var date:Date
     var status:String
-
     var cost:Int { // Вычисляемое свойство
         var sum = 0
         for pos in positions {
@@ -37,9 +36,7 @@ struct Order {
         self.status = status
     }
     init?(doc:QueryDocumentSnapshot) {// QueryDocumentSnapshot
-        //думаю будем использовать инициализатор при получении данных из firebase
         let data = doc.data()
-        
         guard let id = data["id"] as? String else { return nil }
         guard let userId = data["userId"] as? String else { return nil }
         guard let date = data["date"] as? Timestamp else { return nil }

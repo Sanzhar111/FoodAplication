@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ptG-WP-hiG">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -9,6 +9,21 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Loading View Controller-->
+        <scene sceneID="9g6-3D-sep">
+            <objects>
+                <viewController id="ptG-WP-hiG" customClass="LoadingViewController" customModule="Food_Application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0eo-MZ-zqU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="kfJ-7K-AiB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x26-oK-XFu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1917" y="74"/>
+        </scene>
         <!--Authorization View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -178,19 +193,19 @@
             </objects>
             <point key="canvasLocation" x="-54" y="74"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="kdI-4T-P4Y">
             <objects>
-                <tabBarController storyboardIdentifier="TabbarController" id="cBN-FY-1g3" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabbarController" id="cBN-FY-1g3" customClass="MainTabBarViewController" customModule="Food_Application" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="she-1C-9s9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="84a-E6-EDf" kind="relationship" relationship="viewControllers" id="LeX-PO-ahR"/>
-                        <segue destination="4Sf-4t-hge" kind="relationship" relationship="viewControllers" id="JQs-7u-JUE"/>
-                        <segue destination="BD7-YP-hHl" kind="relationship" relationship="viewControllers" id="yiL-e9-Diw"/>
+                        <segue destination="84a-E6-EDf" kind="relationship" relationship="viewControllers" id="8Eu-55-tx3"/>
+                        <segue destination="4Sf-4t-hge" kind="relationship" relationship="viewControllers" id="6hT-dr-6S1"/>
+                        <segue destination="BD7-YP-hHl" kind="relationship" relationship="viewControllers" id="AG2-GM-2qm"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yRa-QH-eCc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -436,16 +451,10 @@
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GPb-XW-DdP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PPd-jo-D1a">
-                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </collectionViewCellContentView>
-                                                    </collectionViewCell>
-                                                </cells>
+                                                <cells/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вкусные" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KI7-WM-9xg">
                                                 <rect key="frame" x="16" y="203" width="382" height="26"/>
@@ -465,16 +474,10 @@
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="QrR-mQ-8s0">
-                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bg3-n1-DgF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </collectionViewCellContentView>
-                                                    </collectionViewCell>
-                                                </cells>
+                                                <cells/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Диетические" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afg-Hr-DOu">
                                                 <rect key="frame" x="16" y="389" width="382" height="26"/>
@@ -494,16 +497,10 @@
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="l68-Dz-bes">
-                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xbj-ew-2XN">
-                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </collectionViewCellContentView>
-                                                    </collectionViewCell>
-                                                </cells>
+                                                <cells/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </collectionView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -681,6 +678,44 @@
             </objects>
             <point key="canvasLocation" x="3842.0289855072465" y="-554.46428571428567"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="rRA-lm-2GO">
+            <objects>
+                <viewController storyboardIdentifier="SplashViewController" id="Htx-cw-yYo" customClass="SplashViewController" customModule="Food_Application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0MF-rs-C7k">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black" translatesAutoresizingMaskIntoConstraints="NO" id="u4I-NZ-vJ0">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="foodLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aSv-Ms-XdP">
+                                <rect key="frame" x="132" y="373" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="0Iy-Nv-KRq"/>
+                                    <constraint firstAttribute="height" constant="150" id="QjC-Qt-eSd"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="UvV-eQ-wTW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aSv-Ms-XdP" firstAttribute="centerX" secondItem="0MF-rs-C7k" secondAttribute="centerX" id="1Ao-NL-Iwc"/>
+                            <constraint firstItem="aSv-Ms-XdP" firstAttribute="centerY" secondItem="0MF-rs-C7k" secondAttribute="centerY" id="HTE-Ja-JYV"/>
+                            <constraint firstItem="UvV-eQ-wTW" firstAttribute="trailing" secondItem="u4I-NZ-vJ0" secondAttribute="trailing" id="TYw-8z-AY2"/>
+                            <constraint firstItem="u4I-NZ-vJ0" firstAttribute="top" secondItem="UvV-eQ-wTW" secondAttribute="top" constant="-44" id="ao4-Oy-Sbc"/>
+                            <constraint firstItem="UvV-eQ-wTW" firstAttribute="bottom" secondItem="u4I-NZ-vJ0" secondAttribute="bottom" constant="-34" id="fje-ij-2F7"/>
+                            <constraint firstItem="u4I-NZ-vJ0" firstAttribute="leading" secondItem="UvV-eQ-wTW" secondAttribute="leading" id="sKc-bt-eOg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logoImageView" destination="aSv-Ms-XdP" id="S4e-F5-ytD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N5Q-G9-du4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3642" y="65"/>
+        </scene>
         <!--Example View Controller-->
         <scene sceneID="mTc-q2-b7d">
             <objects>
@@ -832,7 +867,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fE7-k4-eBI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1854" y="65"/>
+            <point key="canvasLocation" x="-1746" y="-1793"/>
         </scene>
         <!--Item 1-->
         <scene sceneID="pQW-jY-JBK">
@@ -894,7 +929,9 @@
     </scenes>
     <resources>
         <image name="Pizza" width="1024" height="683"/>
+        <image name="black" width="1920" height="1440"/>
         <image name="cart.circle" catalog="system" width="128" height="121"/>
+        <image name="foodLogo" width="499" height="499"/>
         <image name="human" width="840" height="572"/>
         <image name="menucard" catalog="system" width="107" height="128"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>

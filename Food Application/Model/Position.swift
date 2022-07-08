@@ -4,9 +4,9 @@
 //
 //  Created by Admin on 04.06.2022.
 //
-
 import Foundation
 import FirebaseFirestore
+
 struct Position {
     var id:String
     var product:Productt
@@ -36,10 +36,8 @@ struct Position {
         guard let price = data["price"] as? Int else { return nil }
         let product:Productt = Productt(id: "", title: title, imageURL: nil, price: price, descript: "")
         guard let count = data["count"] as? Int else { return nil }
-        
         self.id = id
         self.product = product
         self.count = count
-
     }
 }
