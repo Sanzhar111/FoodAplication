@@ -204,13 +204,56 @@
                     </tabBar>
                     <connections>
                         <segue destination="84a-E6-EDf" kind="relationship" relationship="viewControllers" id="8Eu-55-tx3"/>
-                        <segue destination="4Sf-4t-hge" kind="relationship" relationship="viewControllers" id="6hT-dr-6S1"/>
                         <segue destination="BD7-YP-hHl" kind="relationship" relationship="viewControllers" id="AG2-GM-2qm"/>
+                        <segue destination="r58-IZ-prN" kind="relationship" relationship="viewControllers" id="h0Q-1L-7XC"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yRa-QH-eCc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1120" y="74"/>
+        </scene>
+        <!--Cart View Controller-->
+        <scene sceneID="Dzu-ud-ref">
+            <objects>
+                <viewController id="DjF-v3-2rX" customClass="CartViewController" customModule="Food_Application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="f2g-tO-x23">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6X-GY-wJi">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wbn-ti-xW8">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Wbn-ti-xW8" secondAttribute="trailing" id="6a0-7d-NZE"/>
+                                    <constraint firstItem="Wbn-ti-xW8" firstAttribute="leading" secondItem="m6X-GY-wJi" secondAttribute="leading" id="LnZ-Je-Tya"/>
+                                    <constraint firstAttribute="bottom" secondItem="Wbn-ti-xW8" secondAttribute="bottom" id="PPm-2J-6zc"/>
+                                    <constraint firstItem="Wbn-ti-xW8" firstAttribute="height" secondItem="m6X-GY-wJi" secondAttribute="height" id="S8q-Nc-cl4"/>
+                                    <constraint firstItem="Wbn-ti-xW8" firstAttribute="width" secondItem="m6X-GY-wJi" secondAttribute="width" id="U2L-3O-wcK"/>
+                                    <constraint firstItem="Wbn-ti-xW8" firstAttribute="top" secondItem="m6X-GY-wJi" secondAttribute="top" id="iHr-Z7-om8"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="wB0-RT-UWc"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="TIt-vi-1lo"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eCr-x1-RNO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="m6X-GY-wJi" firstAttribute="top" secondItem="eCr-x1-RNO" secondAttribute="top" id="DTW-vM-FaJ"/>
+                            <constraint firstItem="eCr-x1-RNO" firstAttribute="bottom" secondItem="m6X-GY-wJi" secondAttribute="bottom" id="E1t-a3-ftf"/>
+                            <constraint firstItem="m6X-GY-wJi" firstAttribute="leading" secondItem="eCr-x1-RNO" secondAttribute="leading" id="VnO-6W-H9y"/>
+                            <constraint firstItem="eCr-x1-RNO" firstAttribute="trailing" secondItem="m6X-GY-wJi" secondAttribute="trailing" id="vKQ-BB-JP2"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="wb2-gp-hAv"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kDf-on-qi9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3070" y="74"/>
         </scene>
         <!--Cart View Controller-->
         <scene sceneID="V5f-nZ-GdW">
@@ -221,44 +264,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="403-fh-tIh">
-                                <rect key="frame" x="0.0" y="88" width="414" height="647"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="696"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Итого:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Hb-5q-cYU">
-                                <rect key="frame" x="0.0" y="731" width="52" height="21"/>
+                                <rect key="frame" x="0.0" y="780" width="52" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j5r-dy-BG6">
-                                <rect key="frame" x="165" y="768" width="244" height="50"/>
+                                <rect key="frame" x="165" y="817" width="244" height="50"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="244" id="Yfo-gv-VLt"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Заказать"/>
-                                <connections>
-                                    <action selector="orderButtonIsTapped:" destination="PFx-UM-BV9" eventType="touchUpInside" id="sul-6M-REZ"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Цена" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho8-oN-rJR">
-                                <rect key="frame" x="368" y="731" width="41" height="21"/>
+                                <rect key="frame" x="368" y="780" width="41" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpV-yX-0UB">
-                                <rect key="frame" x="5" y="768" width="147" height="50"/>
+                                <rect key="frame" x="5" y="817" width="147" height="50"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hqs-1I-nH7"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Очистить корзину"/>
-                                <connections>
-                                    <action selector="cleanButtonIsTapped:" destination="PFx-UM-BV9" eventType="touchUpInside" id="htS-Ou-i9p"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="J5Y-33-gtE"/>
@@ -281,14 +318,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="RZa-Ve-pNQ"/>
-                    <connections>
-                        <outlet property="priceForAllLabel" destination="ho8-oN-rJR" id="ZkL-ws-lbk"/>
-                        <outlet property="tableView" destination="403-fh-tIh" id="aER-dh-zZv"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8YL-2Q-gOt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3069.5652173913045" y="133.92857142857142"/>
+            <point key="canvasLocation" x="5905.7971014492759" y="119.86607142857142"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="zsb-HV-VeC">
@@ -417,7 +450,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H63-e8-M2q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3069.5652173913045" y="889.95535714285711"/>
+            <point key="canvasLocation" x="3070" y="802"/>
         </scene>
         <!--Cathalog View Controller-->
         <scene sceneID="b10-2l-c4b">
@@ -561,7 +594,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tLl-wn-lI5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3070" y="-554"/>
+            <point key="canvasLocation" x="3070" y="-607"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="xj0-hJ-IqO">
@@ -676,7 +709,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr6-9e-VFy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3842.0289855072465" y="-554.46428571428567"/>
+            <point key="canvasLocation" x="4006" y="-607"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="rRA-lm-2GO">
@@ -873,7 +906,7 @@
         <scene sceneID="pQW-jY-JBK">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="84a-E6-EDf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 1" image="menucard" catalog="system" id="dzw-O2-0RD"/>
+                    <tabBarItem key="tabBarItem" title="Item 1" image="menucard.fill" catalog="system" id="dzw-O2-0RD"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eeR-MG-0zS">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -886,7 +919,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i1Y-Ur-qPQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2121.739130434783" y="-554.46428571428567"/>
+            <point key="canvasLocation" x="2099" y="-607"/>
         </scene>
         <!--Item 2-->
         <scene sceneID="rsR-F3-XpX">
@@ -905,13 +938,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFd-Ej-NxP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2161" y="133"/>
+            <point key="canvasLocation" x="4963.768115942029" y="119.86607142857142"/>
         </scene>
-        <!--Item-->
+        <!--Profile-->
         <scene sceneID="KG1-Ka-pPb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BD7-YP-hHl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="person.fill" catalog="system" id="M3H-ZJ-dip"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="M3H-ZJ-dip"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SwM-Uz-amB">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -924,16 +957,36 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mcc-TB-oOr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2161" y="890"/>
+            <point key="canvasLocation" x="2099" y="802"/>
+        </scene>
+        <!--Cart-->
+        <scene sceneID="fRw-jQ-bXa">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="r58-IZ-prN" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Cart" image="cart.fill" catalog="system" id="7qD-n0-B2Y"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Cp7-mk-Jw6">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="DjF-v3-2rX" kind="relationship" relationship="rootViewController" id="ISF-vM-xIs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uY3-Uy-Tzg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2099" y="74"/>
         </scene>
     </scenes>
     <resources>
         <image name="Pizza" width="1024" height="683"/>
         <image name="black" width="1920" height="1440"/>
         <image name="cart.circle" catalog="system" width="128" height="121"/>
+        <image name="cart.fill" catalog="system" width="128" height="102"/>
         <image name="foodLogo" width="499" height="499"/>
         <image name="human" width="840" height="572"/>
-        <image name="menucard" catalog="system" width="107" height="128"/>
+        <image name="menucard.fill" catalog="system" width="106" height="128"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

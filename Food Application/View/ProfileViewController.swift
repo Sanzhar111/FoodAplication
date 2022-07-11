@@ -32,7 +32,12 @@ class ProfileViewController: UIViewController {
         addressTextField.delegate = self
         
         nameTextField.text = ProfileViewModel.shared.profile?.name
-        numberTextField.text = String(ProfileViewModel.shared.profile!.phone)
+        if String(ProfileViewModel.shared.profile!.phone) == "0" {
+            numberTextField.text = ""
+        } else {
+            numberTextField.text = String(ProfileViewModel.shared.profile!.phone)
+        }
+        
         addressTextField.text = ProfileViewModel.shared.profile?.address
         
         numberTextField.keyboardType = .numbersAndPunctuation
