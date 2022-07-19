@@ -8,11 +8,28 @@ import UIKit
 class RegistrationViewController: UIViewController {
     @IBOutlet weak var emailLabel: UITextField!
     @IBOutlet weak var passwordLabel: UITextField!
+    @IBOutlet weak var registrationButton: UIButton!
+    @IBOutlet weak var authorizationButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailLabel.delegate = self
-        passwordLabel.delegate = self
+        setUpElements()
     }
+    func setUpElements() {
+        emailLabel.delegate = self
+        emailLabel.attributedPlaceholder = NSAttributedString(string: "Email",
+                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 0.6471, green: 0.6235, blue: 0.6235, alpha: 1)])
+        emailLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
+        passwordLabel.delegate = self
+        passwordLabel.attributedPlaceholder = NSAttributedString(string: "Password",
+                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 0.6471, green: 0.6235, blue: 0.6235, alpha: 1)])
+        passwordLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
+        Utilities.styleTextField(emailLabel)
+        Utilities.styleTextField(passwordLabel)
+        Utilities.styleFilledButton(authorizationButton)
+        Utilities.styleFilledButton(registrationButton)
+        
+    }
+
     @IBAction func registrationTapped(_ sender: Any) {
         let validatifonFields = AuthService.shared.validateFields(password: passwordLabel.text ?? "", email: emailLabel.text ?? "")
         if validatifonFields != nil {
@@ -38,7 +55,7 @@ class RegistrationViewController: UIViewController {
         let story = UIStoryboard(name: "Main", bundle: nil)
         let newVC = story.instantiateViewController(withIdentifier: "AuthorizationViewController") as! AuthorizationViewController
         newVC.modalPresentationStyle = .fullScreen
-        self.present(newVC, animated: true, completion: nil)
+        self.present(newVC, animated: false, completion: nil)
     }
     func showError (errorText:String) {
         let alertController = UIAlertController(title: "Error", message: errorText, preferredStyle: .alert)

@@ -16,5 +16,9 @@ class PositionCollectionViewCell: UITableViewCell {
         self.nameProductLabel.text = position.product.title
         self.countLabel.text = String(position.count)
         self.priceLabel.text = String(position.cost) + "₽"
+        self.nameProductLabel.sizeToFit()
+        self.countLabel.sizeToFit()
+        self.priceLabel.sizeToFit()
+        self.nameProductLabel.lineBreakMode = .byWordWrapping
     }
 }

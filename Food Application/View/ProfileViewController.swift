@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak var exitButton: UIButton!
     let button = UIButton(type: .custom)
     let button2 = UIButton(type: .custom)
     let button3 = UIButton(type: .custom)
@@ -45,6 +46,7 @@ class ProfileViewController: UIViewController {
         setButton(button: button, tag: 1, textField: nameTextField)
         setButton(button: button2, tag: 2, textField: numberTextField)
         setButton(button: button3, tag: 3, textField: addressTextField)
+        Utilities.styleFilledButton(exitButton)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

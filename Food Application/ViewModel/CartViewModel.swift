@@ -7,11 +7,10 @@
 
 import Foundation
 
-class CartViewModel {
-    
+class CartViewModel {    
     static let shared = CartViewModel()
-    public var positions = [Position]()
-    public var cartPositions = [Position]()
+    var positions = [Position]()
+    var cartPositions = [Position]()
     var costForAll : Int {// вычисляемое свойство отвечающее за то
         // чтоб узнать стоимоть всей корзины
         var sum = 0

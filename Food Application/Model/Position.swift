@@ -7,7 +7,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct Position {
+struct Position:Equatable {
     var id:String
     var product:Productt
     var count:Int
@@ -39,5 +39,8 @@ struct Position {
         self.id = id
         self.product = product
         self.count = count
+    }
+    static func == (lhs: Position, rhs: Position) -> Bool {
+        return lhs.product.title == rhs.product.title
     }
 }

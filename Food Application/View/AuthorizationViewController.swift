@@ -8,10 +8,26 @@ import UIKit
 class AuthorizationViewController: UIViewController {
     @IBOutlet weak var emailLabel: UITextField!
     @IBOutlet weak var passwordLabel: UITextField!
+    @IBOutlet weak var authorizationButton: UIButton!
+    @IBOutlet weak var registrationButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpElements()
+    }
+    func setUpElements() {
         emailLabel.delegate = self
+        emailLabel.attributedPlaceholder = NSAttributedString(string: "Email",
+                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 0.6471, green: 0.6235, blue: 0.6235, alpha: 1)])
+        emailLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
         passwordLabel.delegate = self
+        passwordLabel.attributedPlaceholder = NSAttributedString(string: "Password",
+                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 0.6471, green: 0.6235, blue: 0.6235, alpha: 1)])
+        passwordLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
+        Utilities.styleTextField(emailLabel)
+        Utilities.styleTextField(passwordLabel)
+        Utilities.styleFilledButton(authorizationButton)
+        Utilities.styleFilledButton(registrationButton)
+        
     }
     @IBAction func AuthorisationTapped(_ sender: Any) {
         AuthService.shared.signIn(email: emailLabel.text ?? "", password: passwordLabel.text ?? "") { [self] result in 

@@ -53,6 +53,9 @@
 		84D902E028547F8300B47152 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D902DF28547F8300B47152 /* FirebaseUser.swift */; };
 		84D902E22854808300B47152 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D902E12854808300B47152 /* DatabaseService.swift */; };
 		84D902E42855CB0800B47152 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D902E32855CB0800B47152 /* ProfileViewModel.swift */; };
+		84E7E5A9287EABB500ACE20F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7E5A8287EABB500ACE20F /* Utilities.swift */; };
+		84E7E5AC2884337100ACE20F /* ProductListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7E5AA2884336F00ACE20F /* ProductListCollectionViewCell.swift */; };
+		84E7E5AD2884337100ACE20F /* ProductListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E7E5AB2884337000ACE20F /* ProductListCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +122,9 @@
 		84D902DF28547F8300B47152 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		84D902E12854808300B47152 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		84D902E32855CB0800B47152 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		84E7E5A8287EABB500ACE20F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		84E7E5AA2884336F00ACE20F /* ProductListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListCollectionViewCell.swift; sourceTree = "<group>"; };
+		84E7E5AB2884337000ACE20F /* ProductListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductListCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +214,7 @@
 				842251272837F4D90021EB9A /* View */,
 				84C0FA7B284A389A006D89C9 /* ViewModel */,
 				84C0FA762847C4C9006D89C9 /* Componets */,
+				84E7E5A7287EAB7000ACE20F /* Utilities */,
 				84753902283465B700CCFF90 /* Assets.xcassets */,
 				84753904283465B700CCFF90 /* LaunchScreen.storyboard */,
 				84D902D12853629900B47152 /* GoogleService-Info.plist */,
@@ -242,6 +249,8 @@
 				84C0FA84284DCBE7006D89C9 /* PositionCollectionViewCell.xib */,
 				844A2F102859EFA4007D4AAE /* OrderTableViewCell.swift */,
 				844A2F112859EFA4007D4AAE /* OrderTableViewCell.xib */,
+				84E7E5AA2884336F00ACE20F /* ProductListCollectionViewCell.swift */,
+				84E7E5AB2884337000ACE20F /* ProductListCollectionViewCell.xib */,
 				8403B3DA284F219200DC9392 /* Extensions */,
 			);
 			path = Componets;
@@ -280,6 +289,14 @@
 				849CD0612877231F0032619E /* NavigationManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		84E7E5A7287EAB7000ACE20F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				84E7E5A8287EABB500ACE20F /* Utilities.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,6 +415,7 @@
 			files = (
 				84753906283465B700CCFF90 /* LaunchScreen.storyboard in Resources */,
 				84C0FA86284DCBE7006D89C9 /* PositionCollectionViewCell.xib in Resources */,
+				84E7E5AD2884337100ACE20F /* ProductListCollectionViewCell.xib in Resources */,
 				84753903283465B700CCFF90 /* Assets.xcassets in Resources */,
 				84C0FA7A2847C52C006D89C9 /* ListOfTheProductsCell.xib in Resources */,
 				84753901283465B400CCFF90 /* Main.storyboard in Resources */,
@@ -451,11 +469,13 @@
 				849CD0582876F02F0032619E /* SplashViewController.swift in Sources */,
 				8416959F283D2F8A00506A9D /* Product.swift in Sources */,
 				84D14F0428576E1A00C52832 /* OrderStatus.swift in Sources */,
+				84E7E5A9287EABB500ACE20F /* Utilities.swift in Sources */,
 				84D14F022857592700C52832 /* Order.swift in Sources */,
 				84C0FA792847C52C006D89C9 /* ListOfTheProductsCell.swift in Sources */,
 				84D902E028547F8300B47152 /* FirebaseUser.swift in Sources */,
 				847538FC283465B400CCFF90 /* SceneDelegate.swift in Sources */,
 				849CD0662878235D0032619E /* Menu.swift in Sources */,
+				84E7E5AC2884337100ACE20F /* ProductListCollectionViewCell.swift in Sources */,
 				84C0FA692844AA7E006D89C9 /* DetailViewController.swift in Sources */,
 				8403B3DE2851D6DC00DC9392 /* ExampleViewController.swift in Sources */,
 				849CD05E287703A70032619E /* MainTabBarViewController.swift in Sources */,
@@ -635,7 +655,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3HCY3HR23S;
+				DEVELOPMENT_TEAM = 9KTLTADTR6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Food Application/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -667,7 +687,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3HCY3HR23S;
+				DEVELOPMENT_TEAM = 9KTLTADTR6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Food Application/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
