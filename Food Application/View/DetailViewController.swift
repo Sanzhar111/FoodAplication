@@ -47,18 +47,18 @@ final class DetailViewController: UIViewController {
     @IBAction func buttonIsTapped(_ sender: UIButton) {
         var position = Position(id: viewModel.product.id, product: viewModel.product, count: self.countProduct)
         position.product.price = viewModel.getPrice(index: selectedIndex)
-        if let index = CartViewModel.shared.positions.firstIndex(where: { pos in
+        if let index = CartViewModel.shared.cartPositions.firstIndex(where: { pos in
             pos == position
         }) {
             print(index)
-            CartViewModel.shared.positions[index].count += self.countProduct
+    //        CartViewModel.shared.positions[index].count += self.countProduct
             CartViewModel.shared.cartPositions[index].count += self.countProduct
         } else {
             print("no index")
             CartViewModel.shared.addPosition(position)
         }
         
-        print(CartViewModel.shared.positions.count," / ",CartViewModel.shared.cartPositions.count)
+        print(CartViewModel.shared.cartPositions.count," / ",CartViewModel.shared.cartPositions.count)
         NotificationCenter.default.post(name: NSNotification.Name("load"), object: nil)
         self.navigationController?.popViewController(animated: true)
     }

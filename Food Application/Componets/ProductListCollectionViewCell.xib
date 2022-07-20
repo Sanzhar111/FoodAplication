@@ -16,6 +16,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="482" height="92"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZwQ-Ev-BKt">
+                        <rect key="frame" x="0.0" y="0.0" width="482" height="92"/>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UPe-vu-GoA">
                         <rect key="frame" x="5" y="34" width="20" height="22"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -46,13 +49,17 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="m7n-U1-9pn" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Dqi-Hw-SvH"/>
+                <constraint firstAttribute="trailing" secondItem="ZwQ-Ev-BKt" secondAttribute="trailing" id="Gb8-9N-xbN"/>
                 <constraint firstItem="sIR-rE-VFp" firstAttribute="top" secondItem="5Bw-iA-0Ih" secondAttribute="bottom" constant="5" id="LQp-5V-Hn9"/>
                 <constraint firstItem="UPe-vu-GoA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="QS9-pu-bn6"/>
+                <constraint firstAttribute="bottom" secondItem="ZwQ-Ev-BKt" secondAttribute="bottom" id="Y83-yP-3Kc"/>
                 <constraint firstItem="5Bw-iA-0Ih" firstAttribute="leading" secondItem="m7n-U1-9pn" secondAttribute="trailing" constant="5" id="Z9d-Vi-YvY"/>
                 <constraint firstItem="m7n-U1-9pn" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="30" id="ccQ-vw-Fqo"/>
+                <constraint firstItem="ZwQ-Ev-BKt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="gcX-cu-uVX"/>
                 <constraint firstAttribute="trailing" secondItem="m7n-U1-9pn" secondAttribute="trailing" constant="372" id="iEK-1k-z48"/>
                 <constraint firstItem="UPe-vu-GoA" firstAttribute="centerY" secondItem="m7n-U1-9pn" secondAttribute="centerY" id="izT-vo-92g"/>
                 <constraint firstItem="sIR-rE-VFp" firstAttribute="leading" secondItem="m7n-U1-9pn" secondAttribute="trailing" constant="5" id="nVB-ff-49L"/>
+                <constraint firstItem="ZwQ-Ev-BKt" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="rRz-Cz-2kL"/>
                 <constraint firstItem="5Bw-iA-0Ih" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="tzh-mv-Vph"/>
                 <constraint firstAttribute="bottom" secondItem="m7n-U1-9pn" secondAttribute="bottom" constant="5" id="yR8-2x-PGR"/>
             </constraints>

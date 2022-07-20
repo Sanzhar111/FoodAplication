@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ChooseCollectionViewCell" customModule="Food_Application" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="362" height="33"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="362" height="33"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTR-KK-olN">
+                        <rect key="frame" x="0.0" y="0.0" width="362" height="33"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QX-71-qqn">
+                                <rect key="frame" x="0.0" y="6.5" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="c0z-WA-STb"/>
+                                    <constraint firstAttribute="width" constant="20" id="qli-8k-umV"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="" image="trash" catalog="system"/>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="1QX-71-qqn" firstAttribute="centerY" secondItem="YTR-KK-olN" secondAttribute="centerY" id="7EJ-xM-f16"/>
+                            <constraint firstAttribute="trailing" secondItem="1QX-71-qqn" secondAttribute="trailing" constant="342" id="cSb-cZ-2TZ"/>
+                            <constraint firstItem="1QX-71-qqn" firstAttribute="leading" secondItem="YTR-KK-olN" secondAttribute="leading" id="cwe-gw-Zvk"/>
+                        </constraints>
+                    </view>
+                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="LMJ-Ai-k21">
+                        <rect key="frame" x="267" y="1" width="94" height="31"/>
+                    </stepper>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vep-6p-sak">
+                        <rect key="frame" x="254.5" y="1" width="7.5" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="YTR-KK-olN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4uq-W8-FEt"/>
+                <constraint firstItem="vep-6p-sak" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="1" id="6z5-bM-HP5"/>
+                <constraint firstAttribute="bottom" secondItem="vep-6p-sak" secondAttribute="bottom" constant="1" id="Djx-aB-IKT"/>
+                <constraint firstAttribute="bottom" secondItem="LMJ-Ai-k21" secondAttribute="bottom" constant="1" id="Py8-Kr-WRW"/>
+                <constraint firstAttribute="bottom" secondItem="vep-6p-sak" secondAttribute="bottom" constant="1" id="SNh-WR-muA"/>
+                <constraint firstItem="LMJ-Ai-k21" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="1" id="hyh-ua-0m7"/>
+                <constraint firstItem="vep-6p-sak" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="1" id="kH4-bt-MzQ"/>
+                <constraint firstItem="YTR-KK-olN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="nkx-BJ-aXy"/>
+                <constraint firstItem="LMJ-Ai-k21" firstAttribute="leading" secondItem="vep-6p-sak" secondAttribute="trailing" constant="5" id="nnJ-t7-OeD"/>
+                <constraint firstAttribute="bottom" secondItem="YTR-KK-olN" secondAttribute="bottom" id="t58-1r-S17"/>
+                <constraint firstAttribute="trailing" secondItem="LMJ-Ai-k21" secondAttribute="trailing" constant="1" id="zKM-ra-bKD"/>
+                <constraint firstAttribute="trailing" secondItem="YTR-KK-olN" secondAttribute="trailing" id="zqA-P8-B82"/>
+            </constraints>
+            <size key="customSize" width="362" height="33"/>
+            <point key="canvasLocation" x="24.637681159420293" y="9.0401785714285712"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="trash" catalog="system" width="121" height="128"/>
+    </resources>
+</document>

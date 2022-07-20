@@ -8,19 +8,18 @@
 import UIKit
 
 class CartViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+    //@IBOutlet weak var collectionView: UICollectionView!
    // @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var priceForAllLabel: UILabel!
     @IBOutlet weak var cleanButton: UIBarButtonItem!
     @IBOutlet weak var orderButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        
-        self.collectionView.register(UINib(nibName: "ProductListCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProductListCollectionViewCell")
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        if CartViewModel.shared.positions.count == 0 {
+        self.tableView.register(UINib(nibName: "TwoCellsTableViewCell", bundle: nil), forCellReuseIdentifier: "TwoCellsTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        if CartViewModel.shared.cartPositions.count == 0 {
             priceForAllLabel.text = "0₽"
         } else {
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
@@ -40,7 +39,7 @@ class CartViewController: UIViewController {
     }
     
     @objc func reloadInformation() {
-        self.collectionView.reloadData()
+        self.tableView.reloadData()
          priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
     }
     @IBAction func orderButtonIsTapped(_ sender: UIButton) {
@@ -54,7 +53,7 @@ class CartViewController: UIViewController {
             order.positions = CartViewModel.shared.cartPositions
             CartViewModel.shared.cartPositions.removeAll()
             priceForAllLabel.text = "0₽"
-            collectionView.reloadData()
+            tableView.reloadData()
             print("order.positions:\(order.positions)")
                 DataBaseService.shared.setOrder(order: order) { result in
                     switch result {
@@ -76,56 +75,25 @@ class CartViewController: UIViewController {
         } else {
             CartViewModel.shared.cartPositions.removeAll()
             priceForAllLabel.text = "0₽"
-            collectionView.reloadData()
+            tableView.reloadData()
         }
     }
 }
-extension CartViewController:UICollectionViewDelegate,UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CartViewModel.shared.cartPositions.count
-
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductListCollectionViewCell", for: indexPath) as! ProductListCollectionViewCell
-        cell.setup(position: CartViewModel.shared.cartPositions[indexPath.item])
-      //  CartViewModel.shared.positions
-        return cell
-
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-       // height += 90
-        return CGSize(width: (self.view.bounds.width - 2 ) , height: 100)
-    }
-
-    
-   /*func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (CartViewModel.shared.positions.count == 0)  {
-            return 0
-        } else {
-            return CartViewModel.shared.cartPositions.count
-        }
-    }
+extension CartViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PositionCollectionViewCell", for: indexPath) as! ProductListCollectionViewCell
-        //cell.setup(position: CartViewModel.shared.cartPositions[indexPath.row])
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCellsTableViewCell", for: indexPath) as! TwoCellsTableViewCell
+        cell.position = CartViewModel.shared.cartPositions[indexPath.item]
+        cell.collectionView.reloadData()
+        print(cell.position.product.title)
+        print(cell.position.count)
+        print(cell.position.cost)
         return cell
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      print(CartViewModel.shared.cartPositions.count)
+        return CartViewModel.shared.cartPositions.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 150
     }
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            tableView.beginUpdates()
-            print("Было: \(CartViewModel.shared.positions.count)")
-            CartViewModel.shared.cartPositions.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            print("Стало: \(CartViewModel.shared.cartPositions.count)")
-            priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
-            tableView.endUpdates()
-        }
-    }*/
 }
