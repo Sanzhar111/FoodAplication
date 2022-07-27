@@ -11,9 +11,11 @@ struct Position:Equatable {
     var id:String
     var product:Productt
     var count:Int
+    var isSelected = false
     var cost:Int { // Вычисляемое свойство
         return product.price * self.count
     }
+    
     var representation:[String:Any] {
         var repres = [String:Any]()
         repres["id"] = id

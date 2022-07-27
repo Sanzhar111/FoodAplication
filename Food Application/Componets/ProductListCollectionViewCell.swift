@@ -6,13 +6,15 @@
 //
 
 import UIKit
-
+protocol ChoosenCollectionViewCellDelegate:class {
+    func checkBoxToggle(sender:ProductListCollectionViewCell)
+}
 class ProductListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-   
+    @IBOutlet weak var button: UIButton!
+    weak var delegate:ChoosenCollectionViewCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -32,4 +34,7 @@ class ProductListCollectionViewCell: UICollectionViewCell {
         
     }
 
+    @IBAction func buttonIsTapped(_ sender: Any) {
+        delegate?.checkBoxToggle(sender: self)
+    }
 }

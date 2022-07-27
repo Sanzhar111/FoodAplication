@@ -8,12 +8,16 @@
 import UIKit
 
 class CartViewController: UIViewController {
-    //@IBOutlet weak var collectionView: UICollectionView!
-   // @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var priceForAllLabel: UILabel!
-    @IBOutlet weak var cleanButton: UIBarButtonItem!
+    @IBOutlet weak var cleanButton: UIButton!
     @IBOutlet weak var orderButton: UIButton!
+    @IBOutlet weak var totalLabel: UILabel!
+    private var viewHeightVar = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UINib(nibName: "TwoCellsTableViewCell", bundle: nil), forCellReuseIdentifier: "TwoCellsTableViewCell")
@@ -40,6 +44,7 @@ class CartViewController: UIViewController {
     
     @objc func reloadInformation() {
         self.tableView.reloadData()
+        heightSetup()
          priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
     }
     @IBAction func orderButtonIsTapped(_ sender: UIButton) {
@@ -54,6 +59,8 @@ class CartViewController: UIViewController {
             CartViewModel.shared.cartPositions.removeAll()
             priceForAllLabel.text = "0₽"
             tableView.reloadData()
+            heightSetup()
+            moveItemsToBottom()
             print("order.positions:\(order.positions)")
                 DataBaseService.shared.setOrder(order: order) { result in
                     switch result {
@@ -73,21 +80,112 @@ class CartViewController: UIViewController {
             alertContoller.addAction(alerAction)
             self.present(alertContoller, animated: true)
         } else {
-            CartViewModel.shared.cartPositions.removeAll()
-            priceForAllLabel.text = "0₽"
-            tableView.reloadData()
+            let alertContoller = UIAlertController(title:nil, message: nil , preferredStyle: .actionSheet)
+            let alerAction = UIAlertAction(title: "Удалить все", style: .default) { action in
+                CartViewModel.shared.cartPositions.removeAll()
+                self.priceForAllLabel.text = "0₽"
+                self.tableView.reloadData()
+                self.moveItemsToBottom()
+                self.heightSetup()
+            }
+            let alerAction2 = UIAlertAction(title: "Удалить выбранные", style: .default) { action in
+                CartViewModel.shared.cartPositions = CartViewModel.shared.cartPositions.filter() {$0.isSelected != true }
+                print(CartViewModel.shared.cartPositions.count)
+                self.priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
+                self.tableView.reloadData()
+                if CartViewModel.shared.cartPositions.count == 0 {
+                    self.moveItemsToBottom()
+                }
+                self.heightSetup()
+            }
+            let alerAction3 = UIAlertAction(title: "Отмена", style: .cancel)
+            alertContoller.addAction(alerAction)
+            alertContoller.addAction(alerAction2)
+            alertContoller.addAction(alerAction3)
+            self.present(alertContoller, animated: true)
+            
+        }
+    }
+    @IBAction func selectAllProduct(_ sender: UIButton) {
+        CartViewModel.shared.selectAllPostitions()
+        tableView.reloadData()
+    }
+    
+    private func heightSetup() {
+        self.view.layoutIfNeeded()
+        self.tableViewHeight.constant =
+        self.tableView.contentSize.height
+        self.viewHeightVar = Int(tableViewHeight.constant)
+        self.viewHeight.constant = CGFloat(viewHeightVar)
+        self.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: CGFloat(viewHeightVar + 150))
+       self.view.layoutIfNeeded()
+    }
+    private func moveItemsToBottom() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Int(0))) {
+            UIView.animateKeyframes(withDuration: 0.3, delay: 0.0, options: UIView.KeyframeAnimationOptions(rawValue: 7), animations: {
+                self.orderButton.frame.origin.y = self.view.safeAreaLayoutGuide.layoutFrame.maxY - 148
+                self.totalLabel.frame.origin.y = self.view.safeAreaLayoutGuide.layoutFrame.maxY - 183
+                self.priceForAllLabel.frame.origin.y = self.view.safeAreaLayoutGuide.layoutFrame.maxY - 183
+            },completion: nil)
         }
     }
 }
-extension CartViewController:UITableViewDelegate,UITableViewDataSource{
+extension CartViewController:UITableViewDelegate,UITableViewDataSource,SelectedTableViewCellDelegate{
+    func upValue(value: Int, sender: TwoCellsTableViewCell) {
+        print("the major value = \(value)")
+        if let selectedIndexPath = tableView.indexPath(for: sender) {
+            print("is seleceted(=)==\(selectedIndexPath)")
+            CartViewModel.shared.cartPositions[selectedIndexPath.row].count = value
+            priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
+//            data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
+            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+        }
+    }
+    func deleteRow(sender: TwoCellsTableViewCell) {
+        if let selectedIndexPath = tableView.indexPath(for: sender) {
+            print("is seleceted(=)==\(selectedIndexPath)")
+            CartViewModel.shared.cartPositions.remove(at: selectedIndexPath.row)
+            priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
+//            data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
+            tableView.reloadData()
+            if CartViewModel.shared.cartPositions.count == 0 {
+                moveItemsToBottom()
+            }
+        }
+    }
+    
+    func checkBoxToggle(sender: TwoCellsTableViewCell) {
+        if let selectedIndexPath = tableView.indexPath(for: sender) {
+            print("is seleceted(=)==\(selectedIndexPath)")
+            CartViewModel.shared.cartPositions[selectedIndexPath.row].isSelected = !CartViewModel.shared.cartPositions[selectedIndexPath.row].isSelected
+//            data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
+            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+        }
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCellsTableViewCell", for: indexPath) as! TwoCellsTableViewCell
         cell.position = CartViewModel.shared.cartPositions[indexPath.item]
+        cell.delegate = self
         cell.collectionView.reloadData()
+        heightSetup()
         print(cell.position.product.title)
         print(cell.position.count)
         print(cell.position.cost)
         return cell
+    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            print("Было: \(CartViewModel.shared.cartPositions.count)")
+            CartViewModel.shared.cartPositions.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            print("Стало: \(CartViewModel.shared.cartPositions.count)")
+            priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
+            tableView.endUpdates()
+        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       print(CartViewModel.shared.cartPositions.count)

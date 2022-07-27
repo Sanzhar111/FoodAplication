@@ -28,6 +28,7 @@ final class DetailViewController: UIViewController {
         self.segmentControllFood.addTarget(self, action: #selector(getPrice), for: .valueChanged)
         self.stepper.stepValue = 1
         self.stepper.addTarget(self, action: #selector(getCount), for: .valueChanged)
+        Utilities.styleFilledButton(addToBasketButton)
     }
     @objc func getCount(target:UIStepper) {
         if target == stepper {

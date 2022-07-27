@@ -24,4 +24,9 @@ class CartViewModel {
   //      self.positions.append(position)
         self.cartPositions.append(position)
     }
+    func selectAllPostitions() {
+        for i in 0..<cartPositions.count {
+            cartPositions[i].isSelected = true
+        }
+    }
 }

@@ -27,6 +27,9 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="" image="trash" catalog="system"/>
+                                <connections>
+                                    <action selector="deleteButtonIsTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="ykT-2b-Bf1"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -35,7 +38,7 @@
                             <constraint firstItem="1QX-71-qqn" firstAttribute="leading" secondItem="YTR-KK-olN" secondAttribute="leading" id="cwe-gw-Zvk"/>
                         </constraints>
                     </view>
-                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="LMJ-Ai-k21">
+                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="LMJ-Ai-k21">
                         <rect key="frame" x="267" y="1" width="94" height="31"/>
                     </stepper>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vep-6p-sak">
@@ -62,6 +65,10 @@
                 <constraint firstAttribute="trailing" secondItem="YTR-KK-olN" secondAttribute="trailing" id="zqA-P8-B82"/>
             </constraints>
             <size key="customSize" width="362" height="33"/>
+            <connections>
+                <outlet property="countProductLabel" destination="vep-6p-sak" id="az1-Kg-bp1"/>
+                <outlet property="stepper" destination="LMJ-Ai-k21" id="w67-Jh-cep"/>
+            </connections>
             <point key="canvasLocation" x="24.637681159420293" y="9.0401785714285712"/>
         </collectionViewCell>
     </objects>

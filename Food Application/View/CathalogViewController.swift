@@ -7,7 +7,7 @@
 
 import UIKit
 import SkeletonView
-class CathalogViewController: UIViewController {
+final class CathalogViewController: UIViewController {
     @IBOutlet weak var scroller: UIScrollView!
     @IBOutlet weak var collectionView1: UICollectionView!
     @IBOutlet weak var collectionView2: UICollectionView!
