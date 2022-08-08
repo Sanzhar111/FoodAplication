@@ -49,10 +49,7 @@ class CartViewController: UIViewController {
     }
     @IBAction func orderButtonIsTapped(_ sender: UIButton) {
         if CartViewModel.shared.cartPositions.count == 0 {
-            let alertContoller = UIAlertController(title:"Невозможно выполнить действие.", message: "Ваша корзина пуста.", preferredStyle: .alert)
-            let alerAction = UIAlertAction(title: "Закрыть", style: .default)
-            alertContoller.addAction(alerAction)
-            self.present(alertContoller, animated: true)
+            showDefaultAlertController()
         } else {
             var order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue)
             order.positions = CartViewModel.shared.cartPositions
@@ -75,10 +72,7 @@ class CartViewController: UIViewController {
     }
     @IBAction func cleanButtonIsTapped(_ sender: Any) {
         if CartViewModel.shared.cartPositions.count == 0 {
-            let alertContoller = UIAlertController(title:"Невозможно выполнить действие.", message: "Ваша корзина пуста.", preferredStyle: .alert)
-            let alerAction = UIAlertAction(title: "Закрыть", style: .default)
-            alertContoller.addAction(alerAction)
-            self.present(alertContoller, animated: true)
+            showDefaultAlertController()
         } else {
             let alertContoller = UIAlertController(title:nil, message: nil , preferredStyle: .actionSheet)
             let alerAction = UIAlertAction(title: "Удалить все", style: .default) { action in
@@ -106,9 +100,15 @@ class CartViewController: UIViewController {
             
         }
     }
+    
     @IBAction func selectAllProduct(_ sender: UIButton) {
-        CartViewModel.shared.selectAllPostitions()
-        tableView.reloadData()
+        if CartViewModel.shared.cartPositions.count == 0 {
+            showDefaultAlertController()
+        } else {
+            CartViewModel.shared.selectAllPostitions()
+            tableView.reloadData()
+        }
+        
     }
     
     private func heightSetup() {
@@ -129,6 +129,12 @@ class CartViewController: UIViewController {
             },completion: nil)
         }
     }
+    private func showDefaultAlertController() {
+        let alertContoller = UIAlertController(title:"Невозможно выполнить действие.", message: "Ваша корзина пуста.", preferredStyle: .alert)
+        let alerAction = UIAlertAction(title: "Закрыть", style: .default)
+        alertContoller.addAction(alerAction)
+        self.present(alertContoller, animated: true)
+    }
 }
 extension CartViewController:UITableViewDelegate,UITableViewDataSource,SelectedTableViewCellDelegate{
     func upValue(value: Int, sender: TwoCellsTableViewCell) {
@@ -137,7 +143,6 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource,SelectedT
             print("is seleceted(=)==\(selectedIndexPath)")
             CartViewModel.shared.cartPositions[selectedIndexPath.row].count = value
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
-//            data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
             tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
         }
     }
@@ -146,7 +151,6 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource,SelectedT
             print("is seleceted(=)==\(selectedIndexPath)")
             CartViewModel.shared.cartPositions.remove(at: selectedIndexPath.row)
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
-//            data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
             tableView.reloadData()
             if CartViewModel.shared.cartPositions.count == 0 {
                 moveItemsToBottom()

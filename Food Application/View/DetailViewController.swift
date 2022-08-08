@@ -46,7 +46,7 @@ final class DetailViewController: UIViewController {
     }
     
     @IBAction func buttonIsTapped(_ sender: UIButton) {
-        var position = Position(id: viewModel.product.id, product: viewModel.product, count: self.countProduct)
+        let position = Position(id: viewModel.product.id, product: viewModel.product, count: self.countProduct)
         position.product.price = viewModel.getPrice(index: selectedIndex)
         if let index = CartViewModel.shared.cartPositions.firstIndex(where: { pos in
             pos == position

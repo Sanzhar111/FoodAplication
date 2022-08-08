@@ -36,6 +36,7 @@ final class CathalogViewController: UIViewController {
         self.collectionView2.isUserInteractionEnabled = true
         collectionView2.allowsSelection = true
         
+        
         self.collectionView3.register(UINib(nibName: "ListOfTheProductsCell", bundle: nil), forCellWithReuseIdentifier: "ListOfTheProductsCell")
         self.collectionView3.delegate = self
         self.collectionView3.dataSource = self
@@ -116,8 +117,8 @@ extension CathalogViewController:UICollectionViewDelegate,SkeletonCollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        height += 90
-        return CGSize(width: (self.view.bounds.width  - 5)/2 , height: 90)
+       // height += 60
+        return CGSize(width: (self.view.bounds.width  - 5) , height: 120)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == collectionView1 {

@@ -14,7 +14,7 @@ class ListOfTheProductsCell: UICollectionViewCell {
     }
     func setUp(product:Productt) {
         self.imageView.image = product.image
-        self.priceLabel.text = String(product.price)
+        self.priceLabel.text = String(product.price)+"₽"
         self.nameLabel.text = String(product.title)
     }
 }
