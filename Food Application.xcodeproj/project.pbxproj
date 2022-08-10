@@ -13,6 +13,8 @@
 		84225122283517310021EB9A /* CathalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84225121283517310021EB9A /* CathalogViewController.swift */; };
 		842251242835175D0021EB9A /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842251232835175D0021EB9A /* CartViewController.swift */; };
 		84225126283517690021EB9A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84225125283517690021EB9A /* ProfileViewController.swift */; };
+		843F313028A0F0F500E0C44A /* ListOfProductsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F312E28A0F0F500E0C44A /* ListOfProductsTableViewCell.swift */; };
+		843F313128A0F0F500E0C44A /* ListOfProductsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843F312F28A0F0F500E0C44A /* ListOfProductsTableViewCell.xib */; };
 		844A2F122859EFA4007D4AAE /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A2F102859EFA4007D4AAE /* OrderTableViewCell.swift */; };
 		844A2F132859EFA4007D4AAE /* OrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844A2F112859EFA4007D4AAE /* OrderTableViewCell.xib */; };
 		8462903F288813AF00AF7D30 /* TwoCellsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462903D288813AF00AF7D30 /* TwoCellsTableViewCell.swift */; };
@@ -86,6 +88,8 @@
 		84225121283517310021EB9A /* CathalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CathalogViewController.swift; sourceTree = "<group>"; };
 		842251232835175D0021EB9A /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		84225125283517690021EB9A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		843F312E28A0F0F500E0C44A /* ListOfProductsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfProductsTableViewCell.swift; sourceTree = "<group>"; };
+		843F312F28A0F0F500E0C44A /* ListOfProductsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListOfProductsTableViewCell.xib; sourceTree = "<group>"; };
 		844A2F102859EFA4007D4AAE /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		844A2F112859EFA4007D4AAE /* OrderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderTableViewCell.xib; sourceTree = "<group>"; };
 		8462903D288813AF00AF7D30 /* TwoCellsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCellsTableViewCell.swift; sourceTree = "<group>"; };
@@ -251,6 +255,8 @@
 		84C0FA762847C4C9006D89C9 /* Componets */ = {
 			isa = PBXGroup;
 			children = (
+				843F312E28A0F0F500E0C44A /* ListOfProductsTableViewCell.swift */,
+				843F312F28A0F0F500E0C44A /* ListOfProductsTableViewCell.xib */,
 				84C0FA772847C52C006D89C9 /* ListOfTheProductsCell.swift */,
 				84C0FA782847C52C006D89C9 /* ListOfTheProductsCell.xib */,
 				84C0FA83284DCBE7006D89C9 /* PositionCollectionViewCell.swift */,
@@ -433,6 +439,7 @@
 				84C0FA7A2847C52C006D89C9 /* ListOfTheProductsCell.xib in Resources */,
 				84753901283465B400CCFF90 /* Main.storyboard in Resources */,
 				844A2F132859EFA4007D4AAE /* OrderTableViewCell.xib in Resources */,
+				843F313128A0F0F500E0C44A /* ListOfProductsTableViewCell.xib in Resources */,
 				84E7E5B12886CBDA00ACE20F /* ChooseCollectionViewCell.xib in Resources */,
 				84D902D22853629900B47152 /* GoogleService-Info.plist in Resources */,
 			);
@@ -486,6 +493,7 @@
 				84D14F0428576E1A00C52832 /* OrderStatus.swift in Sources */,
 				84E7E5A9287EABB500ACE20F /* Utilities.swift in Sources */,
 				8462903F288813AF00AF7D30 /* TwoCellsTableViewCell.swift in Sources */,
+				843F313028A0F0F500E0C44A /* ListOfProductsTableViewCell.swift in Sources */,
 				84D14F022857592700C52832 /* Order.swift in Sources */,
 				84C0FA792847C52C006D89C9 /* ListOfTheProductsCell.swift in Sources */,
 				84D902E028547F8300B47152 /* FirebaseUser.swift in Sources */,

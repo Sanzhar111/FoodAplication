@@ -47,6 +47,7 @@ class ProfileViewController: UIViewController {
         setButton(button: button2, tag: 2, textField: numberTextField)
         setButton(button: button3, tag: 3, textField: addressTextField)
         Utilities.styleFilledButton(exitButton)
+        profilePhotoImageView.layer.cornerRadius = 5
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -191,7 +192,7 @@ extension ProfileViewController:PHPickerViewControllerDelegate {
                 guard let image = reading as? UIImage, error == nil else {
                     return
                 }
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { 
                     self.profilePhotoImageView.image = image
                     DataBaseService.shared.uploadImage(currentUserID: AuthService.shared.auth.currentUser!.uid, photo: self.profilePhotoImageView.image!) { res in
                         switch res {
