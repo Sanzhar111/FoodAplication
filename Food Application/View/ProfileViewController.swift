@@ -51,7 +51,13 @@ class ProfileViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        profilePhotoImageView.image = ProfileViewModel.shared.imageProfile
+        if let image = ProfileViewModel.shared.imageProfile {
+            profilePhotoImageView.image = image
+        } else {
+            profilePhotoImageView.image = UIImage(systemName: "person.fill")
+            profilePhotoImageView.tintColor = .black
+        }
+        
         self.ordersTableView.reloadData()
     }
     @objc func reloadImage() {
