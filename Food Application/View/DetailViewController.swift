@@ -53,15 +53,27 @@ final class DetailViewController: UIViewController {
         }) {
             print(index)
     //        CartViewModel.shared.positions[index].count += self.countProduct
+            showAlert()
             CartViewModel.shared.cartPositions[index].count += self.countProduct
         } else {
             print("no index")
+            showAlert()
             CartViewModel.shared.addPosition(position)
         }
         
         print(CartViewModel.shared.cartPositions.count," / ",CartViewModel.shared.cartPositions.count)
         NotificationCenter.default.post(name: NSNotification.Name("load"), object: nil)
         self.navigationController?.popViewController(animated: true)
+    }
+    func showAlert() {
+        let alertContoller = UIAlertController(title: nil,
+                                               message: "Товар добавлен в корзину",
+                                               preferredStyle: .alert)
+        let alerAction = UIAlertAction(title: "Закрыть", style: .default)
+        alertContoller.addAction(alerAction)
+        self.present(alertContoller, animated: true)
+
+       
     }
 }
 

@@ -18,11 +18,11 @@ class RegistrationViewController: UIViewController {
         emailLabel.delegate = self
         emailLabel.attributedPlaceholder = NSAttributedString(string: "Email",
                                                               attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 0.6471, green: 0.6235, blue: 0.6235, alpha: 1)])
-        emailLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
+        //emailLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
         passwordLabel.delegate = self
         passwordLabel.attributedPlaceholder = NSAttributedString(string: "Password",
                                                               attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 0.6471, green: 0.6235, blue: 0.6235, alpha: 1)])
-        passwordLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
+       // passwordLabel.textColor = UIColor.init(red: 0.7373, green: 0.7098, blue: 0.7098, alpha: 1)
         Utilities.styleTextField(emailLabel)
         Utilities.styleTextField(passwordLabel)
         Utilities.styleFilledButton(authorizationButton)

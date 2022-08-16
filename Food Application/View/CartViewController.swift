@@ -17,6 +17,7 @@ class CartViewController: UIViewController {
     @IBOutlet weak var cleanButton: UIButton!
     @IBOutlet weak var orderButton: UIButton!
     @IBOutlet weak var totalLabel: UILabel!
+    @IBOutlet weak var emptyLabel: UILabel!
     private var viewHeightVar = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,12 @@ class CartViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if CartViewModel.shared.cartPositions.count == 0 {
+            self.tableView.alpha = 0
+        } else {
+            self.tableView.alpha = 1
+            self.emptyLabel.alpha = 0
+        }
         ProfileViewModel.shared.getOrders()
         
     }
@@ -57,6 +64,8 @@ class CartViewController: UIViewController {
             priceForAllLabel.text = "0₽"
             tableView.reloadData()
             heightSetup()
+            self.tableView.alpha = 0
+            self.emptyLabel.alpha = 1
             moveItemsToBottom()
             print("order.positions:\(order.positions)")
                 DataBaseService.shared.setOrder(order: order) { result in
@@ -68,6 +77,10 @@ class CartViewController: UIViewController {
                         print(error.localizedDescription)
                     }
                 }
+            let alertContoller = UIAlertController(title:"Заказ успешно совершен", message:"Cпасибо за покупку!" , preferredStyle: .alert)
+            let alerAction = UIAlertAction(title: "Закрыть", style: .default)
+            alertContoller.addAction(alerAction)
+            self.present(alertContoller, animated: true)
         }
     }
     @IBAction func cleanButtonIsTapped(_ sender: Any) {
@@ -80,14 +93,19 @@ class CartViewController: UIViewController {
                 self.priceForAllLabel.text = "0₽"
                 self.tableView.reloadData()
                 self.moveItemsToBottom()
+                self.tableView.alpha = 0
+                self.emptyLabel.alpha = 1
                 self.heightSetup()
             }
             let alerAction2 = UIAlertAction(title: "Удалить выбранные", style: .default) { action in
                 CartViewModel.shared.cartPositions = CartViewModel.shared.cartPositions.filter() {$0.isSelected != true }
                 print(CartViewModel.shared.cartPositions.count)
                 self.priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
+                self.emptyLabel.alpha = 0
                 self.tableView.reloadData()
                 if CartViewModel.shared.cartPositions.count == 0 {
+                    self.tableView.alpha = 0
+                    self.emptyLabel.alpha = 1
                     self.moveItemsToBottom()
                 }
                 self.heightSetup()

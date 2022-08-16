@@ -99,17 +99,20 @@ extension CathalogViewController:UITableViewDelegate,UITableViewDataSource,UICol
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tableView1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ListOfProductsTableViewCell", for: indexPath) as! ListOfProductsTableViewCell
+            cell.selectionStyle = .none
             let product = viewModel.products.popular[indexPath.item]
             cell.setUp(product: product)
             return cell
         } else if tableView == tableView2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ListOfProductsTableViewCell", for: indexPath) as! ListOfProductsTableViewCell
             let product = viewModel.products.tasty[indexPath.item]
+            cell.selectionStyle = .none
             cell.setUp(product: product)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ListOfProductsTableViewCell", for: indexPath) as! ListOfProductsTableViewCell
             let product = viewModel.products.healthy[indexPath.item]
+            cell.selectionStyle = .none
             cell.setUp(product: product)
             return cell
         }
