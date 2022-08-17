@@ -19,6 +19,14 @@ class CartViewModel {
         }
         return sum
     }
+    var countPositions : Int {
+        var count = 0
+        for pos in cartPositions {
+            count += pos.count
+        }
+        return count
+
+    }
     private init(){}
     func addPosition(_ position:Position) {
   //      self.positions.append(position)
