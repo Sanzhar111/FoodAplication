@@ -23,6 +23,9 @@
 		843F317928ACAB7800E0C44A /* OrderDetailsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843F317728ACAB7700E0C44A /* OrderDetailsCollectionViewCell.xib */; };
 		843F317C28ACD6E000E0C44A /* TimeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F317A28ACD6E000E0C44A /* TimeCollectionViewCell.swift */; };
 		843F317D28ACD6E000E0C44A /* TimeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843F317B28ACD6E000E0C44A /* TimeCollectionViewCell.xib */; };
+		843F318028AFB9AA00E0C44A /* CardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F317E28AFB9AA00E0C44A /* CardsCollectionViewCell.swift */; };
+		843F318128AFB9AA00E0C44A /* CardsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843F317F28AFB9AA00E0C44A /* CardsCollectionViewCell.xib */; };
+		843F318328AFBEA500E0C44A /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F318228AFBEA500E0C44A /* Card.swift */; };
 		844A2F122859EFA4007D4AAE /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A2F102859EFA4007D4AAE /* OrderTableViewCell.swift */; };
 		844A2F132859EFA4007D4AAE /* OrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844A2F112859EFA4007D4AAE /* OrderTableViewCell.xib */; };
 		8462903F288813AF00AF7D30 /* TwoCellsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462903D288813AF00AF7D30 /* TwoCellsTableViewCell.swift */; };
@@ -106,6 +109,9 @@
 		843F317728ACAB7700E0C44A /* OrderDetailsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDetailsCollectionViewCell.xib; sourceTree = "<group>"; };
 		843F317A28ACD6E000E0C44A /* TimeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCollectionViewCell.swift; sourceTree = "<group>"; };
 		843F317B28ACD6E000E0C44A /* TimeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeCollectionViewCell.xib; sourceTree = "<group>"; };
+		843F317E28AFB9AA00E0C44A /* CardsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewCell.swift; sourceTree = "<group>"; };
+		843F317F28AFB9AA00E0C44A /* CardsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardsCollectionViewCell.xib; sourceTree = "<group>"; };
+		843F318228AFBEA500E0C44A /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		844A2F102859EFA4007D4AAE /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		844A2F112859EFA4007D4AAE /* OrderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderTableViewCell.xib; sourceTree = "<group>"; };
 		8462903D288813AF00AF7D30 /* TwoCellsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCellsTableViewCell.swift; sourceTree = "<group>"; };
@@ -292,6 +298,8 @@
 				843F317728ACAB7700E0C44A /* OrderDetailsCollectionViewCell.xib */,
 				843F317A28ACD6E000E0C44A /* TimeCollectionViewCell.swift */,
 				843F317B28ACD6E000E0C44A /* TimeCollectionViewCell.xib */,
+				843F317E28AFB9AA00E0C44A /* CardsCollectionViewCell.swift */,
+				843F317F28AFB9AA00E0C44A /* CardsCollectionViewCell.xib */,
 				8403B3DA284F219200DC9392 /* Extensions */,
 			);
 			path = Componets;
@@ -319,6 +327,7 @@
 				84D14F0328576E1A00C52832 /* OrderStatus.swift */,
 				849CD0652878235D0032619E /* Menu.swift */,
 				843F313428AA3D1200E0C44A /* ClientInformation.swift */,
+				843F318228AFBEA500E0C44A /* Card.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -466,6 +475,7 @@
 				84753901283465B400CCFF90 /* Main.storyboard in Resources */,
 				844A2F132859EFA4007D4AAE /* OrderTableViewCell.xib in Resources */,
 				843F313128A0F0F500E0C44A /* ListOfProductsTableViewCell.xib in Resources */,
+				843F318128AFB9AA00E0C44A /* CardsCollectionViewCell.xib in Resources */,
 				84E7E5B12886CBDA00ACE20F /* ChooseCollectionViewCell.xib in Resources */,
 				84D902D22853629900B47152 /* GoogleService-Info.plist in Resources */,
 				843F317D28ACD6E000E0C44A /* TimeCollectionViewCell.xib in Resources */,
@@ -502,6 +512,8 @@
 				847538FA283465B400CCFF90 /* AppDelegate.swift in Sources */,
 				84225122283517310021EB9A /* CathalogViewController.swift in Sources */,
 				84D902DE28547A0300B47152 /* MainTabBarViewModel.swift in Sources */,
+				843F318328AFBEA500E0C44A /* Card.swift in Sources */,
+				843F318028AFB9AA00E0C44A /* CardsCollectionViewCell.swift in Sources */,
 				84C0FA7F284BB2E7006D89C9 /* CartViewModel.swift in Sources */,
 				84D902DC2853824100B47152 /* AuthService.swift in Sources */,
 				842251242835175D0021EB9A /* CartViewController.swift in Sources */,
