@@ -17,6 +17,7 @@ class ProfileDetailsViewController: UIViewController {
     @IBOutlet weak var timeCollectionView: UICollectionView!
     @IBOutlet weak var countProductsLabel: UILabel!
     @IBOutlet weak var cardsCollectionView: UICollectionView!
+    @IBOutlet weak var payButton: UIButton!
     var profileArray = [ClientInformation(image: UIImage(systemName: "person")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Кульбаев Санжар 79506626838"),
                         ClientInformation(image: UIImage(systemName: "message")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Комментарий курьеру"),
                         ClientInformation(image: UIImage(named: "дверь")!, rightImage: UIImage(systemName: "circle")!, text: "Оставить у двери"),
@@ -46,6 +47,7 @@ class ProfileDetailsViewController: UIViewController {
         self.view.layoutIfNeeded()
         scrollView.isScrollEnabled = true
 
+      //  Utilities.styleFilledButton(payButton)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -110,7 +112,7 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
         } else if collectionView == self.timeCollectionView {
             return CGSize(width: self.view.bounds.width / 3, height: 60)
         } else {
-            return CGSize(width: self.view.bounds.width / 3, height: 80)
+            return CGSize(width: self.view.bounds.width / 3, height: 69)
         }
     }
 }
