@@ -79,11 +79,23 @@ class ProfileViewController: UIViewController {
         print("i tapped")
         isClickable = true
         if responder.tag == 1 {
-            nameTextField.becomeFirstResponder()
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DeliveryInfoViewController") as! DeliveryInfoViewController
+            nextViewController.modalPresentationStyle = .fullScreen
+            self.navigationController?.show(nextViewController, sender: self)
+            //nameTextField.becomeFirstResponder()
         } else if responder.tag == 2 {
-            numberTextField.becomeFirstResponder()
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DeliveryInfoViewController") as! DeliveryInfoViewController
+            nextViewController.modalPresentationStyle = .fullScreen
+            self.navigationController?.show(nextViewController, sender: self)
+            //numberTextField.becomeFirstResponder()
         } else {
-            addressTextField.becomeFirstResponder()
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DeliveryInfoViewController") as! DeliveryInfoViewController
+            nextViewController.modalPresentationStyle = .fullScreen
+            self.navigationController?.show(nextViewController, sender: self)
+            //addressTextField.becomeFirstResponder()
         }
     }
     @IBAction func exitButtonTapped(_ sender: UIButton) {

@@ -10,13 +10,18 @@ import UIKit
 class ProfileDetailsViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var editButton: UIButton!
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var heightTableView: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timeCollectionView: UICollectionView!
     @IBOutlet weak var countProductsLabel: UILabel!
     @IBOutlet weak var cardsCollectionView: UICollectionView!
+    @IBOutlet weak var payButton: UIButton!
+    @IBOutlet weak var countProductLabelLeftDownCorner: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var priceLabelUpper: UILabel!
+    @IBOutlet weak var countProductLabelRightDownCorner: UILabel!
     var profileArray = [ClientInformation(image: UIImage(systemName: "person")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Кульбаев Санжар 79506626838"),
                         ClientInformation(image: UIImage(systemName: "message")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Комментарий курьеру"),
                         ClientInformation(image: UIImage(named: "дверь")!, rightImage: UIImage(systemName: "circle")!, text: "Оставить у двери"),
@@ -40,7 +45,8 @@ class ProfileDetailsViewController: UIViewController {
         timeCollectionView.dataSource = self
         cardsCollectionView.dataSource = self
         
-        Utilities.styleFilledButton(button)
+        Utilities.styleFilledButton(editButton)
+        Utilities.styleFilledButton(payButton)
         self.view.layoutIfNeeded()
         heightTableView.constant = tableView.contentSize.height
         self.view.layoutIfNeeded()
@@ -50,12 +56,20 @@ class ProfileDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
-        countProductsLabel.text = String(CartViewModel.shared.countPositions) + " товаров"
+        labelSet()
     }
     
     @IBAction func closeButton(_ sender: Any) {
         self.dismiss(animated: true)
     }
+    func labelSet() {
+        countProductsLabel.text = String(CartViewModel.shared.countPositions) + " товаров"
+        countProductLabelRightDownCorner.text = String(CartViewModel.shared.countPositions) + " товаров"
+        countProductLabelLeftDownCorner.text = "Товары (\(CartViewModel.shared.countPositions))"
+        priceLabelUpper.text = "\(CartViewModel.shared.costForAll) ₽"
+        priceLabel.text = "\(CartViewModel.shared.costForAll) ₽"
+    }
+    
 }
 extension ProfileDetailsViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,7 +124,7 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
         } else if collectionView == self.timeCollectionView {
             return CGSize(width: self.view.bounds.width / 3, height: 60)
         } else {
-            return CGSize(width: self.view.bounds.width / 3, height: 80)
+            return CGSize(width: self.view.bounds.width / 3, height: 64)
         }
     }
 }

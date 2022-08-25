@@ -68,6 +68,8 @@
 		84D902E028547F8300B47152 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D902DF28547F8300B47152 /* FirebaseUser.swift */; };
 		84D902E22854808300B47152 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D902E12854808300B47152 /* DatabaseService.swift */; };
 		84D902E42855CB0800B47152 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D902E32855CB0800B47152 /* ProfileViewModel.swift */; };
+		84DF96A928B366710034893A /* UIApplication+keywindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DF96A828B366710034893A /* UIApplication+keywindow.swift */; };
+		84DF96AB28B38DB40034893A /* DeliveryInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DF96AA28B38DB40034893A /* DeliveryInfoViewController.swift */; };
 		84E7E5A9287EABB500ACE20F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7E5A8287EABB500ACE20F /* Utilities.swift */; };
 		84E7E5AC2884337100ACE20F /* ProductListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7E5AA2884336F00ACE20F /* ProductListCollectionViewCell.swift */; };
 		84E7E5AD2884337100ACE20F /* ProductListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E7E5AB2884337000ACE20F /* ProductListCollectionViewCell.xib */; };
@@ -154,6 +156,8 @@
 		84D902DF28547F8300B47152 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		84D902E12854808300B47152 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		84D902E32855CB0800B47152 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		84DF96A828B366710034893A /* UIApplication+keywindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+keywindow.swift"; sourceTree = "<group>"; };
+		84DF96AA28B38DB40034893A /* DeliveryInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryInfoViewController.swift; sourceTree = "<group>"; };
 		84E7E5A8287EABB500ACE20F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		84E7E5AA2884336F00ACE20F /* ProductListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListCollectionViewCell.swift; sourceTree = "<group>"; };
 		84E7E5AB2884337000ACE20F /* ProductListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductListCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				8403B3DB284F21AC00DC9392 /* String+SizeWidth.swift */,
+				84DF96A828B366710034893A /* UIApplication+keywindow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 				8403B3DD2851D6DC00DC9392 /* ExampleViewController.swift */,
 				849CD05D287703A70032619E /* MainTabBarViewController.swift */,
 				843F313228A662BE00E0C44A /* ProfileDetailsViewController.swift */,
+				84DF96AA28B38DB40034893A /* DeliveryInfoViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -521,6 +527,7 @@
 				849CD05C2876F1270032619E /* SplashAnimator.swift in Sources */,
 				84C0FA82284BB367006D89C9 /* Position.swift in Sources */,
 				84D902E22854808300B47152 /* DatabaseService.swift in Sources */,
+				84DF96AB28B38DB40034893A /* DeliveryInfoViewController.swift in Sources */,
 				84C0FA85284DCBE7006D89C9 /* PositionCollectionViewCell.swift in Sources */,
 				843F317828ACAB7800E0C44A /* OrderDetailsCollectionViewCell.swift in Sources */,
 				844A2F122859EFA4007D4AAE /* OrderTableViewCell.swift in Sources */,
@@ -543,6 +550,7 @@
 				84D902E028547F8300B47152 /* FirebaseUser.swift in Sources */,
 				847538FC283465B400CCFF90 /* SceneDelegate.swift in Sources */,
 				849CD0662878235D0032619E /* Menu.swift in Sources */,
+				84DF96A928B366710034893A /* UIApplication+keywindow.swift in Sources */,
 				84E7E5AC2884337100ACE20F /* ProductListCollectionViewCell.swift in Sources */,
 				84C0FA692844AA7E006D89C9 /* DetailViewController.swift in Sources */,
 				8403B3DE2851D6DC00DC9392 /* ExampleViewController.swift in Sources */,
