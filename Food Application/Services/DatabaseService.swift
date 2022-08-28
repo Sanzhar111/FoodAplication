@@ -42,11 +42,24 @@ class DataBaseService {
             guard let data = snap.data() else { return }
             guard let username = data["name"] as? String else { return }
             guard let id = data["id"] as? String? else { return }
-            guard let phone = data["phone"] as? Int else { return }
+            guard let phone = data["phone"] as? String else { return }
             guard let address = data["address"] as? String else { return }
             guard let profileImage = data["profileImage"] as? String else { return }
-            let user = FirebaseUser(id: id!, name: username, phone: phone, address: address, profileImage: profileImage)
-            print("пришедший юзер: \(user.name) | \(user.phone) | \(user.address)")
+            
+            guard let country = data["country"] as? String else { return }
+            guard let city = data["city"] as? String else { return }
+            guard let street = data["street"] as? String else { return }
+            guard let numberHouse = data["numberHouse"] as? String else { return }
+            guard let index = data["index"] as? String else { return }
+            guard let flatOrOfficeNmumber = data["flatOrOfficeNmumber"] as? String else { return }
+            guard let porch = data["porch"] as? String else { return }
+            guard let floor = data["floor"] as? String else { return }
+            guard let intercom = data["intercom"] as? String else { return }
+            guard let commentsForACourier = data["commentsForACourier"] as? String else { return }
+            
+            let user = FirebaseUser(id: id!, name: username, phone: phone, address: address, profileImage: profileImage, country: country, city: city, street: street, numberHouse: numberHouse, index: index, flatOrOfficeNmumber: flatOrOfficeNmumber, porch: porch, floor: floor, intercom: intercom, commentsForACourier: commentsForACourier)
+           // FirebaseUser(id: <#T##String#>, name: <#T##String#>, phone: <#T##Int#>, address: <#T##String#>, profileImage: <#T##String#>, country: <#T##String#>, city: <#T##String?#>, street: <#T##String?#>, numberHouse: <#T##Int?#>, index: <#T##String?#>, flatOrOfficeNmumber: <#T##Int?#>, porch: <#T##Int?#>, floor: <#T##Int?#>, intercom: <#T##Int?#>, commentsForACourier: <#T##String?#>)
+          //  print("пришедший юзер: \(user.name) | \(user.phone) | \(user.address)")
             complition(.success(user))
         }
     }

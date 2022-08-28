@@ -49,6 +49,8 @@
 		849CD060287722840032619E /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CD05F287722840032619E /* LoadingViewController.swift */; };
 		849CD0622877231F0032619E /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CD0612877231F0032619E /* NavigationManager.swift */; };
 		849CD0662878235D0032619E /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CD0652878235D0032619E /* Menu.swift */; };
+		84A04A0828B9F420009C8D24 /* InfoForDeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A04A0728B9F420009C8D24 /* InfoForDeliveryViewController.swift */; };
+		84BD137F28B7BAAA002A455A /* DeliveryInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD137E28B7BAAA002A455A /* DeliveryInfoViewModel.swift */; };
 		84C0FA692844AA7E006D89C9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0FA682844AA7E006D89C9 /* DetailViewController.swift */; };
 		84C0FA792847C52C006D89C9 /* ListOfTheProductsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0FA772847C52C006D89C9 /* ListOfTheProductsCell.swift */; };
 		84C0FA7A2847C52C006D89C9 /* ListOfTheProductsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0FA782847C52C006D89C9 /* ListOfTheProductsCell.xib */; };
@@ -140,6 +142,8 @@
 		849CD05F287722840032619E /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		849CD0612877231F0032619E /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		849CD0652878235D0032619E /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		84A04A0728B9F420009C8D24 /* InfoForDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoForDeliveryViewController.swift; sourceTree = "<group>"; };
+		84BD137E28B7BAAA002A455A /* DeliveryInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryInfoViewModel.swift; sourceTree = "<group>"; };
 		84C0FA682844AA7E006D89C9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		84C0FA772847C52C006D89C9 /* ListOfTheProductsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfTheProductsCell.swift; sourceTree = "<group>"; };
 		84C0FA782847C52C006D89C9 /* ListOfTheProductsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListOfTheProductsCell.xib; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 				849CD05D287703A70032619E /* MainTabBarViewController.swift */,
 				843F313228A662BE00E0C44A /* ProfileDetailsViewController.swift */,
 				84DF96AA28B38DB40034893A /* DeliveryInfoViewController.swift */,
+				84A04A0728B9F420009C8D24 /* InfoForDeliveryViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				84C0FA7C284A38CE006D89C9 /* DetailViewModel.swift */,
 				84C0FA7E284BB2E7006D89C9 /* CartViewModel.swift */,
 				84D902DD28547A0300B47152 /* MainTabBarViewModel.swift */,
+				84BD137E28B7BAAA002A455A /* DeliveryInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -512,6 +518,7 @@
 				84E7E5B02886CBDA00ACE20F /* ChooseCollectionViewCell.swift in Sources */,
 				84C0FA7D284A38CE006D89C9 /* DetailViewModel.swift in Sources */,
 				847538FE283465B400CCFF90 /* AuthorizationViewController.swift in Sources */,
+				84BD137F28B7BAAA002A455A /* DeliveryInfoViewModel.swift in Sources */,
 				843F313328A662BE00E0C44A /* ProfileDetailsViewController.swift in Sources */,
 				849CD05A2876F0B20032619E /* SplashPresenter.swift in Sources */,
 				847DE30C286D9D8300E56B09 /* CathalogViewModel.swift in Sources */,
@@ -528,6 +535,7 @@
 				84C0FA82284BB367006D89C9 /* Position.swift in Sources */,
 				84D902E22854808300B47152 /* DatabaseService.swift in Sources */,
 				84DF96AB28B38DB40034893A /* DeliveryInfoViewController.swift in Sources */,
+				84A04A0828B9F420009C8D24 /* InfoForDeliveryViewController.swift in Sources */,
 				84C0FA85284DCBE7006D89C9 /* PositionCollectionViewCell.swift in Sources */,
 				843F317828ACAB7800E0C44A /* OrderDetailsCollectionViewCell.swift in Sources */,
 				844A2F122859EFA4007D4AAE /* OrderTableViewCell.swift in Sources */,
