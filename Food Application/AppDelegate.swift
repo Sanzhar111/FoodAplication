@@ -15,10 +15,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        print("app")        
+        /*do {
+            try AuthService.shared.auth.signOut()
+        } catch let error as NSError {
+            print("Fail: \(error.localizedDescription)")
+        } catch {
+            print("Fail: \(error)")
+        }*/
+       print("app")
         return true
     }
-    
+
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

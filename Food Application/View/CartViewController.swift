@@ -18,6 +18,10 @@ class CartViewController: UIViewController {
     @IBOutlet weak var orderButton: UIButton!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var emptyLabel: UILabel!
+    
+    var viewControllerToInsertBelow : UIViewController?
+
+    
     private var viewHeightVar = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,7 @@ class CartViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("load"), object: nil)
       //  Utilities.styleFilledButton(cleanButton)
         Utilities.styleFilledButton(orderButton)
+        self.navigationController?.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -54,7 +59,7 @@ class CartViewController: UIViewController {
         heightSetup()
          priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
     }
-    @IBAction func orderButtonIsTapped(_ sender: UIButton) {
+   /* @IBAction func orderButtonIsTapped(_ sender: UIButton) {
         if CartViewModel.shared.cartPositions.count == 0 {
             showDefaultAlertController()
         } else {
@@ -82,7 +87,7 @@ class CartViewController: UIViewController {
             alertContoller.addAction(alerAction)
             self.present(alertContoller, animated: true)
         }
-    }
+    }*/
     @IBAction func cleanButtonIsTapped(_ sender: Any) {
         if CartViewModel.shared.cartPositions.count == 0 {
             showDefaultAlertController()
@@ -128,7 +133,25 @@ class CartViewController: UIViewController {
         }
         
     }
-    
+    @IBAction func orderButtonIsTapped(_ sender: UIButton) {
+        if CartViewModel.shared.cartPositions.count == 0 {
+            showDefaultAlertController()
+        } else {
+            if ProfileViewModel.shared.profile?.name == "" || ProfileViewModel.shared.profile?.phone == "" ||
+                ProfileViewModel.shared.profile?.street == "" ||
+                ProfileViewModel.shared.profile?.country == "" ||
+                ProfileViewModel.shared.profile?.city == "" {
+                //openViewController()vewvrewerbwnowrebnwrijn
+                pushTwoViewControllers()
+            }
+        }
+    }
+    private func openViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "InfoForDeliveryViewController") as! InfoForDeliveryViewController
+        nextViewController.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(nextViewController, animated: true)
+    }
     private func heightSetup() {
         self.view.layoutIfNeeded()
         self.tableViewHeight.constant =
@@ -215,5 +238,33 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource,SelectedT
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+    }
+}
+extension CartViewController:UINavigationControllerDelegate {
+    func pushTwoViewControllers() {
+        if let viewController2 = self.storyboard?.instantiateViewController(withIdentifier: "ProfileDetailsViewController"),
+               let viewController3 = self.storyboard?.instantiateViewController(withIdentifier: "InfoForDeliveryViewController") { //change this to your identifiers
+                    self.viewControllerToInsertBelow = viewController2
+            self.navigationController?.modalPresentationStyle = .currentContext
+            self.navigationController?.show(viewController3, sender: self)
+           /*
+            if var navstack = navigationController?.viewControllers{
+                                navstack.append(contentsOf: [viewController2,viewController3])
+                                navigationController?.setViewControllers(navstack, animated: true)
+                            }*/
+                    //self.navigationController?.pushViewController(viewController3, animated: true)
+            }
+        }
+
+        //MARK: - UINavigationControllerDelegate
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        if let vc = viewControllerToInsertBelow {
+                    viewControllerToInsertBelow = nil
+            let index = navigationController.viewControllers.firstIndex(of: viewController)!
+            //indexOf(viewController)!
+            navigationController.viewControllers.insert(vc, at: index)
+            //insert(vc, atIndex: index)
+                }
+
     }
 }

@@ -32,33 +32,33 @@ class ProfileViewController: UIViewController {
         numberTextField.delegate = self
         addressTextField.delegate = self
         
-        nameTextField.text = ProfileViewModel.shared.profile?.name
-        if String(ProfileViewModel.shared.profile!.phone) == "0" {
-            numberTextField.text = ""
-        } else {
-            numberTextField.text = String(ProfileViewModel.shared.profile!.phone)
-        }
-        
-        addressTextField.text = ProfileViewModel.shared.profile?.address
-        
         numberTextField.keyboardType = .numbersAndPunctuation
-        
         setButton(button: button, tag: 1, textField: nameTextField)
         setButton(button: button2, tag: 2, textField: numberTextField)
         setButton(button: button3, tag: 3, textField: addressTextField)
         Utilities.styleFilledButton(exitButton)
         profilePhotoImageView.layer.cornerRadius = 5
+        showInformation()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        showInformation()
+        self.ordersTableView.reloadData()
+    }
+    func showInformation() {
         if let image = ProfileViewModel.shared.imageProfile {
             profilePhotoImageView.image = image
         } else {
             profilePhotoImageView.image = UIImage(systemName: "person.fill")
             profilePhotoImageView.tintColor = .black
         }
-        
-        self.ordersTableView.reloadData()
+        nameTextField.text = ProfileViewModel.shared.profile?.name
+        //if String(ProfileViewModel.shared.profile!.phone) == "0" {
+          //  numberTextField.text = ""
+        //} else {
+            numberTextField.text = String(ProfileViewModel.shared.profile!.phone)
+        //}
+        addressTextField.text = ProfileViewModel.shared.profile?.address
     }
     @objc func reloadImage() {
         profilePhotoImageView.image = ProfileViewModel.shared.imageProfile
@@ -79,11 +79,14 @@ class ProfileViewController: UIViewController {
         print("i tapped")
         isClickable = true
         if responder.tag == 1 {
-            nameTextField.becomeFirstResponder()
+            showEditViewController()
+            //nameTextField.becomeFirstResponder()
         } else if responder.tag == 2 {
-            numberTextField.becomeFirstResponder()
+            showEditViewController()
+            //numberTextField.becomeFirstResponder()
         } else {
-            addressTextField.becomeFirstResponder()
+            showEditViewController()
+            //addressTextField.becomeFirstResponder()
         }
     }
     @IBAction func exitButtonTapped(_ sender: UIButton) {
@@ -112,6 +115,13 @@ class ProfileViewController: UIViewController {
         } else {
             navigationManager.show(screen: .onboarding, inController: self)
         }
+    }
+    func showEditViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DeliveryInfoViewController") as! DeliveryInfoViewController
+        nextViewController.modalPresentationStyle = .fullScreen
+        nextViewController.delegate = self
+        self.navigationController?.show(nextViewController, sender: self)
     }
     @IBAction func setImageButtonIsTapped(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -168,7 +178,7 @@ extension ProfileViewController : UITextFieldDelegate {
             isClickable = false
         } else if textField == numberTextField {
             numberTextField.resignFirstResponder()
-            ProfileViewModel.shared.profile!.phone = Int(numberTextField.text ?? "0") ?? 0
+            ProfileViewModel.shared.profile!.phone = numberTextField.text ?? ""
             ProfileViewModel.shared.setProfile()
             isClickable = false
         } else {
@@ -242,5 +252,16 @@ extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationCon
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+}
+extension ProfileViewController:DeliveryInfoViewControllerDelegate {
+    func changeInfo(information: String, name: String, phoneNumber: String) {
+        self.addressTextField.text = information
+        self.nameTextField.text = name
+        self.numberTextField.text = phoneNumber
+        ProfileViewModel.shared.profile?.address = information
+        ProfileViewModel.shared.profile?.name = name
+        ProfileViewModel.shared.profile?.phone =  phoneNumber
+        ProfileViewModel.shared.setProfile()
     }
 }

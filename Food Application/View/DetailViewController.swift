@@ -53,11 +53,15 @@ final class DetailViewController: UIViewController {
         }) {
             print(index)
     //        CartViewModel.shared.positions[index].count += self.countProduct
-            showAlert()
+            self.navigationController?.dismiss(animated: true)
+            showToast(message: "Добавлено в корзину")
+            //ergwegwegwegweg
             CartViewModel.shared.cartPositions[index].count += self.countProduct
         } else {
             print("no index")
-            showAlert()
+            showToast(message: "Добавлено в корзину")
+            self.navigationController?.dismiss(animated: true)
+            //wergwegwergewr
             CartViewModel.shared.addPosition(position)
         }
         
@@ -65,15 +69,48 @@ final class DetailViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name("load"), object: nil)
         self.navigationController?.popViewController(animated: true)
     }
-    func showAlert() {
-        let alertContoller = UIAlertController(title: nil,
-                                               message: "Товар добавлен в корзину",
-                                               preferredStyle: .alert)
-        let alerAction = UIAlertAction(title: "Закрыть", style: .default)
-        alertContoller.addAction(alerAction)
-        self.present(alertContoller, animated: true)
+    func showToast(message:String) {
+        guard let window = UIApplication.shared.keyWindow  else {
+            return
+        }
+        let toastLavel = UILabel()
+        toastLavel.text = message
+        toastLavel.textAlignment = .center
+        toastLavel.font = .systemFont(ofSize: 18)
+        toastLavel.textColor = .white
+        toastLavel.backgroundColor = UIColor.init(red: 48/255, green: 173/255, blue: 99/255, alpha: 1)
+        toastLavel.numberOfLines = 0
+        let textSize = toastLavel.intrinsicContentSize
+        toastLavel.frame = CGRect(x: 20, y: window.frame.minY + 50, width: self.view.frame.width - 20, height: textSize.height + 30)
+        toastLavel.alpha = 0
+        toastLavel.center.x = window.center.x
+        toastLavel.layer.cornerRadius = 10
+        toastLavel.layer.masksToBounds = true
+        window.addSubview(toastLavel)
+        UIView.animate(withDuration: 0.25, delay: 0.1, options: .curveLinear, animations: {
+            toastLavel.layer.masksToBounds = true
+            var frame = toastLavel.frame
+            frame.origin.x = frame.origin.x
+            frame.origin.y = frame.origin.y + 10
+            toastLavel.frame = frame
+            toastLavel.alpha = 1
+        }, completion: { finished in
+            print("Animation completed")
+        })
 
-       
+        UIView.animate(withDuration: 0.2, delay: 2.1, options: .curveLinear, animations: {
+            var frame = toastLavel.frame
+            frame.origin.x = frame.origin.x
+            frame.origin.y = frame.origin.y - 10
+            toastLavel.frame = frame
+            toastLavel.alpha = 0
+        }, completion: { finished in
+            toastLavel.removeFromSuperview()
+            print("Animation completed")
+        })
+        
     }
+    
+    
 }
 

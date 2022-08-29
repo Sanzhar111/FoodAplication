@@ -15,7 +15,7 @@ class AuthService {
     func signUp(email:String,password:String,completion:@escaping(Result<User,Error>)->()) {// регистрация пользователя
         auth.createUser(withEmail: email, password: password) { result, error in
             if let result = result {
-                let firebaseUser = FirebaseUser(id: result.user.uid, name: "", phone: 0, address: "", profileImage: "")
+                let firebaseUser = FirebaseUser(id: result.user.uid, name: "", phone: "", address: "", profileImage: "", country: "", city: "", street: "", numberHouse: "", index: "", flatOrOfficeNmumber: "", porch: "", floor: "", intercom: "", commentsForACourier: "")
                 DataBaseService.shared.setUser(user: firebaseUser) { resultDB in
                     switch resultDB {
                     case .success(let user):
