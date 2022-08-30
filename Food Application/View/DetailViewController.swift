@@ -53,18 +53,19 @@ final class DetailViewController: UIViewController {
         }) {
             print(index)
     //        CartViewModel.shared.positions[index].count += self.countProduct
-            self.navigationController?.dismiss(animated: true)
+            
+            //self.navigationController?.dismiss(animated: true)
          
             
-            //showToast(message: "Добавлено в корзину")
+            showToast(message: "Добавлено в корзину")
             
             
             //ergwegwegwegweg
             CartViewModel.shared.cartPositions[index].count += self.countProduct
         } else {
             print("no index")
-           // showToast(message: "Добавлено в корзину")
-            self.navigationController?.dismiss(animated: true)
+            showToast(message: "Добавлено в корзину")
+            //self.navigationController?.dismiss(animated: true)
             //wergwegwergewr
             CartViewModel.shared.addPosition(position)
         }
