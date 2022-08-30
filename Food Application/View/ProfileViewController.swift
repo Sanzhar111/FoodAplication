@@ -102,11 +102,14 @@ class ProfileViewController: UIViewController {
             }
             ProfileViewModel.shared.orders.removeAll()
             ProfileViewModel.shared.imageProfile = nil
+            ProfileViewModel.shared.profile = nil
+            CartViewModel.shared.cartPositions.removeAll()
             self.showInitialScreen()
         }
         let action2 = UIAlertAction(title: "Отмена", style: .cancel)
         alert.addAction(action)
         alert.addAction(action2)
+        
         present(alert, animated: true)
     }
      func showInitialScreen() {

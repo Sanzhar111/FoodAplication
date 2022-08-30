@@ -23,7 +23,10 @@ class ProfileDetailsViewController: UIViewController {
     @IBOutlet weak var priceLabelUpper: UILabel!
     @IBOutlet weak var countProductLabelRightDownCorner: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    var profileArray = [ClientInformation(image: UIImage(systemName: "person")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Кульбаев Санжар 79506626838"),
+    var addressVariable = ""
+    var nameVariable = ""
+    var phoneVariable = ""
+    var profileArray = [ClientInformation(image: UIImage(systemName: "person")!, rightImage: UIImage(systemName: "chevron.right")!, text: "\(ProfileViewModel.shared.profile?.name ?? "") \(ProfileViewModel.shared.profile?.phone ?? "") "),
                         ClientInformation(image: UIImage(systemName: "message")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Комментарий курьеру"),
                         ClientInformation(image: UIImage(named: "дверь")!, rightImage: UIImage(systemName: "circle")!, text: "Оставить у двери"),
                         ClientInformation(image: UIImage(systemName: "phone")!, rightImage: UIImage(systemName: "circle")!, text: "Позвонить перед доставкой")]
@@ -33,19 +36,8 @@ class ProfileDetailsViewController: UIViewController {
                      Card(cardNumber: "1111", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil)]
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "ProfileDetailTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileDetailTableViewCell")
-        collectionView.register(UINib(nibName: "OrderDetailsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "OrderDetailsCollectionViewCell")
-        timeCollectionView.register(UINib(nibName: "TimeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TimeCollectionViewCell")
-        cardsCollectionView.register(UINib(nibName: "CardsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CardsCollectionViewCell")
-        tableView.delegate = self
-        collectionView.delegate = self
-        timeCollectionView.delegate = self
-        cardsCollectionView.delegate = self
-        tableView.dataSource = self
-        collectionView.dataSource = self
-        timeCollectionView.dataSource = self
-        cardsCollectionView.dataSource = self
-        
+        registerCells()
+        setUpDelegatesAndDataSources()
         Utilities.styleFilledButton(editButton)
         Utilities.styleFilledButton(payButton)
         self.view.layoutIfNeeded()
@@ -59,7 +51,22 @@ class ProfileDetailsViewController: UIViewController {
         collectionView.reloadData()
         labelSet()
     }
-    
+    func setUpDelegatesAndDataSources() {
+        tableView.delegate = self
+        collectionView.delegate = self
+        timeCollectionView.delegate = self
+        cardsCollectionView.delegate = self
+        tableView.dataSource = self
+        collectionView.dataSource = self
+        timeCollectionView.dataSource = self
+        cardsCollectionView.dataSource = self
+    }
+    func registerCells() {
+        tableView.register(UINib(nibName: "ProfileDetailTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileDetailTableViewCell")
+        collectionView.register(UINib(nibName: "OrderDetailsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "OrderDetailsCollectionViewCell")
+        timeCollectionView.register(UINib(nibName: "TimeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TimeCollectionViewCell")
+        cardsCollectionView.register(UINib(nibName: "CardsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CardsCollectionViewCell")
+    }
     @IBAction func closeButton(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true)
@@ -73,14 +80,20 @@ class ProfileDetailsViewController: UIViewController {
         countProductLabelLeftDownCorner.text = "Товары (\(CartViewModel.shared.countPositions))"
         priceLabelUpper.text = "\(CartViewModel.shared.costForAll) ₽"
         priceLabel.text = "\(CartViewModel.shared.costForAll) ₽"
-        addressLabel.text = (ProfileViewModel.shared.profile?.address)
+        
+        if addressVariable != "" {
+            addressLabel.text = addressVariable
+        } else {
+            addressLabel.text = (ProfileViewModel.shared.profile?.address)
+        }
+        tableView.reloadData()
     }
     func openViewController() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DeliveryInfoViewController") as! DeliveryInfoViewController
         nextViewController.modalPresentationStyle = .fullScreen
         nextViewController.delegate = self
-        self.navigationController?.show(nextViewController, sender: self)
+        self.navigationController?.pushViewController(nextViewController, animated: true)
     }
     
 }
@@ -151,12 +164,29 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
 }
 extension ProfileDetailsViewController:DeliveryInfoViewControllerDelegate {
     func changeInfo(information: String, name: String, phoneNumber: String) {
-        self.addressLabel.text = information
+        self.addressVariable = information
+        profileArray[0].text = name + " " + phoneNumber
         ProfileViewModel.shared.profile?.address = information
         ProfileViewModel.shared.profile?.name = name
         ProfileViewModel.shared.profile?.phone =  phoneNumber
+        labelSet()
         ProfileViewModel.shared.setProfile()
     }
 }
-
-
+extension ProfileDetailsViewController:InfoForDeliveryDelegate {
+    func updateInfo(name: String, address: String, country: String, city: String, street: String, numberHouse: String, phone: String) {
+        addressVariable = address
+        profileArray[0].text = name + " " + phone
+        ProfileViewModel.shared.profile?.name = name
+        ProfileViewModel.shared.profile?.country = country
+        ProfileViewModel.shared.profile?.city = city
+        ProfileViewModel.shared.profile?.street = street
+        ProfileViewModel.shared.profile?.numberHouse = numberHouse
+        ProfileViewModel.shared.profile?.phone = phone
+        ProfileViewModel.shared.profile?.address = address
+        labelSet()
+        ProfileViewModel.shared.setProfile()
+    }
+    
+    
+}

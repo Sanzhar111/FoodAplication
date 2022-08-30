@@ -143,14 +143,10 @@ class CartViewController: UIViewController {
                 ProfileViewModel.shared.profile?.city == "" {
                 //openViewController()vewvrewerbwnowrebnwrijn
                 pushTwoViewControllers()
+            } else {
+                showControllersForOrder()
             }
         }
-    }
-    private func openViewController() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "InfoForDeliveryViewController") as! InfoForDeliveryViewController
-        nextViewController.modalPresentationStyle = .fullScreen
-        self.navigationController?.present(nextViewController, animated: true)
     }
     private func heightSetup() {
         self.view.layoutIfNeeded()
@@ -242,19 +238,22 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource,SelectedT
 }
 extension CartViewController:UINavigationControllerDelegate {
     func pushTwoViewControllers() {
-        if let viewController2 = self.storyboard?.instantiateViewController(withIdentifier: "ProfileDetailsViewController"),
-               let viewController3 = self.storyboard?.instantiateViewController(withIdentifier: "InfoForDeliveryViewController") { //change this to your identifiers
-                    self.viewControllerToInsertBelow = viewController2
+        if let viewController2 = self.storyboard?.instantiateViewController(withIdentifier: "ProfileDetailsViewController") as? ProfileDetailsViewController,
+               let viewController3 = self.storyboard?.instantiateViewController(withIdentifier: "InfoForDeliveryViewController") as? InfoForDeliveryViewController { //change this to your identifiers
+            viewController3.delegate = viewController2
+            self.viewControllerToInsertBelow = viewController2
             self.navigationController?.modalPresentationStyle = .currentContext
             self.navigationController?.show(viewController3, sender: self)
-           /*
-            if var navstack = navigationController?.viewControllers{
-                                navstack.append(contentsOf: [viewController2,viewController3])
-                                navigationController?.setViewControllers(navstack, animated: true)
-                            }*/
-                    //self.navigationController?.pushViewController(viewController3, animated: true)
             }
         }
+    func showControllersForOrder() {
+        if let viewController2 = self.storyboard?.instantiateViewController(withIdentifier: "ProfileDetailsViewController") as? ProfileDetailsViewController,
+               let viewController3 = self.storyboard?.instantiateViewController(withIdentifier: "DeliveryInfoViewController") as? DeliveryInfoViewController { //change this to your identifiers
+            viewController3.delegate = viewController2
+            viewController2.modalPresentationStyle = .fullScreen
+            self.navigationController?.show(viewController2, sender: self)
+    }
+    }
 
         //MARK: - UINavigationControllerDelegate
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
