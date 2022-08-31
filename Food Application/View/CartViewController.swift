@@ -144,10 +144,12 @@ class CartViewController: UIViewController {
                 //openViewController()vewvrewerbwnowrebnwrijn
                 pushTwoViewControllers()
             } else {
+               // openViewController()
                 showControllersForOrder()
             }
         }
     }
+    
     private func heightSetup() {
         self.view.layoutIfNeeded()
         self.tableViewHeight.constant =
@@ -251,10 +253,11 @@ extension CartViewController:UINavigationControllerDelegate {
                let viewController3 = self.storyboard?.instantiateViewController(withIdentifier: "DeliveryInfoViewController") as? DeliveryInfoViewController { //change this to your identifiers
             viewController3.delegate = viewController2
             viewController2.modalPresentationStyle = .fullScreen
+            //navigationController?.modalPresentationStyle = .fullScreen
             self.navigationController?.show(viewController2, sender: self)
+            //show(viewController2, sender: self)
     }
     }
-
         //MARK: - UINavigationControllerDelegate
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         if let vc = viewControllerToInsertBelow {
@@ -263,7 +266,6 @@ extension CartViewController:UINavigationControllerDelegate {
             //indexOf(viewController)!
             navigationController.viewControllers.insert(vc, at: index)
             //insert(vc, atIndex: index)
-                }
-
+        }
     }
 }

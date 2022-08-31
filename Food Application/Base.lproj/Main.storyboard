@@ -277,7 +277,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Перейти к оформлению"/>
                                                 <connections>
-                                                    <action selector="orderButtonIsTapped:" destination="DjF-v3-2rX" eventType="touchUpInside" id="8nD-I1-Kyv"/>
+                                                    <action selector="orderButtonIsTapped:" destination="DjF-v3-2rX" eventType="touchUpInside" id="JUq-Jm-Der"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -327,7 +327,7 @@
                         <outlet property="bottomConstraint" destination="kZ8-sx-4DZ" id="dsu-wV-ua7"/>
                         <outlet property="cleanButton" destination="pA2-YK-rWm" id="2at-Eh-3jB"/>
                         <outlet property="emptyLabel" destination="zMk-sP-KZ2" id="WmB-PS-Uas"/>
-                        <outlet property="orderButton" destination="Vbs-v3-s3K" id="IfE-Eo-r6O"/>
+                        <outlet property="orderButton" destination="Vbs-v3-s3K" id="NSg-X7-0II"/>
                         <outlet property="priceForAllLabel" destination="neM-hg-h1z" id="lfj-Dv-1gt"/>
                         <outlet property="scrollView" destination="E8F-N8-Ftn" id="rD6-L5-XIO"/>
                         <outlet property="tableView" destination="y5P-bZ-tVg" id="SJy-Do-GhM"/>

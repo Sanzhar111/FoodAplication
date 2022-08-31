@@ -14,4 +14,5 @@ struct Card {
     var cvc:String?
     var date1:String?
     var date2:String?
+    var isSelected:Bool
 }

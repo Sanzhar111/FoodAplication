@@ -30,10 +30,11 @@ class ProfileDetailsViewController: UIViewController {
                         ClientInformation(image: UIImage(systemName: "message")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Комментарий курьеру"),
                         ClientInformation(image: UIImage(named: "дверь")!, rightImage: UIImage(systemName: "circle")!, text: "Оставить у двери"),
                         ClientInformation(image: UIImage(systemName: "phone")!, rightImage: UIImage(systemName: "circle")!, text: "Позвонить перед доставкой")]
+    var selectedCell:IndexPath = IndexPath.init(row: 0, section: 0)
     var timeArray = ["В течении часа", "12.00-13.00","13.00-14.00","14.00-15.00","15.00-16.00","16.00-17.00","17.00-18.00","18.00-19.00","19.00-20.00","20.00-21.00","21.00-22.00","22.00-23.00","23.00-00.00"]
-    var cardArray = [Card(cardNumber: "1234", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil),
-                     Card(cardNumber: "1111", imageCard: UIImage(named: "Сбер"), cvc: nil, date1: nil, date2: nil),
-                     Card(cardNumber: "1111", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil)]
+    var cardArray = [Card(cardNumber: "1234", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false),
+                     Card(cardNumber: "1111", imageCard: UIImage(named: "Сбер"), cvc: nil, date1: nil, date2: nil, isSelected: false),
+                     Card(cardNumber: "1111", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false)]
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCells()
@@ -70,6 +71,10 @@ class ProfileDetailsViewController: UIViewController {
     @IBAction func closeButton(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true)
+        for i in 0 ..< cardArray.count {
+            cardArray[i].isSelected = false
+        }
+    selectedCell = IndexPath.init(row: 0, section: 0)
     }
     @IBAction func editButtonIsTapped(_ sender: Any) {
         openViewController()
@@ -142,6 +147,7 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
         }
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.collectionView {
             print(CartViewModel.shared.cartPositions.count)
@@ -161,6 +167,80 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
             return CGSize(width: self.view.bounds.width / 3, height: 64)
         }
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == cardsCollectionView {
+         
+                var selectedcell = collectionView.cellForItem(at: indexPath)
+                //let notSelectedcell = collectionView.cellForItem(at: selectedCell)
+            print("indexPath = \(indexPath)")
+            print("NITindexPath = \(selectedCell)\n")
+              
+                    if selectedCell.row != indexPath.row {
+                        cardArray[indexPath.row].isSelected = true
+                        cardArray[selectedCell.row].isSelected = false
+                      /*  notSelectedcell?.layer.cornerRadius = 6
+                        notSelectedcell!.layer.borderWidth = 1.0
+                        notSelectedcell!.layer.borderColor = UIColor.white.cgColor
+                        */
+                        print("indexPath = \(indexPath)")
+                        print("NITindexPath = \(selectedCell)\n")
+
+                        selectedcell = collectionView.cellForItem(at: selectedCell)
+                        selectedcell?.layer.cornerRadius = 6
+                        selectedcell!.layer.borderWidth = 1.0
+                        selectedcell!.layer.borderColor = UIColor.clear.cgColor
+                        //collectionView.reloadItems(at: [selectedCell])
+
+                        print("indexPath = \(indexPath)")
+                        print("NITindexPath = \(selectedCell)\n")
+
+                        selectedcell = collectionView.cellForItem(at: indexPath)
+                        selectedcell?.layer.cornerRadius = 6
+                        selectedcell!.layer.borderWidth = 1.0
+                        selectedcell!.layer.borderColor = UIColor.blue.cgColor
+                        
+                        
+                        //collectionView.reloadItems(at: [indexPath,selectedCell])
+                      //  collectionView.reloadItems(at: [indexPath])
+                        /*
+                        notSelectedcell?.layer.cornerRadius = 6
+                        notSelectedcell!.layer.borderWidth = 1.0
+                        notSelectedcell!.layer.borderColor = UIColor.white.cgColor
+                        */
+                       // collectionView.reloadData()
+                        selectedCell = indexPath
+                    } else if (selectedCell.row == indexPath.row) && (cardArray[indexPath.row].isSelected == false) {
+                        print("hh]n")
+                        cardArray[indexPath.row].isSelected = true
+                        selectedcell?.layer.cornerRadius = 6
+                        selectedcell!.layer.borderWidth = 1.0
+                        selectedcell!.layer.borderColor = UIColor.blue.cgColor
+                      //  collectionView.reloadData()
+                      //  collectionView.reloadItems(at: [indexPath])
+                        selectedCell = indexPath
+
+                    }
+                    
+                
+                
+                
+            
+            
+        }
+        
+        
+    }
+    /*func upValue(value: Int, sender: TwoCellsTableViewCell) {
+        print("the major value = \(value)")
+        if let selectedIndexPath = tableView.indexPath(for: sender) {
+            print("is seleceted(=)==\(selectedIndexPath)")
+            CartViewModel.shared.cartPositions[selectedIndexPath.row].count = value
+            priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
+            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+            
+        }
+    }*/
+
 }
 extension ProfileDetailsViewController:DeliveryInfoViewControllerDelegate {
     func changeInfo(information: String, name: String, phoneNumber: String) {
@@ -184,7 +264,7 @@ extension ProfileDetailsViewController:InfoForDeliveryDelegate {
         ProfileViewModel.shared.profile?.numberHouse = numberHouse
         ProfileViewModel.shared.profile?.phone = phone
         ProfileViewModel.shared.profile?.address = address
-        labelSet()
+        //labelSet()
         ProfileViewModel.shared.setProfile()
     }
     
