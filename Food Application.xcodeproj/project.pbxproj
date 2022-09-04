@@ -51,6 +51,8 @@
 		849CD0662878235D0032619E /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CD0652878235D0032619E /* Menu.swift */; };
 		84A04A0828B9F420009C8D24 /* InfoForDeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A04A0728B9F420009C8D24 /* InfoForDeliveryViewController.swift */; };
 		84A2D06A28BCAD2800915B32 /* InfoForDeliveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2D06928BCAD2800915B32 /* InfoForDeliveryViewModel.swift */; };
+		84A2D06C28C1D79800915B32 /* PayCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2D06B28C1D79800915B32 /* PayCardViewController.swift */; };
+		84A2D06F28C20ACB00915B32 /* UIView + dropShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2D06E28C20ACB00915B32 /* UIView + dropShadow.swift */; };
 		84BD137F28B7BAAA002A455A /* DeliveryInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD137E28B7BAAA002A455A /* DeliveryInfoViewModel.swift */; };
 		84C0FA692844AA7E006D89C9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0FA682844AA7E006D89C9 /* DetailViewController.swift */; };
 		84C0FA792847C52C006D89C9 /* ListOfTheProductsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0FA772847C52C006D89C9 /* ListOfTheProductsCell.swift */; };
@@ -145,6 +147,8 @@
 		849CD0652878235D0032619E /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		84A04A0728B9F420009C8D24 /* InfoForDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoForDeliveryViewController.swift; sourceTree = "<group>"; };
 		84A2D06928BCAD2800915B32 /* InfoForDeliveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoForDeliveryViewModel.swift; sourceTree = "<group>"; };
+		84A2D06B28C1D79800915B32 /* PayCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCardViewController.swift; sourceTree = "<group>"; };
+		84A2D06E28C20ACB00915B32 /* UIView + dropShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + dropShadow.swift"; sourceTree = "<group>"; };
 		84BD137E28B7BAAA002A455A /* DeliveryInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryInfoViewModel.swift; sourceTree = "<group>"; };
 		84C0FA682844AA7E006D89C9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		84C0FA772847C52C006D89C9 /* ListOfTheProductsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfTheProductsCell.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 				843F313228A662BE00E0C44A /* ProfileDetailsViewController.swift */,
 				84DF96AA28B38DB40034893A /* DeliveryInfoViewController.swift */,
 				84A04A0728B9F420009C8D24 /* InfoForDeliveryViewController.swift */,
+				84A2D06B28C1D79800915B32 /* PayCardViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -263,6 +268,7 @@
 				84C0FA7B284A389A006D89C9 /* ViewModel */,
 				84C0FA762847C4C9006D89C9 /* Componets */,
 				84E7E5A7287EAB7000ACE20F /* Utilities */,
+				84A2D06D28C20A0B00915B32 /* Extensions */,
 				84753902283465B700CCFF90 /* Assets.xcassets */,
 				84753904283465B700CCFF90 /* LaunchScreen.storyboard */,
 				84D902D12853629900B47152 /* GoogleService-Info.plist */,
@@ -286,6 +292,14 @@
 				8475391C283465B700CCFF90 /* Food_ApplicationUITestsLaunchTests.swift */,
 			);
 			path = "Food ApplicationUITests";
+			sourceTree = "<group>";
+		};
+		84A2D06D28C20A0B00915B32 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				84A2D06E28C20ACB00915B32 /* UIView + dropShadow.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		84C0FA762847C4C9006D89C9 /* Componets */ = {
@@ -538,9 +552,11 @@
 				84C0FA82284BB367006D89C9 /* Position.swift in Sources */,
 				84D902E22854808300B47152 /* DatabaseService.swift in Sources */,
 				84DF96AB28B38DB40034893A /* DeliveryInfoViewController.swift in Sources */,
+				84A2D06F28C20ACB00915B32 /* UIView + dropShadow.swift in Sources */,
 				84A04A0828B9F420009C8D24 /* InfoForDeliveryViewController.swift in Sources */,
 				84C0FA85284DCBE7006D89C9 /* PositionCollectionViewCell.swift in Sources */,
 				843F317828ACAB7800E0C44A /* OrderDetailsCollectionViewCell.swift in Sources */,
+				84A2D06C28C1D79800915B32 /* PayCardViewController.swift in Sources */,
 				844A2F122859EFA4007D4AAE /* OrderTableViewCell.swift in Sources */,
 				8403B3DC284F21AC00DC9392 /* String+SizeWidth.swift in Sources */,
 				84A2D06A28BCAD2800915B32 /* InfoForDeliveryViewModel.swift in Sources */,

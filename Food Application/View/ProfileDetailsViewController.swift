@@ -32,7 +32,7 @@ class ProfileDetailsViewController: UIViewController {
                         ClientInformation(image: UIImage(systemName: "phone")!, rightImage: UIImage(systemName: "circle")!, text: "Позвонить перед доставкой")]
     var selectedCell:IndexPath = IndexPath.init(row: 0, section: 0)
     var timeArray = ["В течении часа", "12.00-13.00","13.00-14.00","14.00-15.00","15.00-16.00","16.00-17.00","17.00-18.00","18.00-19.00","19.00-20.00","20.00-21.00","21.00-22.00","22.00-23.00","23.00-00.00"]
-    var cardArray = [Card(cardNumber: "1234", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false),
+    var cardArray = [Card(cardNumber: "", imageCard: nil, imageView: UIImage(named: "addCard"), cvc: nil, date1: nil, date2: nil, isSelected: false),Card(cardNumber: "1234", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false),
                      Card(cardNumber: "1111", imageCard: UIImage(named: "Сбер"), cvc: nil, date1: nil, date2: nil, isSelected: false),
                      Card(cardNumber: "1111", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false)]
     override func viewDidLoad() {
@@ -143,6 +143,9 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardsCollectionViewCell", for: indexPath) as! CardsCollectionViewCell
             cell.setUp(card: cardArray[indexPath.item])
+            cell.layer.borderColor = UIColor.lightGray.cgColor
+            cell.layer.cornerRadius = 6
+            cell.layer.borderWidth = 1
             return cell
         }
     }
@@ -188,7 +191,7 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
                         selectedcell = collectionView.cellForItem(at: selectedCell)
                         selectedcell?.layer.cornerRadius = 6
                         selectedcell!.layer.borderWidth = 1.0
-                        selectedcell!.layer.borderColor = UIColor.clear.cgColor
+                        selectedcell!.layer.borderColor = UIColor.lightGray.cgColor
                         //collectionView.reloadItems(at: [selectedCell])
 
                         print("indexPath = \(indexPath)")
@@ -199,7 +202,12 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
                         selectedcell!.layer.borderWidth = 1.0
                         selectedcell!.layer.borderColor = UIColor.blue.cgColor
                         
-                        
+                        if indexPath.row == 0 {
+                            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PayCardViewController") as! PayCardViewController
+                            nextViewController.modalPresentationStyle = .fullScreen
+                            self.navigationController?.pushViewController(nextViewController, animated: true)
+                        }
                         //collectionView.reloadItems(at: [indexPath,selectedCell])
                       //  collectionView.reloadItems(at: [indexPath])
                         /*
@@ -220,12 +228,6 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
                         selectedCell = indexPath
 
                     }
-                    
-                
-                
-                
-            
-            
         }
         
         

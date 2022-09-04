@@ -8,6 +8,7 @@
 import UIKit
 
 class CardsCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var cardNumberLabel: UILabel!
     @IBOutlet weak var cardImage: UIImageView!
     @IBOutlet weak var myView: UIView!
@@ -16,7 +17,15 @@ class CardsCollectionViewCell: UICollectionViewCell {
         myView.layer.cornerRadius = 5
     }
     func setUp(card:Card) {
-        self.cardNumberLabel.text = "** " + card.cardNumber
-        self.cardImage.image = card.imageCard
+        if card.imageView != nil {
+            mainImageView.image = card.imageView
+            self.cardNumberLabel.text = card.cardNumber
+            self.cardImage.image = card.imageCard
+        } else {
+            mainImageView.image = card.imageView
+            self.cardNumberLabel.text = "** " + card.cardNumber
+            self.cardImage.image = card.imageCard
+
+        }
     }
 }

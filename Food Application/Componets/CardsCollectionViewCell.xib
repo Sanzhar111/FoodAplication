@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,10 +19,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vSD-OK-ibx">
                         <rect key="frame" x="0.0" y="0.0" width="462" height="229"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="** 6732" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Poh-bH-28e">
-                                <rect key="frame" x="5" y="206" width="53" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Poh-bH-28e">
+                                <rect key="frame" x="5" y="224" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UJC-Fp-ejt">
@@ -33,11 +32,17 @@
                                     <constraint firstAttribute="height" constant="30" id="Wkz-4n-hxy"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addCard" translatesAutoresizingMaskIntoConstraints="NO" id="LeB-9s-KUp">
+                                <rect key="frame" x="0.0" y="0.0" width="462" height="229"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <constraints>
+                            <constraint firstItem="LeB-9s-KUp" firstAttribute="top" secondItem="vSD-OK-ibx" secondAttribute="top" id="2GD-OV-QIf"/>
                             <constraint firstAttribute="trailing" secondItem="UJC-Fp-ejt" secondAttribute="trailing" constant="5" id="3V8-sT-XdR"/>
+                            <constraint firstItem="LeB-9s-KUp" firstAttribute="leading" secondItem="vSD-OK-ibx" secondAttribute="leading" id="G9Z-PX-FgE"/>
                             <constraint firstItem="Poh-bH-28e" firstAttribute="leading" secondItem="vSD-OK-ibx" secondAttribute="leading" constant="5" id="LET-jl-rK9"/>
+                            <constraint firstAttribute="trailing" secondItem="LeB-9s-KUp" secondAttribute="trailing" id="NM5-k6-MRu"/>
+                            <constraint firstAttribute="bottom" secondItem="LeB-9s-KUp" secondAttribute="bottom" id="Z97-bN-3Ex"/>
                             <constraint firstAttribute="bottom" secondItem="UJC-Fp-ejt" secondAttribute="bottom" constant="5" id="b0T-x7-HYn"/>
                             <constraint firstAttribute="bottom" secondItem="Poh-bH-28e" secondAttribute="bottom" constant="5" id="kjV-sA-mqn"/>
                         </constraints>
@@ -55,14 +60,13 @@
             <connections>
                 <outlet property="cardImage" destination="UJC-Fp-ejt" id="z0D-pB-Tvr"/>
                 <outlet property="cardNumberLabel" destination="Poh-bH-28e" id="HS6-1J-6gq"/>
+                <outlet property="mainImageView" destination="LeB-9s-KUp" id="iDt-II-8F0"/>
                 <outlet property="myView" destination="vSD-OK-ibx" id="Gux-rb-U9W"/>
             </connections>
             <point key="canvasLocation" x="240.57971014492756" y="128.90625"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <image name="addCard" width="1300" height="1300"/>
     </resources>
 </document>

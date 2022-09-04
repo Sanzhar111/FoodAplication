@@ -11,6 +11,7 @@ import UIKit
 struct Card {
     var cardNumber:String
     var imageCard:UIImage?
+    var imageView:UIImage?
     var cvc:String?
     var date1:String?
     var date2:String?
