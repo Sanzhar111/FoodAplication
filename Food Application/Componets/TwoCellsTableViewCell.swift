@@ -38,6 +38,17 @@ extension TwoCellsTableViewCell: UICollectionViewDelegate,
                                  ChooseCollectionViewCellDelegate,
                                  ChoosenCollectionViewCellDelegate
 {
+    func checkBoxToggle(sender: Any) {
+        if let selectedIndexPath = collectionView.indexPath(for: sender as! UICollectionViewCell) {
+            //data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
+          //  CartViewModel.shared.cartPositions[selectedIndexPath.item].isSelected = !CartViewModel.shared.cartPositions[selectedIndexPath.item].isSelected
+//            position.isSelected = !position.isSelected
+           // collectionView.reloadItems(at: [selectedIndexPath])
+            print("selected at - \(selectedIndexPath)")
+            delegate?.checkBoxToggle(sender: self)
+        }
+    }
+    
     func addValue(value: Int, sender: ChooseCollectionViewCell) {
         if let selectedIndexPath = collectionView.indexPath(for: sender) {
             print("the first value = \(value)")
@@ -51,7 +62,7 @@ extension TwoCellsTableViewCell: UICollectionViewDelegate,
         }
     }
     
-    func checkBoxToggle(sender: ProductListCollectionViewCell) {
+   /* func checkBoxToggle(sender: ProductListCollectionViewCell) {
         if let selectedIndexPath = collectionView.indexPath(for: sender) {
             //data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
           //  CartViewModel.shared.cartPositions[selectedIndexPath.item].isSelected = !CartViewModel.shared.cartPositions[selectedIndexPath.item].isSelected
@@ -60,7 +71,7 @@ extension TwoCellsTableViewCell: UICollectionViewDelegate,
             print("selected at - \(selectedIndexPath)")
             delegate?.checkBoxToggle(sender: self)
         }
-    }
+    }*/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }

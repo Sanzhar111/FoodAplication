@@ -12,8 +12,11 @@ class PayCardViewController: UIViewController {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var cvcView: UIView!
     @IBOutlet weak var insertCardButton: UIButton!
+    @IBOutlet weak var priceLabe: UILabel!
     var selected = false
-    
+    let viewMoedel = PaycardViewModel()
+    var priceVariable = ""
+    var textForAButton = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +25,11 @@ class PayCardViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         setUpButton(image: UIImage(systemName: "square")!)
         seUpViews()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        priceLabe.text = priceVariable
+        payButton.setTitle(textForAButton, for: .normal)
     }
     func seUpViews() {
         cardView.dropShadow(colorView: .white , colorOfShadow: .gray, opacity: 0.6, offSet: CGSize.zero, radius: 4)
@@ -64,7 +72,33 @@ class PayCardViewController: UIViewController {
         insertCardButton.isSelected = selected
        
     }
-    
+     @IBAction func orderButtonIsTapped(_ sender: UIButton) {
+        
+             let order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue)
+             //order.positions = CartViewModel.shared.cartPositions
+             //CartViewModel.shared.cartPositions.removeAll()
+             //priceForAllLabel.text = "0₽"
+             //tableView.reloadData()
+             //heightSetup()
+             //self.tableView.alpha = 0
+             //self.emptyLabel.alpha = 1
+             //moveItemsToBottom()
+             print("order.positions:\(order.positions)")
+                 DataBaseService.shared.setOrder(order: order) { result in
+                     switch result {
+                     case .success(let order):
+                         print("orders:\(order.cost)")
+                         ProfileViewModel.shared.getOrders()
+                     case .failure(let error):
+                         print(error.localizedDescription)
+                     }
+                 }
+             let alertContoller = UIAlertController(title:"Заказ успешно совершен", message:"Cпасибо за покупку!" , preferredStyle: .alert)
+             let alerAction = UIAlertAction(title: "Закрыть", style: .default)
+             alertContoller.addAction(alerAction)
+             self.present(alertContoller, animated: true)
+         
+     }
     /*
     // MARK: - Navigation
 

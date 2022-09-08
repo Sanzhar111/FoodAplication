@@ -154,6 +154,10 @@ class DataBaseService {
             }
         }
     }
+   
+}
+
+extension DataBaseService {
     func uploadImage(currentUserID:String,photo:UIImage,completion:@escaping(Result<URL,Error>)->()) {
         let imageReference = storage.reference().child("avatars").child(AuthService.shared.auth.currentUser!.uid)
         guard let imageData = photo.jpegData(compressionQuality: 0.4) else { return }
@@ -175,4 +179,11 @@ class DataBaseService {
             }
         }
     }
+}
+
+extension DataBaseService {
+    private var cardsRef:CollectionReference {
+        return dataBase.collection("cards")
+    }
+
 }

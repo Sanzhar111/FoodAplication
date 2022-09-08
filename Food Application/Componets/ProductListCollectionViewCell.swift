@@ -7,7 +7,7 @@
 
 import UIKit
 protocol ChoosenCollectionViewCellDelegate:class {
-    func checkBoxToggle(sender:ProductListCollectionViewCell)
+    func checkBoxToggle(sender:Any)
 }
 class ProductListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!

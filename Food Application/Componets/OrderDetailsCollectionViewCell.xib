@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -46,6 +47,17 @@
                             <constraint firstItem="oBS-Yw-FUu" firstAttribute="leading" secondItem="SNn-39-qkI" secondAttribute="leading" id="cN9-Iw-4FI"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYe-nD-xmL">
+                        <rect key="frame" x="302.5" y="5" width="34.5" height="31"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain">
+                            <imageReference key="image" image="multiply" catalog="system" symbolScale="small"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="deletePositionIsTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Fyz-Vv-4BT"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -54,9 +66,11 @@
                 <constraint firstAttribute="trailing" secondItem="agG-qM-odL" secondAttribute="trailing" id="G1F-fX-KQb"/>
                 <constraint firstItem="SNn-39-qkI" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="L9n-gb-jke"/>
                 <constraint firstItem="2eV-GY-aFw" firstAttribute="top" secondItem="SNn-39-qkI" secondAttribute="bottom" constant="5" id="Mfi-dk-Pvz"/>
+                <constraint firstAttribute="trailing" secondItem="EYe-nD-xmL" secondAttribute="trailing" constant="5" id="Upm-Ro-70B"/>
                 <constraint firstItem="2eV-GY-aFw" firstAttribute="top" secondItem="agG-qM-odL" secondAttribute="bottom" constant="5" id="cuH-hJ-N48"/>
                 <constraint firstItem="2eV-GY-aFw" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="mPQ-24-tR7"/>
                 <constraint firstItem="agG-qM-odL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="n1Z-uK-htO"/>
+                <constraint firstItem="EYe-nD-xmL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="o6o-E1-uqM"/>
                 <constraint firstAttribute="bottom" secondItem="2eV-GY-aFw" secondAttribute="bottom" constant="5" id="shf-8L-xpQ"/>
             </constraints>
             <size key="customSize" width="342" height="261"/>
@@ -70,6 +84,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="multiply" catalog="system" width="128" height="111"/>
         <image name="грузовик" width="840" height="502"/>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

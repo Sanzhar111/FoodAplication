@@ -1168,6 +1168,9 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="default"/>
                                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="deleteAllCartPositionsButtonIsTapped:" destination="0Nx-N3-ALa" eventType="touchUpInside" id="Fkp-Yi-LAU"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Доставка курьером сегодня 16 августа" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3t-Yu-gVg">
                                                         <rect key="frame" x="10" y="5" width="365" height="20.5"/>
@@ -1374,6 +1377,9 @@
                                                         <buttonConfiguration key="configuration" style="plain" title="Оплатить онлайн">
                                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="payButtonIsTapped:" destination="0Nx-N3-ALa" eventType="touchUpInside" id="psN-o9-Y5s"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1629,6 +1635,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Оплатить 546 ₽"/>
+                                <connections>
+                                    <action selector="orderButtonIsTapped:" destination="ZK2-Qe-ZDJ" eventType="touchUpInside" id="VgR-sg-X1c"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gIf-cR-NFx"/>
@@ -1671,6 +1680,7 @@
                         <outlet property="cvcView" destination="nZi-CY-Vqx" id="fXF-ck-z6a"/>
                         <outlet property="insertCardButton" destination="V9k-ms-kq3" id="UUH-KL-c7c"/>
                         <outlet property="payButton" destination="ZJd-yI-gzJ" id="Qs4-eU-SwT"/>
+                        <outlet property="priceLabe" destination="5im-nZ-uRi" id="ZOT-u5-Kjt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zuc-l5-aE7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

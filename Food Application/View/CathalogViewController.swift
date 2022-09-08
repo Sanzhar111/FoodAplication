@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SkeletonView
+//import SkeletonView
 final class CathalogViewController: UIViewController {
     @IBOutlet weak var scroller: UIScrollView!
     @IBOutlet weak var tableView1: UITableView!

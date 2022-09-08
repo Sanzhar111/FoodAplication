@@ -28,11 +28,6 @@ class CartViewController: UIViewController {
         self.tableView.register(UINib(nibName: "TwoCellsTableViewCell", bundle: nil), forCellReuseIdentifier: "TwoCellsTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        if CartViewModel.shared.cartPositions.count == 0 {
-            priceForAllLabel.text = "0₽"
-        } else {
-            priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(reloadInformation), name: NSNotification.Name("load"), object: nil)
       //  Utilities.styleFilledButton(cleanButton)
         Utilities.styleFilledButton(orderButton)
@@ -40,20 +35,28 @@ class CartViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if CartViewModel.shared.cartPositions.count == 0 {
-            self.tableView.alpha = 0
-        } else {
-            self.tableView.alpha = 1
-            self.emptyLabel.alpha = 0
-        }
+        setUpLabels()
         ProfileViewModel.shared.getOrders()
-        
+        tableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ProfileViewModel.shared.getOrders()
     }
     
+    func setUpLabels() {
+        if CartViewModel.shared.cartPositions.count == 0 {
+            self.tableView.alpha = 0
+        } else {
+            self.tableView.alpha = 1
+            self.emptyLabel.alpha = 0
+        }
+        if CartViewModel.shared.cartPositions.count == 0 {
+            priceForAllLabel.text = "0₽"
+        } else {
+            priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
+        }
+    }
     @objc func reloadInformation() {
         self.tableView.reloadData()
         heightSetup()

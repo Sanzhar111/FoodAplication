@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+protocol ProfileDetailsDelegate:Any {
+    func table(tableView:UITableView)
+}
 class ProfileDetailsViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -23,18 +25,20 @@ class ProfileDetailsViewController: UIViewController {
     @IBOutlet weak var priceLabelUpper: UILabel!
     @IBOutlet weak var countProductLabelRightDownCorner: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    var indexOfACard:Int = -1
     var addressVariable = ""
     var nameVariable = ""
     var phoneVariable = ""
-    var profileArray = [ClientInformation(image: UIImage(systemName: "person")!, rightImage: UIImage(systemName: "chevron.right")!, text: "\(ProfileViewModel.shared.profile?.name ?? "") \(ProfileViewModel.shared.profile?.phone ?? "") "),
-                        ClientInformation(image: UIImage(systemName: "message")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Комментарий курьеру"),
-                        ClientInformation(image: UIImage(named: "дверь")!, rightImage: UIImage(systemName: "circle")!, text: "Оставить у двери"),
-                        ClientInformation(image: UIImage(systemName: "phone")!, rightImage: UIImage(systemName: "circle")!, text: "Позвонить перед доставкой")]
+    var profileArray = [ClientInformation(image: UIImage(systemName: "person")!, rightImage: UIImage(systemName: "chevron.right")!, text: "\(ProfileViewModel.shared.profile?.name ?? "") \(ProfileViewModel.shared.profile?.phone ?? "") ",isChosen: false),
+                        ClientInformation(image: UIImage(systemName: "message")!, rightImage: UIImage(systemName: "chevron.right")!, text: "Комментарий курьеру",isChosen: false),
+                        ClientInformation(image: UIImage(named: "дверь")!, rightImage: UIImage(systemName: "circle")!, text: "Оставить у двери",isChosen: false),
+                        ClientInformation(image: UIImage(systemName: "phone")!, rightImage: UIImage(systemName: "circle")!, text: "Позвонить перед доставкой",isChosen: false)]
     var selectedCell:IndexPath = IndexPath.init(row: 0, section: 0)
     var timeArray = ["В течении часа", "12.00-13.00","13.00-14.00","14.00-15.00","15.00-16.00","16.00-17.00","17.00-18.00","18.00-19.00","19.00-20.00","20.00-21.00","21.00-22.00","22.00-23.00","23.00-00.00"]
     var cardArray = [Card(cardNumber: "", imageCard: nil, imageView: UIImage(named: "addCard"), cvc: nil, date1: nil, date2: nil, isSelected: false),Card(cardNumber: "1234", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false),
                      Card(cardNumber: "1111", imageCard: UIImage(named: "Сбер"), cvc: nil, date1: nil, date2: nil, isSelected: false),
                      Card(cardNumber: "1111", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false)]
+    var viewModel = ProfileDetailsViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCells()
@@ -68,17 +72,7 @@ class ProfileDetailsViewController: UIViewController {
         timeCollectionView.register(UINib(nibName: "TimeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TimeCollectionViewCell")
         cardsCollectionView.register(UINib(nibName: "CardsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CardsCollectionViewCell")
     }
-    @IBAction func closeButton(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true)
-        for i in 0 ..< cardArray.count {
-            cardArray[i].isSelected = false
-        }
-    selectedCell = IndexPath.init(row: 0, section: 0)
-    }
-    @IBAction func editButtonIsTapped(_ sender: Any) {
-        openViewController()
-    }
+    
     func labelSet() {
         countProductsLabel.text = String(CartViewModel.shared.countPositions) + " товаров"
         countProductLabelRightDownCorner.text = String(CartViewModel.shared.countPositions) + " товаров"
@@ -100,6 +94,49 @@ class ProfileDetailsViewController: UIViewController {
         nextViewController.delegate = self
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
+    func showAlertController(textTitle:String,textOfAction1:String,textOfAction2:String,completion:@escaping ()->()) {
+        let alertContoller = UIAlertController(title:textTitle, message: nil , preferredStyle: .alert)
+        let alerAction = UIAlertAction(title: textOfAction1, style: .default) { [weak self] action in
+           // self?.viewModel.deleteAllProducts()
+            completion()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+                self?.labelSet()
+            }
+        }
+        let alerAction2 = UIAlertAction(title: textOfAction2, style: .default)
+        alertContoller.addAction(alerAction)
+        alertContoller.addAction(alerAction2)
+        self.present(alertContoller, animated: true)
+    }
+    
+    @IBAction func closeButton(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
+        for i in 0 ..< cardArray.count {
+            cardArray[i].isSelected = false
+        }
+    selectedCell = IndexPath.init(row: 0, section: 0)
+    }
+    @IBAction func editButtonIsTapped(_ sender: Any) {
+        openViewController()
+    }
+    @IBAction func payButtonIsTapped(_ sender: UIButton) {
+        print("indes",indexOfACard)
+        if indexOfACard == 0 {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PayCardViewController") as! PayCardViewController
+            nextViewController.modalPresentationStyle = .fullScreen
+            nextViewController.priceVariable = String(CartViewModel.shared.costForAll) + " ₽"
+            nextViewController.textForAButton = "Оплатить \(CartViewModel.shared.costForAll) ₽"
+            self.navigationController?.pushViewController(nextViewController, animated: true)
+        }
+    }
+    @IBAction func deleteAllCartPositionsButtonIsTapped(_ sender: Any) {
+        showAlertController(textTitle: "Очистить корзину", textOfAction1: "Да", textOfAction2: "Отмена", completion: { [weak self] () in
+            self?.viewModel.deleteAllProducts()
+        })
+    }
     
 }
 extension ProfileDetailsViewController:UITableViewDelegate,UITableViewDataSource {
@@ -110,13 +147,19 @@ extension ProfileDetailsViewController:UITableViewDelegate,UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileDetailTableViewCell", for: indexPath) as! ProfileDetailTableViewCell
         cell.selectionStyle = .none
         cell.setup(profile:profileArray[indexPath.row] )
+        print("indexPath.row = ",indexPath.row)
+        cell.theCellTableView = self.tableView
+        if indexPath.row > 1 {
+           print("Yes")//
+        cell.delegate = self
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 36
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == tableView {
+        if tableView == self.tableView {
             switch indexPath.row {
             case 0: openViewController()
             case 1: openViewController()
@@ -131,6 +174,7 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.collectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OrderDetailsCollectionViewCell", for: indexPath) as! OrderDetailsCollectionViewCell
+            cell.delegate = self
             cell.setup(product: CartViewModel.shared.cartPositions[indexPath.item])
             return cell
         } else if collectionView == self.timeCollectionView  {
@@ -201,36 +245,25 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
                         selectedcell?.layer.cornerRadius = 6
                         selectedcell!.layer.borderWidth = 1.0
                         selectedcell!.layer.borderColor = UIColor.blue.cgColor
-                        
-                        if indexPath.row == 0 {
+                        indexOfACard = indexPath.row
+                        print("The ",indexOfACard)
+                        /*if indexPath.row == 0 {
                             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
                             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PayCardViewController") as! PayCardViewController
                             nextViewController.modalPresentationStyle = .fullScreen
                             self.navigationController?.pushViewController(nextViewController, animated: true)
-                        }
-                        //collectionView.reloadItems(at: [indexPath,selectedCell])
-                      //  collectionView.reloadItems(at: [indexPath])
-                        /*
-                        notSelectedcell?.layer.cornerRadius = 6
-                        notSelectedcell!.layer.borderWidth = 1.0
-                        notSelectedcell!.layer.borderColor = UIColor.white.cgColor
-                        */
-                       // collectionView.reloadData()
+                        }*/
                         selectedCell = indexPath
                     } else if (selectedCell.row == indexPath.row) && (cardArray[indexPath.row].isSelected == false) {
                         print("hh]n")
+                        indexOfACard = indexPath.row
                         cardArray[indexPath.row].isSelected = true
                         selectedcell?.layer.cornerRadius = 6
                         selectedcell!.layer.borderWidth = 1.0
                         selectedcell!.layer.borderColor = UIColor.blue.cgColor
-                      //  collectionView.reloadData()
-                      //  collectionView.reloadItems(at: [indexPath])
                         selectedCell = indexPath
-
                     }
         }
-        
-        
     }
     /*func upValue(value: Int, sender: TwoCellsTableViewCell) {
         print("the major value = \(value)")
@@ -271,4 +304,28 @@ extension ProfileDetailsViewController:InfoForDeliveryDelegate {
     }
     
     
+}
+
+extension ProfileDetailsViewController:ChoosenCollectionViewCellDelegate {
+    func checkBoxToggle(sender: Any) {
+        if let selectedIndexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+            print("is seleceted(=)==\(selectedIndexPath)")
+            print(profileArray[selectedIndexPath.row].isChosen)
+            profileArray[selectedIndexPath.row].isChosen = !profileArray[selectedIndexPath.row].isChosen!
+            print(profileArray[selectedIndexPath.row].isChosen)
+            //            data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
+            //tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+        }
+    }
+}
+extension ProfileDetailsViewController: OrderDetailsCollectionViewCellDelegate {
+    func deletePosition(sender: Any) {
+        if let selectedCell =  collectionView.indexPath(for: (sender as? UICollectionViewCell)!) {
+            showAlertController(textTitle: "Удалить товар", textOfAction1: "Да", textOfAction2: "Отмена") {
+                print("before",CartViewModel.shared.cartPositions.count)
+                CartViewModel.shared.cartPositions.remove(at: selectedCell.row)
+                print("After",CartViewModel.shared.cartPositions.count)
+            }
+        }
+    }
 }

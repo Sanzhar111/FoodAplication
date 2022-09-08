@@ -24,6 +24,7 @@ struct FirebaseUser {
     var floor:String
     var intercom:String
     var commentsForACourier:String
+    var cards:[Card]?
     var representation:[String:Any] {
         var repres = [String:Any]()
         repres["id"] = self.id
