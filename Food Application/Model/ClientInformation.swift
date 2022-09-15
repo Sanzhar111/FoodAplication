@@ -12,5 +12,5 @@ struct ClientInformation {
     var image:UIImage
     var rightImage:UIImage
     var text:String
-    var isChosen:Bool?
+    var isChosen:Bool
 }

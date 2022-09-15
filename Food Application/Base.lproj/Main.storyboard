@@ -1677,8 +1677,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cardView" destination="gJs-p3-eo2" id="CFd-O3-RI8"/>
+                        <outlet property="cvcLabel" destination="tDK-n5-6YS" id="kd1-xn-Yr4"/>
                         <outlet property="cvcView" destination="nZi-CY-Vqx" id="fXF-ck-z6a"/>
+                        <outlet property="date1Label" destination="Fo2-Y4-jDG" id="Kj2-pz-jJF"/>
+                        <outlet property="date2Label" destination="Wpt-GZ-76s" id="QFO-TM-2ZJ"/>
                         <outlet property="insertCardButton" destination="V9k-ms-kq3" id="UUH-KL-c7c"/>
+                        <outlet property="numberCardLabel" destination="GeK-GE-2Xx" id="6PR-6c-9EX"/>
                         <outlet property="payButton" destination="ZJd-yI-gzJ" id="Qs4-eU-SwT"/>
                         <outlet property="priceLabe" destination="5im-nZ-uRi" id="ZOT-u5-Kjt"/>
                     </connections>
@@ -1864,14 +1868,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cart.fill" catalog="system" width="128" height="102"/>
+        <image name="cart.fill" catalog="system" width="32" height="32"/>
         <image name="foodLogo1" width="626" height="626"/>
         <image name="logoscards" width="942" height="176"/>
-        <image name="menucard.fill" catalog="system" width="106" height="128"/>
-        <image name="multiply" catalog="system" width="128" height="111"/>
-        <image name="person" catalog="system" width="128" height="117"/>
-        <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
+        <image name="menucard.fill" catalog="system" width="32" height="32"/>
+        <image name="multiply" catalog="system" width="32" height="32"/>
+        <image name="person" catalog="system" width="32" height="32"/>
+        <image name="person.fill" catalog="system" width="32" height="32"/>
+        <image name="trash" catalog="system" width="32" height="32"/>
         <image name="white" width="3462" height="2411"/>
         <image name="грузовик" width="840" height="502"/>
         <systemColor name="labelColor">

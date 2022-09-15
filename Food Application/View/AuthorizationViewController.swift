@@ -30,8 +30,9 @@ class AuthorizationViewController: UIViewController {
         
     }
     @IBAction func AuthorisationTapped(_ sender: Any) {
-        AuthService.shared.signIn(email: emailLabel.text ?? "", password: passwordLabel.text ?? "") { [self] result in 
+        AuthService.shared.signIn(email: emailLabel.text ?? "", password: passwordLabel.text ?? "") { [self] result in
             switch result {
+                
             case .success(let user):
                 self.emailLabel.text = ""
                 self.passwordLabel.text = ""

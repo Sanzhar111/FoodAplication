@@ -13,6 +13,10 @@ class PayCardViewController: UIViewController {
     @IBOutlet weak var cvcView: UIView!
     @IBOutlet weak var insertCardButton: UIButton!
     @IBOutlet weak var priceLabe: UILabel!
+    @IBOutlet weak var numberCardLabel: UITextField!
+    @IBOutlet weak var date1Label: UITextField!
+    @IBOutlet weak var date2Label: UITextField!
+    @IBOutlet weak var cvcLabel: UITextField!
     var selected = false
     let viewMoedel = PaycardViewModel()
     var priceVariable = ""
@@ -25,6 +29,7 @@ class PayCardViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         setUpButton(image: UIImage(systemName: "square")!)
         seUpViews()
+        setupDelegatesForTextFields()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,14 +51,12 @@ class PayCardViewController: UIViewController {
         let tintedImage = origImage.withRenderingMode(.alwaysTemplate)
         insertCardButton.setImage(tintedImage, for: .normal)
         insertCardButton.tintColor = .black
-
     }
     @IBAction func closeButtonIsTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true)
     }
     @IBAction func insertCardButtonIsTapped(_ sender: Any) {
-        
         if selected {
             setUpButton(image: UIImage(systemName: "checkmark.square")!)
             //let origImage2 = UIImage(systemName: "checkmark.square")
@@ -65,48 +68,59 @@ class PayCardViewController: UIViewController {
             //let origImage = UIImage(systemName: "square")
             //let tintedImage = origImage?.withRenderingMode(.alwaysTemplate)
             //insertCardButton.setImage(tintedImage, for: .normal)
-
             selected = !selected
         }
-        
         insertCardButton.isSelected = selected
        
     }
      @IBAction func orderButtonIsTapped(_ sender: UIButton) {
         
-             let order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue)
-             //order.positions = CartViewModel.shared.cartPositions
-             //CartViewModel.shared.cartPositions.removeAll()
-             //priceForAllLabel.text = "0₽"
-             //tableView.reloadData()
-             //heightSetup()
-             //self.tableView.alpha = 0
-             //self.emptyLabel.alpha = 1
-             //moveItemsToBottom()
-             print("order.positions:\(order.positions)")
-                 DataBaseService.shared.setOrder(order: order) { result in
-                     switch result {
-                     case .success(let order):
-                         print("orders:\(order.cost)")
-                         ProfileViewModel.shared.getOrders()
-                     case .failure(let error):
-                         print(error.localizedDescription)
-                     }
-                 }
-             let alertContoller = UIAlertController(title:"Заказ успешно совершен", message:"Cпасибо за покупку!" , preferredStyle: .alert)
-             let alerAction = UIAlertAction(title: "Закрыть", style: .default)
-             alertContoller.addAction(alerAction)
-             self.present(alertContoller, animated: true)
-         
+         if viewMoedel.cardInfoIsEmpty(number: self.numberCardLabel.text ?? "", date1: self.date1Label.text ?? "", date2: self.date2Label.text ?? "", cvc: self.cvcLabel.text ?? "") {
+             let card = Card(userId: AuthService.shared.auth.currentUser!.uid, imageCard: nil, imageView: nil, cardNumber: numberCardLabel.text!, cvc: cvcLabel.text!, date1: date1Label.text!, date2: date2Label.text!, isSelected: false)
+             var order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, paidCard: card)
+             order.positions = CartViewModel.shared.cartPositions
+                 print("order.positions:\(order.positions)")
+             viewMoedel.createOrder(order: order)
+             showAlertController(textTitle: "Заказ успешно совершен", textOfAction1: "Закрыть") {}
+         } else {
+             showAlertController(textTitle: "Необходимо заолнить все поля", textOfAction1: "Закрыть") {}
+         }
      }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func showAlertController(textTitle:String,textOfAction1:String,completion:@escaping ()->() ) {
+        let alertContoller = UIAlertController(title:textTitle, message: nil , preferredStyle: .alert)
+        let alerAction = UIAlertAction(title: textOfAction1, style: .default) { action in
+           // self?.viewModel.deleteAllProducts()
+            completion()
+        }
+        alertContoller.addAction(alerAction)
+        self.present(alertContoller, animated: true)
     }
-    */
-
 }
+extension PayCardViewController {
+    func setupDelegatesForTextFields() {
+        numberCardLabel.delegate = self
+        date1Label.delegate = self
+        date2Label.delegate = self
+        cvcLabel.delegate = self
+    }
+}
+extension PayCardViewController : UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return true
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    /*func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == numberTextField {
+            let allowedCharacters = "1234567890"
+            let alloweCharacterSet = CharacterSet(charactersIn: allowedCharacters)
+            let typedCharacterSet = CharacterSet(charactersIn: string)
+            return alloweCharacterSet.isSuperset(of: typedCharacterSet)
+        }  else {
+            return true
+        }
+    }*/
+}
+

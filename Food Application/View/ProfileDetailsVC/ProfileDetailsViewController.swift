@@ -35,9 +35,8 @@ class ProfileDetailsViewController: UIViewController {
                         ClientInformation(image: UIImage(systemName: "phone")!, rightImage: UIImage(systemName: "circle")!, text: "Позвонить перед доставкой",isChosen: false)]
     var selectedCell:IndexPath = IndexPath.init(row: 0, section: 0)
     var timeArray = ["В течении часа", "12.00-13.00","13.00-14.00","14.00-15.00","15.00-16.00","16.00-17.00","17.00-18.00","18.00-19.00","19.00-20.00","20.00-21.00","21.00-22.00","22.00-23.00","23.00-00.00"]
-    var cardArray = [Card(cardNumber: "", imageCard: nil, imageView: UIImage(named: "addCard"), cvc: nil, date1: nil, date2: nil, isSelected: false),Card(cardNumber: "1234", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false),
-                     Card(cardNumber: "1111", imageCard: UIImage(named: "Сбер"), cvc: nil, date1: nil, date2: nil, isSelected: false),
-                     Card(cardNumber: "1111", imageCard: UIImage(named: "visa"), cvc: nil, date1: nil, date2: nil, isSelected: false)]
+    var cardArray = Card(userId: "", imageCard: nil, imageView: UIImage(named: "addCard"), cardNumber: "", cvc: "", date1: "", date2: "", isSelected: false)
+    var order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, paidCard: Card(userId: "", imageCard: nil, imageView: nil, cardNumber: "", cvc: "", date1: "", date2: "", isSelected: false))
     var viewModel = ProfileDetailsViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +49,8 @@ class ProfileDetailsViewController: UIViewController {
         self.view.layoutIfNeeded()
         scrollView.isScrollEnabled = true
         self.navigationItem.hidesBackButton = true
+        //viewModel.cardArray.append(Card(userId: "", imageCard: nil, imageView: UIImage(named: "addCard"), cardNumber: "", cvc: "", date1: "", date2: "", isSelected: false))
+        print(viewModel.cardArray.count)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -113,9 +114,9 @@ class ProfileDetailsViewController: UIViewController {
     @IBAction func closeButton(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true)
-        for i in 0 ..< cardArray.count {
+       /* for i in 0 ..< cardArray.count {
             cardArray[i].isSelected = false
-        }
+        }*/
     selectedCell = IndexPath.init(row: 0, section: 0)
     }
     @IBAction func editButtonIsTapped(_ sender: Any) {
@@ -130,6 +131,22 @@ class ProfileDetailsViewController: UIViewController {
             nextViewController.priceVariable = String(CartViewModel.shared.costForAll) + " ₽"
             nextViewController.textForAButton = "Оплатить \(CartViewModel.shared.costForAll) ₽"
             self.navigationController?.pushViewController(nextViewController, animated: true)
+        } else {
+            
+            self.order.positions = CartViewModel.shared.cartPositions
+            CartViewModel.shared.cartPositions.removeAll()
+            collectionView.reloadData()
+            labelSet()
+            print("order.positions:\(order.positions)")
+                DataBaseService.shared.setOrder(order: order) { result in
+                    switch result {
+                    case .success(let order):
+                        print("orders:\(order.cost)")
+                        ProfileViewModel.shared.getOrders()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
         }
     }
     @IBAction func deleteAllCartPositionsButtonIsTapped(_ sender: Any) {
@@ -186,7 +203,8 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardsCollectionViewCell", for: indexPath) as! CardsCollectionViewCell
-            cell.setUp(card: cardArray[indexPath.item])
+            print(viewModel.cardArray.count)
+            cell.setUp(card: viewModel.cardArray[indexPath.item])
             cell.layer.borderColor = UIColor.lightGray.cgColor
             cell.layer.cornerRadius = 6
             cell.layer.borderWidth = 1
@@ -202,7 +220,8 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
         } else if collectionView == self.timeCollectionView {
             return timeArray.count
         } else {
-            return cardArray.count
+            print(viewModel.cardArray.count)
+            return  viewModel.cardArray.count
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -223,9 +242,11 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
             print("NITindexPath = \(selectedCell)\n")
               
                     if selectedCell.row != indexPath.row {
-                        cardArray[indexPath.row].isSelected = true
-                        cardArray[selectedCell.row].isSelected = false
-                      /*  notSelectedcell?.layer.cornerRadius = 6
+                        //cardArray[indexPath.row].isSelected = true
+                        //cardArray[selectedCell.row].isSelected = false
+                        viewModel.cardArray[indexPath.row].isSelected = true
+                        viewModel.cardArray[selectedCell.row].isSelected = false
+                        /*  notSelectedcell?.layer.cornerRadius = 6
                         notSelectedcell!.layer.borderWidth = 1.0
                         notSelectedcell!.layer.borderColor = UIColor.white.cgColor
                         */
@@ -254,10 +275,10 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
                             self.navigationController?.pushViewController(nextViewController, animated: true)
                         }*/
                         selectedCell = indexPath
-                    } else if (selectedCell.row == indexPath.row) && (cardArray[indexPath.row].isSelected == false) {
+                    } else if (selectedCell.row == indexPath.row) && (viewModel.cardArray[indexPath.row].isSelected == false) {
                         print("hh]n")
                         indexOfACard = indexPath.row
-                        cardArray[indexPath.row].isSelected = true
+                        viewModel.cardArray[indexPath.row].isSelected = true
                         selectedcell?.layer.cornerRadius = 6
                         selectedcell!.layer.borderWidth = 1.0
                         selectedcell!.layer.borderColor = UIColor.blue.cgColor
@@ -275,7 +296,6 @@ extension ProfileDetailsViewController:UICollectionViewDelegate,UICollectionView
             
         }
     }*/
-
 }
 extension ProfileDetailsViewController:DeliveryInfoViewControllerDelegate {
     func changeInfo(information: String, name: String, phoneNumber: String) {
@@ -311,7 +331,12 @@ extension ProfileDetailsViewController:ChoosenCollectionViewCellDelegate {
         if let selectedIndexPath = tableView.indexPath(for: sender as! UITableViewCell) {
             print("is seleceted(=)==\(selectedIndexPath)")
             print(profileArray[selectedIndexPath.row].isChosen)
-            profileArray[selectedIndexPath.row].isChosen = !profileArray[selectedIndexPath.row].isChosen!
+            profileArray[selectedIndexPath.row].isChosen = !profileArray[selectedIndexPath.row].isChosen
+            if selectedIndexPath.row == 2 {
+                order.leaveNextToTheDoor = profileArray[selectedIndexPath.row].isChosen
+            } else {
+                order.callBeforeDelivey = profileArray[selectedIndexPath.row].isChosen
+            }
             print(profileArray[selectedIndexPath.row].isChosen)
             //            data[selectedIndexPath.row].isChecked = !data[selectedIndexPath.row].isChecked
             //tableView.reloadRows(at: [selectedIndexPath], with: .automatic)

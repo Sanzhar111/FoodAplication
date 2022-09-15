@@ -80,6 +80,14 @@ class DataBaseService {
                         print(error.localizedDescription)
                     }
                 }
+                self?.setCardToOrder(by: order.id, card: order.paidCard, complition: { res in
+                    switch res {
+                    case .success(let card):
+                        print(card)
+                    case .failure(let error) :
+                        print(error.localizedDescription)
+                    }
+                })
             }
         }
     }
@@ -185,5 +193,62 @@ extension DataBaseService {
     private var cardsRef:CollectionReference {
         return dataBase.collection("cards")
     }
-
+    
+                      
+    func setCardToOrder(by orderId:String,card:Card,
+                  complition:@escaping(Result<Card,Error>) -> ()) {
+        let positionRef = ordersRef.document(orderId).collection("card")
+       
+        positionRef.document(card.id).setData(card.representation) { error in
+            if let  error = error {
+                complition(.failure(error))
+            } else {
+                complition(.success(card))
+            }
+        }
+    }
+    func setCardToUser(card:Card,
+                  complition:@escaping(Result<Card,Error>) -> ()) {
+        /*cardsRef.document(card.id).setData(card.representation) { error in
+            if let  error = error {
+                complition(.failure(error))
+            } else {
+                complition(.success(card))
+            }
+        }*/
+        //eegergere_______________
+        cardsRef.document(card.id).setData(card.representation) {  error in
+            if let error = error {
+                complition(.failure(error))
+            } else {
+                complition(.success(card))
+            }
+        }
+    }
+    func getCards(by userId:String?,completion:@escaping(Result<[Card],Error>)->()) {
+        cardsRef.getDocuments { qSnapShot, error in
+            if let qSnapShot = qSnapShot {
+                var cards = [Card]()
+                for doc in qSnapShot.documents {
+                    if let userId = userId {
+                        if let card = Card(doc: doc),card.userId == userId {
+                            cards.append(card)
+                        }
+                        
+                    } else {
+                        //ветка Админа
+                        if let card = Card(doc: doc) {
+                            cards.append(card)
+                        }
+                    }
+                }
+                DispatchQueue.main.async {
+                    completion(.success(cards))
+                }
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+    
 }
