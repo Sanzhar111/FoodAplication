@@ -25,7 +25,8 @@ class ProfileDetailsViewController: UIViewController {
     @IBOutlet weak var priceLabelUpper: UILabel!
     @IBOutlet weak var countProductLabelRightDownCorner: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    var indexOfACard:Int = -1
+    @IBOutlet weak var deliveryDateLabel: UILabel!
+    var indexOfACard:Int = 0
     var addressVariable = ""
     var nameVariable = ""
     var phoneVariable = ""
@@ -55,6 +56,23 @@ class ProfileDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
+        viewModel.getTime()
+        DataBaseService.shared.getCards(by: AuthService.shared.auth.currentUser!.uid) { [weak self] result in
+            switch result {
+            case .success(let cards):
+                
+                if (self?.viewModel.cardArray.count)! - 1 == 0 {
+                    print("items ",self?.viewModel.cardArray.count ?? -1)
+                    for card in cards {
+                        self?.viewModel.cardArray.append(card)
+                        print(card.cardNumber)
+                    }
+                    self?.cardsCollectionView.reloadData()
+                }
+            case .failure(let error) :
+                print(error.localizedDescription)
+            }
+        }
         labelSet()
     }
     func setUpDelegatesAndDataSources() {
@@ -80,7 +98,8 @@ class ProfileDetailsViewController: UIViewController {
         countProductLabelLeftDownCorner.text = "Товары (\(CartViewModel.shared.countPositions))"
         priceLabelUpper.text = "\(CartViewModel.shared.costForAll) ₽"
         priceLabel.text = "\(CartViewModel.shared.costForAll) ₽"
-        
+        deliveryDateLabel.sizeToFit()
+        deliveryDateLabel.text = "Доставка курьером сегодня" + " \(viewModel.getDate())"
         if addressVariable != "" {
             addressLabel.text = addressVariable
         } else {
@@ -100,10 +119,6 @@ class ProfileDetailsViewController: UIViewController {
         let alerAction = UIAlertAction(title: textOfAction1, style: .default) { [weak self] action in
            // self?.viewModel.deleteAllProducts()
             completion()
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-                self?.labelSet()
-            }
         }
         let alerAction2 = UIAlertAction(title: textOfAction2, style: .default)
         alertContoller.addAction(alerAction)
@@ -130,15 +145,20 @@ class ProfileDetailsViewController: UIViewController {
             nextViewController.modalPresentationStyle = .fullScreen
             nextViewController.priceVariable = String(CartViewModel.shared.costForAll) + " ₽"
             nextViewController.textForAButton = "Оплатить \(CartViewModel.shared.costForAll) ₽"
+            //nextViewController.delegate = self
             self.navigationController?.pushViewController(nextViewController, animated: true)
         } else {
             
             self.order.positions = CartViewModel.shared.cartPositions
+            self.order.paidCard = viewModel.cardArray[indexOfACard]
             CartViewModel.shared.cartPositions.removeAll()
-            collectionView.reloadData()
-            labelSet()
+            self.showAlertController(textTitle: "Заказ совершен", textOfAction1: "Ок", textOfAction2: "Закрыть") {
+                self.collectionView.reloadData()
+                self.labelSet()
+            }
             print("order.positions:\(order.positions)")
-                DataBaseService.shared.setOrder(order: order) { result in
+            viewModel.createOrder(order: order)
+            /* DataBaseService.shared.setOrder(order: order) { result in
                     switch result {
                     case .success(let order):
                         print("orders:\(order.cost)")
@@ -146,11 +166,13 @@ class ProfileDetailsViewController: UIViewController {
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
-                }
+                }*/
         }
     }
     @IBAction func deleteAllCartPositionsButtonIsTapped(_ sender: Any) {
         showAlertController(textTitle: "Очистить корзину", textOfAction1: "Да", textOfAction2: "Отмена", completion: { [weak self] () in
+            self?.collectionView.reloadData()
+            self?.labelSet()
             self?.viewModel.deleteAllProducts()
         })
     }
@@ -350,7 +372,10 @@ extension ProfileDetailsViewController: OrderDetailsCollectionViewCellDelegate {
                 print("before",CartViewModel.shared.cartPositions.count)
                 CartViewModel.shared.cartPositions.remove(at: selectedCell.row)
                 print("After",CartViewModel.shared.cartPositions.count)
+                self.collectionView.reloadData()
+                self.labelSet()
             }
         }
     }
 }
+

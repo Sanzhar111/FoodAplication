@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+protocol PayCardViewControllerDelegate:AnyObject {
+    func upButton()
+}
 class PayCardViewController: UIViewController {
     @IBOutlet weak var payButton: UIButton!
     @IBOutlet weak var cardView: UIView!
@@ -21,6 +23,7 @@ class PayCardViewController: UIViewController {
     let viewMoedel = PaycardViewModel()
     var priceVariable = ""
     var textForAButton = ""
+    weak var delegate:PayCardViewControllerDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,32 +61,41 @@ class PayCardViewController: UIViewController {
     }
     @IBAction func insertCardButtonIsTapped(_ sender: Any) {
         if selected {
-            setUpButton(image: UIImage(systemName: "checkmark.square")!)
-            //let origImage2 = UIImage(systemName: "checkmark.square")
-            //let tintedImage2 = origImage2?.withRenderingMode(.alwaysTemplate)
-            //insertCardButton.setImage(tintedImage2, for: .normal)
-            selected = !selected
-        } else {
+            
             setUpButton(image: UIImage(systemName: "square")!)
             //let origImage = UIImage(systemName: "square")
             //let tintedImage = origImage?.withRenderingMode(.alwaysTemplate)
             //insertCardButton.setImage(tintedImage, for: .normal)
-            selected = !selected
+            selected = false
+        } else {
+            setUpButton(image: UIImage(systemName: "checkmark.square")!)
+            //let origImage2 = UIImage(systemName: "checkmark.square")
+            //let tintedImage2 = origImage2?.withRenderingMode(.alwaysTemplate)
+            //insertCardButton.setImage(tintedImage2, for: .normal)
+            selected = true
         }
+        print(selected)
         insertCardButton.isSelected = selected
        
     }
      @IBAction func orderButtonIsTapped(_ sender: UIButton) {
         
          if viewMoedel.cardInfoIsEmpty(number: self.numberCardLabel.text ?? "", date1: self.date1Label.text ?? "", date2: self.date2Label.text ?? "", cvc: self.cvcLabel.text ?? "") {
-             let card = Card(userId: AuthService.shared.auth.currentUser!.uid, imageCard: nil, imageView: nil, cardNumber: numberCardLabel.text!, cvc: cvcLabel.text!, date1: date1Label.text!, date2: date2Label.text!, isSelected: false)
-             var order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, paidCard: card)
-             order.positions = CartViewModel.shared.cartPositions
-                 print("order.positions:\(order.positions)")
-             viewMoedel.createOrder(order: order)
-             showAlertController(textTitle: "Заказ успешно совершен", textOfAction1: "Закрыть") {}
+             
+                 let card = Card(userId: AuthService.shared.auth.currentUser!.uid, imageCard: nil, imageView: nil, cardNumber: numberCardLabel.text!, cvc: cvcLabel.text!, date1: date1Label.text!, date2: date2Label.text!, isSelected: false)
+                 var order = Order(userId: AuthService.shared.auth.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, paidCard: card)
+                 order.positions = CartViewModel.shared.cartPositions
+                     print("order.positions:\(order.positions)")
+             viewMoedel.createOrder(order: order, saveCard: insertCardButton.isSelected)
+                          
+             showAlertController(textTitle: "Заказ успешно совершен", textOfAction1: "Закрыть") {
+                // self.navigationController?.popViewController(animated: true)
+                 self.navigationController?.popToRootViewController(animated: true)
+                 self.dismiss(animated: true)
+                 self.delegate?.upButton()
+             }
          } else {
-             showAlertController(textTitle: "Необходимо заолнить все поля", textOfAction1: "Закрыть") {}
+             showAlertController(textTitle: "Необходимо заполнить все поля", textOfAction1: "Закрыть") {}
          }
      }
     func showAlertController(textTitle:String,textOfAction1:String,completion:@escaping ()->() ) {

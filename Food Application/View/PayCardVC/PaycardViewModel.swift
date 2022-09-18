@@ -15,7 +15,7 @@ class PaycardViewModel {
             return true
         }
     }
-    func createOrder (order:Order) {
+    func createOrder (order:Order,saveCard:Bool) {
         DataBaseService.shared.setOrder(order: order) { result in
             switch result {
             case .success(let order):
@@ -25,12 +25,15 @@ class PaycardViewModel {
                 print(error.localizedDescription)
             }
         }
-        DataBaseService.shared.setCardToUser(card: order.paidCard) { result in
-            switch result {
-            case .success(let card): print("The card ",card)
-            case .failure(let error): print(error.localizedDescription)
+        if saveCard {
+            DataBaseService.shared.setCardToUser(card: order.paidCard) { result in
+                switch result {
+                case .success(let card): print("The card ",card)
+                case .failure(let error): print(error.localizedDescription)
+                }
             }
         }
+        
         CartViewModel.shared.cartPositions.removeAll()
     }
 }

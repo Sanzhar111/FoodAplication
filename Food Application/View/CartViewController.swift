@@ -38,6 +38,10 @@ class CartViewController: UIViewController {
         setUpLabels()
         ProfileViewModel.shared.getOrders()
         tableView.reloadData()
+        if CartViewModel.shared.cartPositions.count == 0 {
+            moveItemsToBottom(duration: 0)
+        }
+            
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -100,7 +104,7 @@ class CartViewController: UIViewController {
                 CartViewModel.shared.cartPositions.removeAll()
                 self.priceForAllLabel.text = "0₽"
                 self.tableView.reloadData()
-                self.moveItemsToBottom()
+                self.moveItemsToBottom(duration: 0.3)
                 self.tableView.alpha = 0
                 self.emptyLabel.alpha = 1
                 self.heightSetup()
@@ -114,7 +118,7 @@ class CartViewController: UIViewController {
                 if CartViewModel.shared.cartPositions.count == 0 {
                     self.tableView.alpha = 0
                     self.emptyLabel.alpha = 1
-                    self.moveItemsToBottom()
+                    self.moveItemsToBottom(duration: 0.3)
                 }
                 self.heightSetup()
             }
@@ -162,9 +166,9 @@ class CartViewController: UIViewController {
         self.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: CGFloat(viewHeightVar + 150))
        self.view.layoutIfNeeded()
     }
-    private func moveItemsToBottom() {
+    private func moveItemsToBottom(duration : Float) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Int(0))) {
-            UIView.animateKeyframes(withDuration: 0.3, delay: 0.0, options: UIView.KeyframeAnimationOptions(rawValue: 7), animations: {
+            UIView.animateKeyframes(withDuration: TimeInterval(duration), delay: 0.0, options: UIView.KeyframeAnimationOptions(rawValue: 7), animations: {
                 self.orderButton.frame.origin.y = self.view.safeAreaLayoutGuide.layoutFrame.maxY - 148
                 self.totalLabel.frame.origin.y = self.view.safeAreaLayoutGuide.layoutFrame.maxY - 183
                 self.priceForAllLabel.frame.origin.y = self.view.safeAreaLayoutGuide.layoutFrame.maxY - 183
@@ -195,7 +199,7 @@ extension CartViewController:UITableViewDelegate,UITableViewDataSource,SelectedT
             priceForAllLabel.text = "\(CartViewModel.shared.costForAll)₽"
             tableView.reloadData()
             if CartViewModel.shared.cartPositions.count == 0 {
-                moveItemsToBottom()
+                moveItemsToBottom(duration: 0.3)
             }
         }
     }

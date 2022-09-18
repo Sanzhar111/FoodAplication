@@ -1437,6 +1437,7 @@
                         <outlet property="countProductLabelLeftDownCorner" destination="j3q-wk-eqK" id="JWr-C3-5nY"/>
                         <outlet property="countProductLabelRightDownCorner" destination="3QG-Fi-NLg" id="YnB-N1-biL"/>
                         <outlet property="countProductsLabel" destination="D6G-LJ-o2F" id="ChZ-WK-Obn"/>
+                        <outlet property="deliveryDateLabel" destination="Y3t-Yu-gVg" id="9XZ-S6-vFP"/>
                         <outlet property="editButton" destination="H0y-Dv-W2g" id="cDt-lO-f9J"/>
                         <outlet property="heightTableView" destination="hbR-o1-J1x" id="NyE-hw-GiA"/>
                         <outlet property="payButton" destination="PqS-6j-zSt" id="ZUf-11-8GX"/>
